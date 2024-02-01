@@ -5,11 +5,9 @@ import {
   StyleSheet,
   Text,
   View,
-  Image,
+
   TextInput,
-  Button,
   TouchableOpacity,
-  StatusBar,
   ImageBackground,
 } from 'react-native';
 export default function SignUp() {
