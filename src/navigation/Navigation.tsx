@@ -7,8 +7,8 @@ import {NavigationContainer} from '@react-navigation/native';
 
 const Tab = createBottomTabNavigator();
 const screenOptions = {
-  tabBarShowLabel: false,
-  headerShown: false,
+  tabBarShowLabel: true,
+  headerShown: true,
   tabBarstyle: {
     position: 'absolute',
     bottom: 0,
@@ -17,7 +17,7 @@ const screenOptions = {
     right: 20,
     elevation: 0,
     heigt: 60,
-    background: '#fff',
+    background: 'black',
   },
 };
 export default function Navigation() {
@@ -30,14 +30,33 @@ export default function Navigation() {
             tabBarIcon: () => {
               return (
                 <Image source={require('../assets/icons/Message.png')}></Image>
+                // <Image source={require('../assets/icons/user.png')}></Image>
+                // <Image source={require('../assets/icons/settings.png')}></Image>
               );
             },
           }}
           name="authScreen"
           component={AuthScreen}
         />
-        <Tab.Screen name="signin" component={Login} />
-        <Tab.Screen name="signOut" component={SignUp} />
+        <Tab.Screen 
+         options={{
+          tabBarIcon: () => {
+            return (
+              // <Image source={require('../assets/icons/Message.png')}></Image>
+              // <Image source={require('../assets/icons/user.png')}></Image>
+              <Image source={require('../assets/icons/settings.png')}></Image>
+            );
+          },
+        }}
+        name="signin" component={Login} />
+        <Tab.Screen  options={{
+            tabBarIcon: () => {
+              return (
+                <Image source={require('../assets/icons/user.png')}></Image>
+                // <Image source={require('../assets/icons/settings.png')}></Image>
+              );
+            },
+          }} name="signOut" component={SignUp} />
       </Tab.Navigator>
     </NavigationContainer>
   );

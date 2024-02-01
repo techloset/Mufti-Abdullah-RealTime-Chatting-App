@@ -8,17 +8,18 @@ import {
   TouchableOpacity,
   ImageBackground,
 } from 'react-native';
+import LinearGradient from 'react-native-linear-gradient';
 export default function AuthScreen() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   return (
-  //   <LinearGradient
-  //   colors={['#43116A', '#68E1FD']}
-  //   start={{ x: 2, y: 5 }}
-  //   end={{ x: 8, y: 11 }}
-  //   style={styles.container}
-  // >
-<>
+    <>
+    <LinearGradient
+    colors={['#43116A', '#68E1FD']}
+    start={{ x: 2, y: 5 }}
+    end={{ x: 8, y: 11 }}
+    style={styles.container}
+  >
     <View style={styles.container}>
       <ImageBackground
         source={require('../../../assets/images/Ellipse 1226.png')}
@@ -69,7 +70,7 @@ export default function AuthScreen() {
         </TouchableOpacity>
       </ImageBackground>
     </View>
-      {/* </LinearGradient> */}
+      </LinearGradient>
       </>
   );
 }
