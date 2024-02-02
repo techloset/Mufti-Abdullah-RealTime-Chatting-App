@@ -8,6 +8,7 @@ import Header from '../components/tabHeader/Header';
 import Home from '../screen/frontEnd/home/Home';
 import Contact from '../screen/frontEnd/contact/Contact';
 import Search from '../screen/frontEnd/search/Search';
+import Setting from '../screen/frontEnd/setting/Setting';
 
 const Tab = createBottomTabNavigator();
 const screenOptions = {
@@ -56,7 +57,7 @@ export default function Navigation() {
           }}
         
           name="Home"
-          component={Contact}
+          component={Home}
         />
         <Tab.Screen 
          options={{
@@ -68,7 +69,7 @@ export default function Navigation() {
             );
           },
         }}
-        name="signin" component={Login} />
+        name="Setting" component={Setting} />
         <Tab.Screen  options={{
             tabBarIcon: () => {
               return (
@@ -76,7 +77,7 @@ export default function Navigation() {
                 // <Image source={require('../assets/icons/settings.png')}></Image>
               );
             },
-          }} name="signOut" component={SignUp} />
+          }} name="Contact" component={Contact} />
       </Tab.Navigator>
     </NavigationContainer>
   );
