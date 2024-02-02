@@ -1,6 +1,4 @@
 import React, {useState} from 'react';
-// import Icon from "../../assets/icons/Google.png"
-// import icon from "../../assets/background.png"
 import {
   StyleSheet,
   Text,

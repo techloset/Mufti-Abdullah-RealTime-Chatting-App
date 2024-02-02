@@ -4,11 +4,16 @@ import Login from '../screen/authScreens/login/Login';
 import SignUp from '../screen/authScreens/signUp/Signup';
 import {Image, View} from 'react-native';
 import {NavigationContainer} from '@react-navigation/native';
+import Header from '../components/tabHeader/Header';
+import Home from '../screen/frontEnd/home/Home';
+import Contact from '../screen/frontEnd/contact/Contact';
+import Search from '../screen/frontEnd/search/Search';
 
 const Tab = createBottomTabNavigator();
 const screenOptions = {
-  tabBarShowLabel: true,
-  headerShown: true,
+  tabBarShowLabel: false,
+  headerShown: false,
+  
   tabBarstyle: {
     position: 'absolute',
     bottom: 0,
@@ -20,23 +25,38 @@ const screenOptions = {
     background: 'black',
   },
 };
+
+
+
+
+
+
 export default function Navigation() {
   return (
     <NavigationContainer>
       <Tab.Navigator 
-      screenOptions={screenOptions}>
+      screenOptions={screenOptions}
+      >
         <Tab.Screen
           options={{
-            tabBarIcon: () => {
+            headerTitle: () => <Header name="Home" />,
+            headerStyle: {
+              backgroundColor: '#4c00b0',
+              height: 60,
+              borderBottomLeftRadius:20,
+              borderBottomRightRadius:20
+            }
+,            tabBarIcon: () => {
               return (
                 <Image source={require('../assets/icons/Message.png')}></Image>
                 // <Image source={require('../assets/icons/user.png')}></Image>
                 // <Image source={require('../assets/icons/settings.png')}></Image>
               );
-            },
+            }
           }}
-          name="authScreen"
-          component={AuthScreen}
+        
+          name="Home"
+          component={Contact}
         />
         <Tab.Screen 
          options={{
