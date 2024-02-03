@@ -14,7 +14,6 @@ const Tab = createBottomTabNavigator();
 const screenOptions = {
   tabBarShowLabel: false,
   headerShown: false,
-  
   tabBarstyle: {
     position: 'absolute',
     bottom: 0,
@@ -40,14 +39,7 @@ export default function Navigation() {
       >
         <Tab.Screen
           options={{
-            headerTitle: () => <Header name="Home" />,
-            headerStyle: {
-              backgroundColor: '#4c00b0',
-              height: 60,
-              borderBottomLeftRadius:20,
-              borderBottomRightRadius:20
-            }
-,            tabBarIcon: () => {
+             tabBarIcon: () => {
               return (
                 <Image source={require('../assets/icons/Message.png')}></Image>
                 // <Image source={require('../assets/icons/user.png')}></Image>
