@@ -9,7 +9,16 @@ import {
   ImageBackground,
 } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
-export default function AuthScreen() {
+import { RootStackParamsList } from '../../../navigation/StackNavigation';
+import { StackNavigationProp } from '@react-navigation/stack';
+
+interface LoginProps{
+  navigation:StackNavigationProp<RootStackParamsList,"login","signup">
+}
+
+export default function AuthScreen({navigation}:LoginProps) {
+
+
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   return (
@@ -53,6 +62,7 @@ export default function AuthScreen() {
                 textAlign: 'center',
                 marginLeft: 10,
                 marginRight: 10,
+                fontFamily:"Poppins-SemiBold"
               }}>
               OR
             </Text>
@@ -62,11 +72,11 @@ export default function AuthScreen() {
           />
         </View>
 
-        <TouchableOpacity style={styles.loginBtnText}>
+        <TouchableOpacity style={styles.loginBtnText} onPress={()=>{navigation.navigate("signup")}}>
           <Text>Sign up with mail</Text>
         </TouchableOpacity>
-        <TouchableOpacity>
-          <Text style={styles.forgot_button}>Existing account? <Text style={{color:"#FFFFFF"}}> Log in</Text></Text>
+        <TouchableOpacity onPress={()=>{navigation.navigate("login")}}>
+          <Text style={styles.forgot_button}>Existing account? <Text style={{color:"#FFFFFF"}} > Log in</Text></Text>
         </TouchableOpacity>
       </ImageBackground>
     </View>

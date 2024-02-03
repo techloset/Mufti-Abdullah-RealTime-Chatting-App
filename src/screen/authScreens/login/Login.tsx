@@ -1,3 +1,4 @@
+import { StackNavigationProp } from '@react-navigation/stack';
 import React, {useState} from 'react';
 import {
   StyleSheet,
@@ -8,7 +9,16 @@ import {
   TouchableOpacity,
   ImageBackground,
 } from 'react-native';
-export default function Login() {
+import { RootStackParamsList } from '../../../navigation/StackNavigation';
+
+
+
+interface Props{
+  navigation:StackNavigationProp<RootStackParamsList,"forgot">
+}
+
+
+export default function Login({navigation}:Props) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   return (
@@ -62,7 +72,7 @@ export default function Login() {
         <Text style={styles.loginBtnText}>LOGIN</Text>
         </ImageBackground>  
       </TouchableOpacity>
-      <TouchableOpacity>
+      <TouchableOpacity onPress={()=>{navigation.navigate("forgot")}}>
         <Text style={styles.forgot_button}>Forgot Password?</Text>
       </TouchableOpacity>
     </View>
@@ -116,8 +126,8 @@ const styles = StyleSheet.create({
     color: '#FFFFFF',
     fontSize: 16,
     lineHeight: 16,
-    fontWeight: '700',
-    fontFamily: 'Poppins',
+    // fontWeight: '700',
+    fontFamily: 'Poppins-ExtraBold',
   },
   main: {
     width: 160,
@@ -128,6 +138,7 @@ const styles = StyleSheet.create({
     lineHeight: 18,
     color: '#3D4A7A',
     marginBottom: 5,
+    fontFamily:"Poppins-Bold"
   },
   des: {
     width: 293,
