@@ -9,6 +9,7 @@ import Home from '../screen/frontEnd/home/Home';
 import Contact from '../screen/frontEnd/contact/Contact';
 import Search from '../screen/frontEnd/search/Search';
 import Setting from '../screen/frontEnd/setting/Setting';
+import {IMAGES} from '../constants/assets/AllImages';
 
 const Tab = createBottomTabNavigator();
 const screenOptions = {
@@ -26,50 +27,34 @@ const screenOptions = {
   },
 };
 
-
-
-
-
-
 export default function Navigation() {
   return (
     <NavigationContainer>
-      <Tab.Navigator 
-      screenOptions={screenOptions}
-      >
+      <Tab.Navigator screenOptions={screenOptions}>
         <Tab.Screen
           options={{
-             tabBarIcon: () => {
-              return (
-                <Image source={require('../assets/icons/Message.png')}></Image>
-                // <Image source={require('../assets/icons/user.png')}></Image>
-                // <Image source={require('../assets/icons/settings.png')}></Image>
-              );
-            }
+            tabBarIcon: ({focused}) =>
+              focused ? <IMAGES.Msg /> : <IMAGES.UnfocusMsg />,
           }}
-        
           name="Home"
           component={Home}
         />
-        <Tab.Screen 
-         options={{
-          tabBarIcon: () => {
-            return (
-              // <Image source={require('../assets/icons/Message.png')}></Image>
-              // <Image source={require('../assets/icons/user.png')}></Image>
-              <Image source={require('../assets/icons/settings.png')}></Image>
-            );
-          },
-        }}
-        name="Setting" component={Setting} />
-        <Tab.Screen  options={{
-            tabBarIcon: () => {
-              return (
-                <Image source={require('../assets/icons/user.png')}></Image>
-                // <Image source={require('../assets/icons/settings.png')}></Image>
-              );
-            },
-          }} name="Contact" component={Contact} />
+        <Tab.Screen
+          options={{
+            tabBarIcon: ({focused}) =>
+              focused ? <IMAGES.FocusSetting /> : <IMAGES.Setting />,
+          }}
+          name="Setting"
+          component={Setting}
+        />
+        <Tab.Screen
+          options={{
+            tabBarIcon: ({focused}) =>
+              focused ? <IMAGES.FocusUser /> : <IMAGES.User />,
+          }}
+          name="Contact"
+          component={Contact}
+        />
       </Tab.Navigator>
     </NavigationContainer>
   );
