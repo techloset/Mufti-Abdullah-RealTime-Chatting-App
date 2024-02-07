@@ -1,4 +1,4 @@
-package com.nativechatapp
+package com.textitapp
 import org.devio.rn.splashscreen.SplashScreen;
 import android.os.Bundle;
 import com.facebook.react.ReactActivity
