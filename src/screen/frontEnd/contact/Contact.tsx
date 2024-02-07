@@ -9,10 +9,22 @@ export default class Contact extends Component {
     return (
       <>
         <Header name="Contact" />
-        <View style={styles.TextView}>
-          <Text style={styles.TextHeading}>MY Contact</Text>
-        </View>
-        <ScrollView>
+        <ScrollView
+          style={{
+            borderTopLeftRadius: 50,
+            borderTopRightRadius: 50,
+            borderColor: 'white',
+            borderWidth: 1,
+            flex: 1,
+            top: 90,
+            zIndex: 1,
+            position: 'relative',
+            backgroundColor: 'white',
+            marginBottom: 10,
+          }}>
+          <View style={styles.TextView}>
+            <Text style={styles.TextHeading}>MY Contact</Text>
+          </View>
           <View style={styles.LettersView}>
             <Text style={styles.LetterText}>A</Text>
             <User />

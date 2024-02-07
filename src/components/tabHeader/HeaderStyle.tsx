@@ -3,13 +3,18 @@ import {StyleSheet} from 'react-native';
 export const styles = StyleSheet.create({
   MainView: {
     display: 'flex',
+    flex: 1,
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    height: 70,
+    height: 140,
+    width: 360,
     backgroundColor: '#09102E',
-    paddingTop: 10,
-    paddingHorizontal: 10,
+    paddingBottom: 39,
+    paddingHorizontal: 23,
+    // borderBottomLeftRadius: 10,
+    // borderBottomRightRadius: 10,
+    position: 'absolute',
   },
   Text: {
     fontWeight: 'bold',
