@@ -74,4 +74,36 @@ export const styles = StyleSheet.create({
     backgroundColor: '#797C7B',
     borderRadius: 25,
   },
+  orMainView: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    width: 332,
+    height: 14,
+    marginBottom: 30,
+  },
+  orText: {
+    color: 'white',
+    fontWeight: '900',
+    fontSize: 14,
+    lineHeight: 14,
+    textAlign: 'center',
+    marginLeft: 10,
+    marginRight: 10,
+    fontFamily: FONTS.BOLD,
+  },
+  orFirstView: {
+    flex: 1,
+    width: 132,
+    height: 1,
+    backgroundColor: '#CDD1D0',
+  },
+  orSecondView: {
+    flex: 1,
+    width: 132,
+    height: 1,
+    backgroundColor: '#CDD1D0',
+  },
+  login: {
+    color: '#FFFFFF',
+  },
 });

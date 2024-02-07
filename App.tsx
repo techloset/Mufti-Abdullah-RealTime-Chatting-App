@@ -26,8 +26,8 @@ function App(): React.JSX.Element {
   return (
     <>
       <AuthContextProvider>
-        {/* <Navigation/> */}
-        {isAuth ? <Navigation /> : <StackNavigation />}
+        <Navigation />
+        {/* {isAuth ? <Navigation /> : <StackNavigation />} */}
         {/* <Login/>
       <SignUp/>
     <Forgot/> */}

@@ -85,45 +85,12 @@ export default function AuthScreen({navigation}: LoginProps) {
                 <Image source={require('../../../assets/icons/Google.png')} />
               </View>
             </TouchableOpacity>
-            <View
-              style={{
-                flexDirection: 'row',
-                alignItems: 'center',
-                width: 332,
-                height: 14,
-                marginBottom: 30,
-              }}>
-              <View
-                style={{
-                  flex: 1,
-                  width: 132,
-                  height: 1,
-                  backgroundColor: '#CDD1D0',
-                }}
-              />
+            <View style={styles.orMainView}>
+              <View style={styles.orFirstView} />
               <View>
-                <Text
-                  style={{
-                    color: 'white',
-                    fontWeight: '900',
-                    fontSize: 14,
-                    lineHeight: 14,
-                    textAlign: 'center',
-                    marginLeft: 10,
-                    marginRight: 10,
-                    fontFamily: FONTS.BOLD,
-                  }}>
-                  OR
-                </Text>
+                <Text style={styles.orText}>OR</Text>
               </View>
-              <View
-                style={{
-                  flex: 1,
-                  width: 132,
-                  height: 1,
-                  backgroundColor: '#CDD1D0',
-                }}
-              />
+              <View style={styles.orSecondView} />
             </View>
 
             <TouchableOpacity
@@ -138,8 +105,7 @@ export default function AuthScreen({navigation}: LoginProps) {
                 navigation.navigate('login');
               }}>
               <Text style={styles.forgot_button}>
-                Existing account?{' '}
-                <Text style={{color: '#FFFFFF'}}> Log in</Text>
+                Existing account? <Text style={styles.login}> Log in</Text>
               </Text>
             </TouchableOpacity>
           </ImageBackground>
