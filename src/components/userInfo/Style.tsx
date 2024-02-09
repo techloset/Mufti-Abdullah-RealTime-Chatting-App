@@ -7,6 +7,9 @@ export const styles = StyleSheet.create({
     justifyContent: 'space-between',
     marginHorizontal: 10,
     marginVertical: 10,
+    borderTopLeftRadius: 20,
+    borderTopRightRadius: 20,
+    backgroundColor: 'white',
   },
   FirstView: {
     paddingTop: 6,
