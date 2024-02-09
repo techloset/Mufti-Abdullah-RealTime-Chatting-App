@@ -2,7 +2,14 @@ import {Text, View} from 'react-native';
 import React, {Component} from 'react';
 import Header from '../../../components/tabHeader/Header';
 import User from '../../../components/contactUserInfo/User';
+import SettingInfo from '../../../components/settingPageComponents/SettingInfo';
+import {SETTINGICON} from '../../../constants/assets/AllImages';
+import {styles} from '../../../components/settingPageComponents/Style';
 
+const NotificationIconComponent = SETTINGICON.NotificationIcon;
+const HelpIconComponent = SETTINGICON.Help;
+const PasswordIconComponent = SETTINGICON.Password;
+const InviteIconComponent = SETTINGICON.Password;
 export class Setting extends Component {
   render() {
     return (
@@ -35,10 +42,25 @@ export class Setting extends Component {
           />
 
           <View style={{marginLeft: 24, marginTop: 2, marginBottom: 20}}>
-            <User />
-            <User />
-            <User />
-            <User />
+            <SettingInfo
+              name="Notifications"
+              description="Messages, group and others"
+              icon={<NotificationIconComponent style={styles.Profile} />}
+            />
+            <SettingInfo
+              name="Help"
+              description="Help center, contact us, privacy policy"
+              icon={<HelpIconComponent style={styles.Profile} />}
+            />
+            <SettingInfo
+              name="Change Password"
+              description="Change Account Password"
+              icon={<PasswordIconComponent style={styles.Profile} />}
+            />
+            <SettingInfo
+              name="Invite a friend"
+              icon={<InviteIconComponent style={styles.Profile} />}
+            />
           </View>
         </View>
       </>
