@@ -7,11 +7,51 @@ import {
   View,
 } from 'react-native';
 import React, {Component} from 'react';
-import Header from '../../../components/tabHeader/Header';
+import Header from '../../../components/tabHeader/HomeHeader';
 import UserInfo from '../../../components/userInfo/UserInfo';
 import {SwipeListView} from 'react-native-swipe-list-view';
+import * as firestore from '@react-native-firebase/firestore';
+import {firebase} from '@react-native-firebase/auth';
+
+interface State {
+  users: UserProfile[];
+}
+
+interface UserProfile {
+  uid: string;
+  username: string;
+  email: string;
+  role: string;
+  status: string;
+}
 
 export class Home extends Component {
+  constructor(props: {}) {
+    super(props);
+    this.state = {
+      users: [],
+    };
+  }
+
+  componentDidMount() {
+    const ref = firebase.firestore().collection('publicProfiles');
+
+    ref
+      .limit(10)
+      .get()
+      .then(function (querySnapshot) {
+        querySnapshot.forEach(function (doc) {
+          // doc.data() is never undefined for query doc snapshots
+          const user = doc.data();
+          console.log(user.username);
+        });
+      })
+      .catch(function (error) {
+        // Handle any errors that occur while retrieving documents
+        console.error('Error retrieving documents:', error);
+      });
+  }
+
   render() {
     return (
       <>

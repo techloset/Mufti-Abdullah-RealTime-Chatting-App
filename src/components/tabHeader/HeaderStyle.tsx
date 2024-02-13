@@ -25,10 +25,14 @@ export const styles = StyleSheet.create({
   Icon: {
     alignSelf: 'center',
   },
-  ProfileImage: {
+  ProfileImage: {borderRadius: 33, height: 44, width: 44, alignSelf: 'center'},
+  //Now Styling for Icon and  Image Background
+  IconAndProfileView: {
+    backgroundColor: '#383D51',
     alignSelf: 'center',
+    justifyContent: 'center',
+    borderRadius: 33,
     height: 44,
     width: 44,
-    borderRadius: 33,
   },
 });

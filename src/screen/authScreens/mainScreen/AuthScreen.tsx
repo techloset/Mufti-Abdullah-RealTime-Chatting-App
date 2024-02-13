@@ -21,7 +21,7 @@ import {styles} from './Style';
 
 GoogleSignin.configure({
   webClientId:
-    '113924888324-hlb4v8i80cckco84qhlrtg49apu8at8m.apps.googleusercontent.com',
+    '880655244940-tggqp0tccp4liuaj3r69m97hr9ljllds.apps.googleusercontent.com',
   scopes: ['profile', 'email'], // what API you want to access on behalf of the user, default is email and profile
   offlineAccess: true, // if you want to access Google API on behalf of the user FROM YOUR SERVER
   hostedDomain: '', // specifies a hosted domain restriction
@@ -42,20 +42,15 @@ export default function AuthScreen({navigation}: LoginProps) {
   const [password, setPassword] = useState('');
   const LoginWithGoogle = async () => {
     try {
-      // Check for Google Play Services
       await GoogleSignin.hasPlayServices({showPlayServicesUpdateDialog: true});
-
-      // Initiate Google sign-in
+      // Get the users ID token
       const {idToken} = await GoogleSignin.signIn();
 
-      // Create Google credential
+      // Create a Google credential with the token
       const googleCredential = auth.GoogleAuthProvider.credential(idToken);
 
-      // Sign in with the credential
-      const googleLoginUser: UserProfileData = {
-        // Include other properties from User or customize as needed
-      };
-      dispatch({type: 'Login', payload: {userData: googleLoginUser}});
+      // Sign-in the user with the credential
+      return auth().signInWithCredential(googleCredential);
     } catch (error) {
       console.error('Error during Google sign-in:', error);
       // Handle the error appropriately, e.g., display an error message to the user
@@ -78,7 +73,7 @@ export default function AuthScreen({navigation}: LoginProps) {
             </Text>
             <Text style={styles.description}>
               Our chat app is the perfect way to stay connected with friends and
-              family.{' '}
+              family.
             </Text>
             <TouchableOpacity onPress={LoginWithGoogle}>
               <View style={styles.img}>

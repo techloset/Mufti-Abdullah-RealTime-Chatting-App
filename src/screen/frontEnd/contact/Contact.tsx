@@ -1,14 +1,14 @@
 import {ScrollView, Text, View} from 'react-native';
 import React, {Component} from 'react';
 import User from '../../../components/contactUserInfo/User';
-import Header from '../../../components/tabHeader/Header';
 import {styles} from './ContactStyle';
+import ContactHeader from '../../../components/tabHeader/ContactHeader';
 
 export default class Contact extends Component {
   render() {
     return (
       <>
-        <Header name="Contact" />
+        <ContactHeader name="Contact" />
         <ScrollView
           style={{
             borderTopLeftRadius: 50,

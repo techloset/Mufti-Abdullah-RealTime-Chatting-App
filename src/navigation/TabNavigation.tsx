@@ -2,9 +2,9 @@ import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import AuthScreen from '../screen/authScreens/mainScreen/AuthScreen';
 import Login from '../screen/authScreens/login/Login';
 import SignUp from '../screen/authScreens/signUp/Signup';
-import {Image, View} from 'react-native';
+import {Image, StyleSheet, View} from 'react-native';
 import {NavigationContainer} from '@react-navigation/native';
-import Header from '../components/tabHeader/Header';
+import Header from '../components/tabHeader/HomeHeader';
 import Home from '../screen/frontEnd/home/Home';
 import Contact from '../screen/frontEnd/contact/Contact';
 import Search from '../screen/frontEnd/search/Search';
@@ -12,6 +12,7 @@ import Setting from '../screen/frontEnd/setting/Setting';
 import {IMAGES} from '../constants/assets/AllImages';
 import Profile from '../screen/frontEnd/profile/Profile';
 import ChangePassword from '../screen/frontEnd/chnagePassword/ChangePassword';
+import SettingNavigation from './SettingNavigation';
 
 const Tab = createBottomTabNavigator();
 const screenOptions = {
@@ -28,34 +29,14 @@ const screenOptions = {
     background: 'black',
   },
 };
-interface TabStyling {
-  fontSize?: number;
-  fontWeight?:
-    | 'bold'
-    | 'normal'
-    | 100
-    | 200
-    | 300
-    | 400
-    | 500
-    | 600
-    | 700
-    | 800
-    | 900;
 
-  color?: string;
-}
-
-const TabStyling: TabStyling = {
-  fontSize: 16,
-  fontWeight: 500,
-  color: '#3D4A7A',
-};
-const UnFocusTabStyling: TabStyling = {
-  fontSize: 16,
-  color: '#797C7B63',
-  fontWeight: 400,
-};
+const TabStyling = StyleSheet.create({
+  main: {
+    fontSize: 16,
+    fontWeight: '500',
+    color: '#3D4A7A',
+  },
+});
 
 export default function Navigation() {
   return (
@@ -64,8 +45,6 @@ export default function Navigation() {
         <Tab.Screen
           options={{
             tabBarLabel: 'Message',
-            tabBarLabelStyle: ({focused}: any) =>
-              focused ? TabStyling : UnFocusTabStyling,
             tabBarIcon: ({focused}) =>
               focused ? <IMAGES.Msg /> : <IMAGES.UnfocusMsg />,
           }}
@@ -98,7 +77,7 @@ export default function Navigation() {
               focused ? <IMAGES.FocusSetting /> : <IMAGES.Setting />,
           }}
           name="Setting"
-          component={ChangePassword}
+          component={SettingNavigation}
         />
       </Tab.Navigator>
     </NavigationContainer>

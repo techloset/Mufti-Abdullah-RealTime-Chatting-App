@@ -1,6 +1,7 @@
 import {StackNavigationProp} from '@react-navigation/stack';
 import auth from '@react-native-firebase/auth';
 import React, {useState} from 'react';
+import ToastManager, {Toast} from 'toastify-react-native';
 import {
   StyleSheet,
   Text,
@@ -19,36 +20,78 @@ interface SignupScreenProps {
   navigation?: StackNavigationProp<RootStackParamsList, 'forgot'>;
 }
 
+type SigninUserData = /*unresolved*/ any;
+const initialState = {email: '', password: ''};
 export default function Login({navigation}: SignupScreenProps) {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [state, setState] = useState(initialState);
+  const [loading, setisloading] = useState(false);
   const {dispatch} = useAuthContext();
-
+  const handleChange = (name: string, value: string): void => {
+    setState(s => ({...s, [name]: value}));
+  };
   const handleLogin = () => {
+    const {email, password} = state;
+    let validRegex =
+      /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
+    if (!email) {
+      return console.log(
+        'plz Enter Email',
+        ' formate like: abc@gmail.com',
+        'error',
+      );
+    }
+    if (!validRegex.test(email)) {
+      return console.log(
+        'Invalid Email Format',
+        ' formate like: abc@gmail.com',
+        'error',
+      );
+    }
+
+    if (password.length < 6) {
+      return console.log(
+        'Invalid Password',
+        'Password length minimum 6 character',
+        'error',
+      );
+    }
+    let userData = {email, password};
+    setisloading(true);
+    loginUser(userData);
+
+    setState(initialState);
+  };
+  const loginUser = (userData: SigninUserData): void => {
     auth()
-      .signInWithEmailAndPassword(email, password)
-      .then(userCredential => {
-        const user: FirebaseUser | null = userCredential.user;
-        console.log('user', user);
-        if (user) {
-          // Handle the case where user.email might be null or undefined
-          const userEmail: string | undefined = user.email || undefined;
-
-          const userData: UserProfileData = {
-            email: userEmail,
-            // Include other properties from User or customize as needed
-          };
-
-          dispatch({type: 'Login', payload: {userData}});
-          navigation?.navigate('auth');
-          // Navigate to the desired screen or perform other actions
-        }
+      .signInWithEmailAndPassword(userData.email, userData.password)
+      .then(() => {
+        console.log(
+          'User Login Successfully!',
+          'wellcome to instagramMeToYou app',
+          'success',
+        );
+        setisloading(false);
+        dispatch({type: 'Login', payload: {userData: userData}});
       })
       .catch(error => {
-        // Handle login errors
-        console.error(error);
+        if (error.code === 'auth/email-already-in-use') {
+          setisloading(false);
+          return console.log(
+            'Email Error',
+            'That email address is already register!',
+            'error',
+          );
+        }
+
+        if (error.code === 'auth/invalid-email') {
+          setisloading(false);
+          return console.log('Email|Password Error', 'plz try again', 'error');
+        }
+        setisloading(false);
+        return console.log('Email|Password Error', 'plz try again', 'error');
       });
   };
+
   return (
     <>
       <View style={styles.container}>
@@ -96,8 +139,8 @@ export default function Login({navigation}: SignupScreenProps) {
             style={styles.TextInput}
             placeholder="Email."
             placeholderTextColor="#003f5c"
-            onChangeText={email => setEmail(email)}
-            value={email}
+            value={state.email}
+            onChangeText={(value: string) => handleChange('email', value)}
           />
         </View>
         <View style={styles.inputView}>
@@ -107,8 +150,8 @@ export default function Login({navigation}: SignupScreenProps) {
             placeholder="Password."
             placeholderTextColor="#003f5c"
             secureTextEntry={true}
-            onChangeText={password => setPassword(password)}
-            value={password}
+            value={state.password}
+            onChangeText={(value: string) => handleChange('password', value)}
           />
         </View>
         <TouchableOpacity onPress={handleLogin}>

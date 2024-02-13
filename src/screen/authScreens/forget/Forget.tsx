@@ -1,20 +1,38 @@
 import React, {useState} from 'react';
-// import Icon from "../../assets/icons/Google.png"
-// import icon from "../../assets/background.png"
+import auth from '@react-native-firebase/auth';
+import ToastManager, {Toast} from 'toastify-react-native';
+
 import {
-  StyleSheet,
-  Text,
-  View,
   TextInput,
   TouchableOpacity,
   ImageBackground,
+  Text,
+  View,
 } from 'react-native';
 import {styles} from './ForgotStyle';
 export default function Forgot() {
   const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const handleSubmit = () => {
+    auth()
+      .sendPasswordResetEmail(email)
+      .then(() => {
+        // Toast.success('Check Email For reset Password');
+        console.log('link sent successfully');
+        setEmail('');
+      })
+      .catch(error => {
+        // Toast.show({
+        //   type: 'error',
+        //   text1: 'server error',
+        // });
+        console.log('server error');
+        console.error(error);
+        // Toast.error;
+      });
+  };
   return (
     <View style={styles.container}>
+      {/* <ToastManager /> */}
       <Text style={styles.main}>Forget Password</Text>
       <Text style={styles.des}>
         Forgot your password? Don’t worry, we’ll send you a magic link right at
@@ -31,7 +49,7 @@ export default function Forgot() {
         />
       </View>
 
-      <TouchableOpacity>
+      <TouchableOpacity onPress={handleSubmit}>
         <ImageBackground
           style={styles.loginBtn}
           source={require('../../../assets/images/background.png')}>

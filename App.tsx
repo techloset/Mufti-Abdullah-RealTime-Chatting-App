@@ -1,18 +1,10 @@
+import {createStackNavigator} from '@react-navigation/stack';
 import {useEffect} from 'react';
-// import Navigation from './src/navigation/Navigation';
-// import AuthScreen from './src/screen/authScreens/mainScreen/AuthScreen';
 import SplashScreen from 'react-native-splash-screen';
-import Navigation from './src/navigation/TabNavigation';
-import StackNavigation from './src/navigation/StackNavigation';
-import AuthContextProvider, {useAuthContext} from './src/context/AuthContext';
-// import Forgot from './src/screen/authScreens/forget/Forget';
-// import Login from './src/screen/authScreens/login/Login';
-// import SignUp from './src/screen/authScreens/signUp/Signup';
+import AuthContextProvider from './src/context/AuthContext';
+import AuthNavigation from './src/navigation/AuthNavigation';
 
 function App(): React.JSX.Element {
-  const {isAuth, user} = useAuthContext();
-  console.log('isAuth', isAuth);
-
   useEffect(() => {
     const hideSplashScreen = () => {
       if (SplashScreen) {
@@ -23,15 +15,12 @@ function App(): React.JSX.Element {
     return () => clearTimeout(timeoutId);
   }, []);
 
+  const Stack = createStackNavigator();
+
   return (
     <>
       <AuthContextProvider>
-        <Navigation />
-        {/* {isAuth ? <Navigation /> : <StackNavigation />} */}
-        {/* <Login/>
-      <SignUp/>
-    <Forgot/> */}
-        {/* <AuthScreen/> */}
+        <AuthNavigation />
       </AuthContextProvider>
     </>
   );
