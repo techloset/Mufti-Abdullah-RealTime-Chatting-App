@@ -1,4 +1,4 @@
-import {View, Text, Image, TouchableOpacity} from 'react-native';
+import {View, Text, Image, TouchableOpacity, Pressable} from 'react-native';
 import React, {useEffect, useState} from 'react';
 import auth from '@react-native-firebase/auth';
 import LinearGradient from 'react-native-linear-gradient';
@@ -7,8 +7,10 @@ import {SwipeListView} from 'react-native-swipe-list-view';
 import firestore from '@react-native-firebase/firestore';
 import {HomeStyles} from './HomeStyling';
 import UserInfo from '../../../components/userInfo/UserInfo';
-import {HEADERICON} from '../../../constants/assets/AllImages';
+import {HEADERICON, HOMEICON} from '../../../constants/assets/AllImages';
 import {HeaderStyles} from '../../../styles/headerStyling/HeaderStyling';
+import {StackNavigationProp} from '@react-navigation/stack';
+import {RootStackParamsList} from '../../../navigation/HomeStackNavigation';
 interface UserData {
   photoURL: string;
   id: string;
@@ -18,7 +20,13 @@ interface UserData {
   timeAgo: string;
   description: string;
 }
-export default function Home() {
+interface navigationProps {
+  navigation: StackNavigationProp<RootStackParamsList, 'home'> & {
+    navigate(screen: string, params: {userDetails: UserData}): void;
+  };
+}
+
+export default function Home({navigation}: navigationProps) {
   const user = auth().currentUser || undefined;
   const [usersData, setUsersData] = useState<UserData[]>();
 
@@ -47,14 +55,14 @@ export default function Home() {
           <TouchableOpacity
             style={HeaderStyles.iconContainer}
             onPress={() => {
-              // Handle search icon press
+              navigation.navigate('search');
             }}>
             <HEADERICON.search />
           </TouchableOpacity>
           <Text style={HeaderStyles.screenName}>Home</Text>
           {user?.photoURL ? (
             <Image
-              source={{uri: user?.photoURL || undefined}}
+              source={{uri: user.photoURL || undefined}}
               style={HeaderStyles.profilePhoto}
             />
           ) : (
@@ -68,12 +76,17 @@ export default function Home() {
           <SwipeListView
             data={usersData}
             renderItem={({item}) => (
-              <UserInfo
-                profileImage={item.photoURL}
-                displayName={item.username}
-                status={item.status}
-                lastActive={item.timeAgo}
-              />
+              <Pressable
+                onPress={() => {
+                  navigation.navigate('messages', {userDetails: item});
+                }}>
+                <UserInfo
+                  profileImage={item.photoURL}
+                  displayName={item.username}
+                  status={item.status}
+                  lastActive={item.timeAgo}
+                />
+              </Pressable>
             )}
             renderHiddenItem={() => (
               <View
@@ -83,10 +96,12 @@ export default function Home() {
                   backgroundColor: 'transparent',
                   justifyContent: 'flex-end',
                   marginHorizontal: 10,
-                  padding: 7,
+                  paddingTop: 13,
+                  paddingHorizontal: 5,
+                  gap: 6,
                 }}>
-                <Text style={{color: 'black'}}>Delete</Text>
-                <Text style={{color: 'black'}}>Notify</Text>
+                <HOMEICON.Noftification />
+                <HOMEICON.DeleteIcon />
               </View>
             )}
             rightOpenValue={-105}

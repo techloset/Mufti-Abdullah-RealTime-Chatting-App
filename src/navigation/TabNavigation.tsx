@@ -1,19 +1,10 @@
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
-import AuthScreen from '../screen/authScreens/mainScreen/AuthScreen';
-import Login from '../screen/authScreens/login/Login';
-import SignUp from '../screen/authScreens/signUp/Signup';
-import {Image, StyleSheet, View} from 'react-native';
+import {StyleSheet} from 'react-native';
 import {NavigationContainer} from '@react-navigation/native';
-import Header from '../components/tabHeader/HomeHeader';
-import Home from '../screen/frontEnd/home/Home';
-import Contact from '../screen/frontEnd/contact/Contact';
-import Search from '../screen/frontEnd/search/Search';
-import Setting from '../screen/frontEnd/setting/Setting';
 import {IMAGES} from '../constants/assets/AllImages';
-import Profile from '../screen/frontEnd/profile/Profile';
-import ChangePassword from '../screen/frontEnd/chnagePassword/ChangePassword';
 import SettingNavigation from './SettingNavigation';
-import MessageScreen from '../screen/frontEnd/messageScreen/MessageScreen';
+import ContactStackNavigation from './ContactStackNavigation';
+import HomeStackNavigation from './HomeStackNavigation';
 
 const Tab = createBottomTabNavigator();
 const screenOptions = {
@@ -50,7 +41,7 @@ export default function Navigation() {
               focused ? <IMAGES.Msg /> : <IMAGES.UnfocusMsg />,
           }}
           name="Home"
-          component={Home}
+          component={HomeStackNavigation}
         />
         <Tab.Screen
           options={{
@@ -64,7 +55,7 @@ export default function Navigation() {
               focused ? <IMAGES.FocusUser /> : <IMAGES.User />,
           }}
           name="Contact"
-          component={Contact}
+          component={ContactStackNavigation}
         />
         <Tab.Screen
           options={{

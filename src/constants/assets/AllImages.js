@@ -13,6 +13,9 @@ import Seacrh from '../../assets/icons/Search (1).svg';
 import leftArrow from '../../assets/icons/Vector 190.svg';
 import UpdateProfile from '../../assets/icons/edit-button-svgrepo-com.svg';
 import EditIcon from '../../assets/icons/Edit.svg';
+import DeleteIcon from '../../assets/icons/Trash.svg';
+import NavigationotificaionIcon from '../../assets/icons/notification.svg';
+import ArrowBlack from '../../assets/icons/Back.svg';
 
 /// Tab Navigation Images
 export const IMAGES = {
@@ -38,9 +41,15 @@ export const USERPROFILEIMAGE = {
   UpdateProfile: UpdateProfile,
   EditIcon: EditIcon,
 };
-
+// header icons
 export const HEADERICON = {
   AddUser: AddUser,
   search: Seacrh,
   leftArrow: leftArrow,
+  ArrowBlack: ArrowBlack,
+};
+// Home Icons
+export const HOMEICON = {
+  Noftification: NavigationotificaionIcon,
+  DeleteIcon: DeleteIcon,
 };

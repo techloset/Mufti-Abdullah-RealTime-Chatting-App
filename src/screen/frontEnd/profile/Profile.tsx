@@ -6,7 +6,7 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import React, {Component, useEffect, useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   HEADERICON,
   USERPROFILEIMAGE,
@@ -26,6 +26,7 @@ import ImagePicker, {
 import storage from '@react-native-firebase/storage';
 import LinearGradient from 'react-native-linear-gradient';
 import {HeaderStyles} from '../../../styles/headerStyling/HeaderStyling';
+import {useNavigation} from '@react-navigation/native';
 interface Resource {
   uri?: string;
   data?: string;
@@ -34,19 +35,23 @@ interface Resource {
 export default function Profile() {
   const [resource, setResource] = useState<Resource>({});
   const {user} = useAuthContext();
-
+  const navigation = useNavigation();
+  const [profileImage, setProfileImage] = useState<string | null>(null);
   const [name, setName] = useState(user.username);
-  const [email, setEmail] = useState(user.email);
   const [status, setStatus] = useState(user.status);
   const currentUser = auth().currentUser;
   console.log('currentUser', currentUser);
+  useEffect(() => {
+    if (user.photoURL) {
+      setProfileImage(user.photoURL);
+    }
+  }, [user.photoURL]);
   if (!currentUser) {
     Alert.alert('Error', 'User not logged in');
     return;
   }
 
   const updateUserProfile = () => {
-    // currentUser.updateEmail(email);
     currentUser.updateProfile({
       displayName: name,
     });
@@ -56,8 +61,6 @@ export default function Profile() {
       .update({
         username: name,
         status: status,
-        // email: email,
-        // photoURL: DownloadURL,
       })
       .then(() => {
         Alert.alert('Success', 'Profile updated successfully');
@@ -120,8 +123,19 @@ export default function Profile() {
       await ref.put(blob);
       const downloadURL = await ref.getDownloadURL();
       console.log('Image uploaded to Firebase Storage:', downloadURL);
+      const userDocRef = firestore().collection('users').doc(user.uid);
+      userDocRef
+        .update({
+          photoURL: downloadURL,
+        })
+        .then(() => {
+          Alert.alert('Success', 'Profile updated successfully');
+          setProfileImage(downloadURL);
+        })
+        .catch(error => {
+          Alert.alert('Error', error.message);
+        });
 
-      // Update user's photoURL in Firebase Auth
       currentUser.updateProfile({
         photoURL: downloadURL,
       });
@@ -130,25 +144,6 @@ export default function Profile() {
     }
   };
 
-  // Function to update user's profile photo in Firebase Authentication
-  const updateUserProfilePhoto = async (downloadURL: string) => {
-    try {
-      const currentUser = auth().currentUser;
-      if (currentUser) {
-        await currentUser.updateProfile({
-          photoURL: downloadURL,
-        });
-        console.log('User profile photo updated successfully');
-      } else {
-        console.error('No user found');
-      }
-    } catch (error) {
-      console.error('Error updating user profile photo:', error);
-      throw error;
-    }
-  };
-
-  console.log('currentUser.photoURL', currentUser.photoURL);
   return (
     <>
       <LinearGradient
@@ -159,9 +154,9 @@ export default function Profile() {
         <View style={HeaderStyles.container}>
           <View style={HeaderStyles.topbar}>
             <TouchableOpacity
-              style={HeaderStyles.iconContainer}
+              style={HeaderStyles.iconContainerForSettingStack}
               onPress={() => {
-                // Handle search icon press
+                navigation.goBack();
               }}>
               <HEADERICON.leftArrow />
             </TouchableOpacity>
@@ -170,7 +165,7 @@ export default function Profile() {
           </View>
         </View>
 
-        <View style={HeaderStyles.main}>
+        <View style={HeaderStyles.mainContainerForPassword}>
           <View
             style={{
               justifyContent: 'center',
@@ -194,7 +189,6 @@ export default function Profile() {
                 style={{
                   position: 'absolute',
                   left: 35,
-                  // bottom: 10,
                   top: -30,
                   width: 60,
                   height: 60,
@@ -219,8 +213,7 @@ export default function Profile() {
                 style={styles.TextInput}
                 placeholder="Your Email."
                 placeholderTextColor="#003f5c"
-                value={email}
-                onChangeText={setEmail}
+                value={user.email}
               />
             </View>
             <View style={styles.inputView}>

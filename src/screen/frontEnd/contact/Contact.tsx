@@ -14,6 +14,8 @@ import firestore from '@react-native-firebase/firestore';
 import LinearGradient from 'react-native-linear-gradient';
 import {HEADERICON} from '../../../constants/assets/AllImages';
 import {HeaderStyles} from '../../../styles/headerStyling/HeaderStyling';
+import {StackNavigationProp} from '@react-navigation/stack';
+import {RootStackParamsList} from '../../../navigation/ContactStackNavigation';
 
 interface UserData {
   confirmPassword: string;
@@ -28,7 +30,10 @@ interface UserData {
   lastActive: string;
 }
 
-export default function Contact() {
+interface navigationProps {
+  navigation: StackNavigationProp<RootStackParamsList, 'contact'>;
+}
+export default function Contact({navigation}: navigationProps) {
   const [users, setUsers] = useState<{[key: string]: UserData[]}>({});
 
   useEffect(() => {
@@ -65,7 +70,7 @@ export default function Contact() {
             <TouchableOpacity
               style={HeaderStyles.iconContainer}
               onPress={() => {
-                // Handle search icon press
+                navigation.navigate('search');
               }}>
               <HEADERICON.search style={HeaderStyles.imageSearch} />
             </TouchableOpacity>

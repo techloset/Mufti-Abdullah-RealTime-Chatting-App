@@ -15,11 +15,13 @@ import {useAuthContext} from '../../../context/AuthContext';
 import LinearGradient from 'react-native-linear-gradient';
 import {HEADERICON} from '../../../constants/assets/AllImages';
 import {HeaderStyles} from '../../../styles/headerStyling/HeaderStyling';
+import {useNavigation} from '@react-navigation/native';
 
 export default function ChangePassword() {
   const [currentPassword, setCurrentPassword] = useState('');
   const [newPassword, setNewPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
+  const navigation = useNavigation();
   const {user} = useAuthContext();
   console.log('user.password', user.password);
   console.log('user.confirmPassword', user.confirmPassword);
@@ -109,9 +111,9 @@ export default function ChangePassword() {
         <View style={HeaderStyles.container}>
           <View style={HeaderStyles.topbar}>
             <TouchableOpacity
-              style={HeaderStyles.iconContainer}
+              style={HeaderStyles.iconContainerForSettingStack}
               onPress={() => {
-                // Handle search icon press
+                navigation.goBack();
               }}>
               <HEADERICON.leftArrow />
             </TouchableOpacity>
@@ -119,7 +121,7 @@ export default function ChangePassword() {
             <View />
           </View>
         </View>
-        <View style={HeaderStyles.main}>
+        <View style={HeaderStyles.mainContainerForPassword}>
           <View style={{marginHorizontal: 20, marginVertical: 80}}>
             <View style={styles.inputView}>
               <Text style={styles.lable}>Current Password</Text>

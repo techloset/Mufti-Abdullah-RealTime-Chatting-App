@@ -16,9 +16,9 @@ interface navigationProps {
   navigation: StackNavigationProp<RootStackParamsList, 'setting', 'profile'>;
 }
 export default function Setting({navigation}: navigationProps) {
-  // const user = auth().currentUser;
+  const currentUser = auth().currentUser;
   const {user} = useAuthContext();
-  console.log('user seting', user);
+  // console.log('user seting', user);
   return (
     <>
       <LinearGradient
@@ -29,7 +29,7 @@ export default function Setting({navigation}: navigationProps) {
         <View style={HeaderStyles.container}>
           <View style={HeaderStyles.topbar}>
             <TouchableOpacity
-              style={HeaderStyles.iconContainer}
+              style={HeaderStyles.iconContainerForSettingStack}
               onPress={() => {
                 // Handle search icon press
               }}>
@@ -46,8 +46,8 @@ export default function Setting({navigation}: navigationProps) {
             }}>
             <View style={{marginLeft: 24, marginBottom: 16}}>
               <User
-                photoURL={user.photoURL}
-                username={user.username}
+                photoURL={currentUser?.photoURL}
+                username={currentUser?.displayName}
                 status={user.status}
               />
             </View>

@@ -59,4 +59,19 @@ export const HeaderStyles = StyleSheet.create({
     alignItems: 'center',
   },
   //--------------here is the changing the styling for settting screens header
+  iconContainerForSettingStack: {
+    height: 44,
+    width: 44,
+    borderRadius: 22,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  mainContainerForPassword: {
+    flex: 1,
+    backgroundColor: 'white',
+    borderTopLeftRadius: 40,
+    borderTopRightRadius: 40,
+    paddingTop: 27,
+    alignItems: 'center',
+  },
 });
