@@ -10,6 +10,8 @@ const Tab = createBottomTabNavigator();
 const screenOptions = {
   tabBarShowLabel: true,
   headerShown: false,
+  tabBarActiveTintColor: '#3D4A7A',
+  tabBarInactiveTintColor: '#797C7B63',
   tabBarstyle: {
     position: 'absolute',
     bottom: 0,
@@ -22,14 +24,6 @@ const screenOptions = {
   },
 };
 
-const TabStyling = StyleSheet.create({
-  main: {
-    fontSize: 16,
-    fontWeight: '500',
-    color: '#3D4A7A',
-  },
-});
-
 export default function Navigation() {
   return (
     <NavigationContainer>
@@ -37,6 +31,10 @@ export default function Navigation() {
         <Tab.Screen
           options={{
             tabBarLabel: 'Message',
+            tabBarLabelStyle: {
+              fontSize: 16,
+              fontWeight: 'bold',
+            },
             tabBarIcon: ({focused}) =>
               focused ? <IMAGES.Msg /> : <IMAGES.UnfocusMsg />,
           }}
@@ -49,7 +47,6 @@ export default function Navigation() {
             tabBarLabelStyle: {
               fontSize: 16,
               fontWeight: 'bold',
-              color: '#3D4A7A',
             },
             tabBarIcon: ({focused}) =>
               focused ? <IMAGES.FocusUser /> : <IMAGES.User />,
@@ -63,7 +60,6 @@ export default function Navigation() {
             tabBarLabelStyle: {
               fontSize: 16,
               fontWeight: 'bold',
-              color: '#3D4A7A',
             },
             tabBarIcon: ({focused}) =>
               focused ? <IMAGES.FocusSetting /> : <IMAGES.Setting />,

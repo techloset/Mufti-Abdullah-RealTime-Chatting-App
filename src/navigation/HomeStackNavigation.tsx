@@ -17,20 +17,8 @@ export default function HomeStackNavigation() {
         headerShown: false,
       }}>
       <Stack.Screen name="home" component={Home} />
-      <Stack.Screen
-        name="search"
-        component={Search}
-        options={{
-          headerTitle: '',
-        }}
-      />
-      <Stack.Screen
-        name="messages"
-        component={MessageScreen}
-        options={{
-          headerTitle: '',
-        }}
-      />
+      <Stack.Screen name="search" component={Search} />
+      <Stack.Screen name="messages" component={MessageScreen} />
     </Stack.Navigator>
   );
 }
