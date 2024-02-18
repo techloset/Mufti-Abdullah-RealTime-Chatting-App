@@ -6,16 +6,35 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import React, {Component, useState} from 'react';
-import {USERPROFILEIMAGE} from '../../../constants/assets/AllImages';
+import React, {Component, useEffect, useState} from 'react';
+import {
+  HEADERICON,
+  USERPROFILEIMAGE,
+} from '../../../constants/assets/AllImages';
 import {styles} from '../../authScreens/signUp/SignUPStyles';
 import {TextInput} from 'react-native';
 import SettingHeader from '../../../components/tabHeader/SettingHeader';
 import {useAuthContext} from '../../../context/AuthContext';
 import firestore from '@react-native-firebase/firestore';
 import auth from '@react-native-firebase/auth';
+import ImagePicker, {
+  launchImageLibrary,
+  ImageLibraryOptions,
+  MediaType,
+  ImagePickerResponse,
+} from 'react-native-image-picker';
+import storage from '@react-native-firebase/storage';
+import LinearGradient from 'react-native-linear-gradient';
+import {HeaderStyles} from '../../../styles/headerStyling/HeaderStyling';
+interface Resource {
+  uri?: string;
+  data?: string;
+}
+
 export default function Profile() {
+  const [resource, setResource] = useState<Resource>({});
   const {user} = useAuthContext();
+
   const [name, setName] = useState(user.username);
   const [email, setEmail] = useState(user.email);
   const [status, setStatus] = useState(user.status);
@@ -36,8 +55,9 @@ export default function Profile() {
     userDocRef
       .update({
         username: name,
-        email: email,
         status: status,
+        // email: email,
+        // photoURL: DownloadURL,
       })
       .then(() => {
         Alert.alert('Success', 'Profile updated successfully');
@@ -46,82 +66,183 @@ export default function Profile() {
         Alert.alert('Error', error.message);
       });
   };
+  const handlePicture = async () => {
+    const options: ImagePicker.ImageLibraryOptions & {
+      title: string;
+      customButtons: {};
+      storageOptions: {};
+    } = {
+      title: 'Select Image',
+      mediaType: 'photo' as ImagePicker.MediaType,
+      customButtons: [
+        {name: 'customOptionKey', title: 'Choose File from Custom Option'},
+      ],
+      storageOptions: {
+        skipBackup: true,
+        path: 'images',
+      },
+    };
 
+    try {
+      const res: ImagePickerResponse = await launchImageLibrary(options);
+
+      console.log('response', res.assets);
+      const resp = res.assets as ImagePicker.Asset[];
+      const uri: string | undefined = resp[0].uri;
+      setResource({
+        uri: res.uri,
+        data: res.data,
+      });
+      if (uri !== undefined && uri !== null) {
+        console.log('uri before', uri);
+        uploadImageToFirebaseStorage(uri);
+      }
+      if (res.didCancel) {
+        console.log('res.uri', res.uri);
+        console.log('res.data', res.data);
+      } else {
+        console.log('User cancelled image picker');
+      }
+    } catch (err) {
+      console.error('ImagePicker error:', err);
+    }
+  };
+  const uploadImageToFirebaseStorage = async (uri: string) => {
+    try {
+      const imageName = uri.substring(uri.lastIndexOf('/') + 1);
+      console.log('imageName', imageName);
+      const response = await fetch(uri);
+      console.log('response', response);
+      const blob = await response.blob();
+      console.log('blob', blob);
+      const ref = storage().ref().child(`images/${imageName}`);
+      console.log('ref', ref);
+      await ref.put(blob);
+      const downloadURL = await ref.getDownloadURL();
+      console.log('Image uploaded to Firebase Storage:', downloadURL);
+
+      // Update user's photoURL in Firebase Auth
+      currentUser.updateProfile({
+        photoURL: downloadURL,
+      });
+    } catch (error) {
+      console.error('Error uploading image to Firebase Storage:', error);
+    }
+  };
+
+  // Function to update user's profile photo in Firebase Authentication
+  const updateUserProfilePhoto = async (downloadURL: string) => {
+    try {
+      const currentUser = auth().currentUser;
+      if (currentUser) {
+        await currentUser.updateProfile({
+          photoURL: downloadURL,
+        });
+        console.log('User profile photo updated successfully');
+      } else {
+        console.error('No user found');
+      }
+    } catch (error) {
+      console.error('Error updating user profile photo:', error);
+      throw error;
+    }
+  };
+
+  console.log('currentUser.photoURL', currentUser.photoURL);
   return (
     <>
-      <SettingHeader name="Profile" />
-      <View
-        style={{
-          borderTopLeftRadius: 50,
-          borderTopRightRadius: 50,
-          borderColor: 'white',
-          borderWidth: 1,
-          flex: 1,
-          top: 90,
-          zIndex: 1,
-          position: 'relative',
-          backgroundColor: 'white',
-          alignItems: 'center',
-        }}>
-        <View
-          style={{
-            justifyContent: 'center',
-            alignItems: 'center',
-            marginVertical: 20,
-          }}>
-          {user.photoURL == null ? (
-            <USERPROFILEIMAGE.ProfileImage height={120} width={120} />
-          ) : (
-            <Image source={user.photoURL} height={120} width={120} />
-          )}
+      <LinearGradient
+        style={HeaderStyles.mainContainer}
+        colors={['#000', '#43116A']}
+        start={{x: 0, y: 0}}
+        end={{x: 1, y: 0}}>
+        <View style={HeaderStyles.container}>
+          <View style={HeaderStyles.topbar}>
+            <TouchableOpacity
+              style={HeaderStyles.iconContainer}
+              onPress={() => {
+                // Handle search icon press
+              }}>
+              <HEADERICON.leftArrow />
+            </TouchableOpacity>
+            <Text style={HeaderStyles.screenName}>Profile</Text>
+            <View />
+          </View>
+        </View>
+
+        <View style={HeaderStyles.main}>
           <View
             style={{
-              position: 'absolute',
-              top: 95,
-              right: 12,
+              justifyContent: 'center',
+              alignItems: 'center',
+              marginVertical: 20,
             }}>
-            <USERPROFILEIMAGE.UpdateProfile height={20} width={20} />
+            {currentUser.photoURL == null ? (
+              <USERPROFILEIMAGE.ProfileImage height={120} width={120} />
+            ) : (
+              <Image
+                source={{uri: currentUser.photoURL}}
+                height={120}
+                width={120}
+                style={{
+                  borderRadius: 60,
+                }}
+              />
+            )}
+            <TouchableOpacity onPress={handlePicture}>
+              <View
+                style={{
+                  position: 'absolute',
+                  left: 35,
+                  // bottom: 10,
+                  top: -30,
+                  width: 60,
+                  height: 60,
+                }}>
+                <USERPROFILEIMAGE.UpdateProfile height={20} width={20} />
+              </View>
+            </TouchableOpacity>
           </View>
+          <View style={{marginHorizontal: 20, marginVertical: 20}}>
+            <View style={styles.inputView}>
+              <Text style={styles.lable}>Your Name</Text>
+              <TextInput
+                style={styles.TextInput}
+                placeholderTextColor="#003f5c"
+                value={name}
+                onChangeText={setName}
+              />
+            </View>
+            <View style={styles.inputView}>
+              <Text style={styles.lable}>Your Email</Text>
+              <TextInput
+                style={styles.TextInput}
+                placeholder="Your Email."
+                placeholderTextColor="#003f5c"
+                value={email}
+                onChangeText={setEmail}
+              />
+            </View>
+            <View style={styles.inputView}>
+              <Text style={styles.lable}>Your Status</Text>
+              <TextInput
+                style={styles.TextInput}
+                placeholder="Your Status."
+                placeholderTextColor="#003f5c"
+                value={status}
+                onChangeText={setStatus}
+              />
+            </View>
+          </View>
+          <TouchableOpacity onPress={updateUserProfile}>
+            <ImageBackground
+              source={require('../../../assets/images/background.png')}
+              style={styles.loginBtn}>
+              <Text>Update Profile</Text>
+            </ImageBackground>
+          </TouchableOpacity>
         </View>
-        <View style={{marginHorizontal: 20, marginVertical: 20}}>
-          <View style={styles.inputView}>
-            <Text style={styles.lable}>Your Name</Text>
-            <TextInput
-              style={styles.TextInput}
-              placeholderTextColor="#003f5c"
-              value={name}
-              onChangeText={setName}
-            />
-          </View>
-          <View style={styles.inputView}>
-            <Text style={styles.lable}>Your Email</Text>
-            <TextInput
-              style={styles.TextInput}
-              placeholder="Your Email."
-              placeholderTextColor="#003f5c"
-              value={email}
-              onChangeText={setEmail}
-            />
-          </View>
-          <View style={styles.inputView}>
-            <Text style={styles.lable}>Your Status</Text>
-            <TextInput
-              style={styles.TextInput}
-              placeholder="Your Status."
-              placeholderTextColor="#003f5c"
-              value={status}
-              onChangeText={setStatus}
-            />
-          </View>
-        </View>
-        <TouchableOpacity onPress={updateUserProfile}>
-          <ImageBackground
-            source={require('../../../assets/images/background.png')}
-            style={styles.loginBtn}>
-            <Text>Update Profile</Text>
-          </ImageBackground>
-        </TouchableOpacity>
-      </View>
+      </LinearGradient>
     </>
   );
 }

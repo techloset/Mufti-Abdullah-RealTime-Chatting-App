@@ -11,7 +11,7 @@ import Profile from '../../assets/images/Ellipse 307.svg';
 import AddUser from '../../assets/icons/user-add.svg';
 import Seacrh from '../../assets/icons/Search (1).svg';
 import leftArrow from '../../assets/icons/Vector 190.svg';
-import UpdateProfile from '../../assets/icons/Frame 49.svg';
+import UpdateProfile from '../../assets/icons/edit-button-svgrepo-com.svg';
 import EditIcon from '../../assets/icons/Edit.svg';
 
 /// Tab Navigation Images

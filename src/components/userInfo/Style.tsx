@@ -13,7 +13,8 @@ export const styles = StyleSheet.create({
   },
   FirstView: {
     paddingTop: 6,
-    width: 120,
+    minWidth: 120,
+    maxWidth: 180,
     marginLeft: 10,
     display: 'flex',
     flexDirection: 'row',

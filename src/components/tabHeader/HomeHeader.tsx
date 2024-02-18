@@ -3,6 +3,8 @@ import React from 'react';
 import {styles} from './HeaderStyle';
 import {useAuthContext} from '../../context/AuthContext';
 import {HEADERICON, USERPROFILEIMAGE} from '../../constants/assets/AllImages';
+import auth from '@react-native-firebase/auth';
+
 /////Logut use in header
 const Header = (props: {name: string}) => {
   const {user, Logout} = useAuthContext();

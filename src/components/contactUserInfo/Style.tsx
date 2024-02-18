@@ -8,7 +8,8 @@ export const styles = StyleSheet.create({
   },
   InnerView: {
     paddingTop: 6,
-    width: 120,
+    minWidth: 120,
+    maxWidth: 180,
     display: 'flex',
     flexDirection: 'row',
   },

@@ -13,6 +13,7 @@ import {IMAGES} from '../constants/assets/AllImages';
 import Profile from '../screen/frontEnd/profile/Profile';
 import ChangePassword from '../screen/frontEnd/chnagePassword/ChangePassword';
 import SettingNavigation from './SettingNavigation';
+import MessageScreen from '../screen/frontEnd/messageScreen/MessageScreen';
 
 const Tab = createBottomTabNavigator();
 const screenOptions = {

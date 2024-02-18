@@ -10,8 +10,11 @@ import {
 import {styles} from '../../authScreens/signUp/SignUPStyles';
 import SettingHeader from '../../../components/tabHeader/SettingHeader';
 import auth from '@react-native-firebase/auth';
-import firestore from '@react-native-firebase/firestore'; // Import Firestore
+import firestore from '@react-native-firebase/firestore';
 import {useAuthContext} from '../../../context/AuthContext';
+import LinearGradient from 'react-native-linear-gradient';
+import {HEADERICON} from '../../../constants/assets/AllImages';
+import {HeaderStyles} from '../../../styles/headerStyling/HeaderStyling';
 
 export default function ChangePassword() {
   const [currentPassword, setCurrentPassword] = useState('');
@@ -98,63 +101,69 @@ export default function ChangePassword() {
   // };
   return (
     <>
-      <SettingHeader name="Change Password" />
-      <View
-        style={{
-          borderTopLeftRadius: 50,
-          borderTopRightRadius: 50,
-          borderColor: 'white',
-          borderWidth: 1,
-          flex: 1,
-          top: 90,
-          zIndex: 1,
-          position: 'relative',
-          backgroundColor: 'white',
-          alignItems: 'center',
-        }}>
-        <View style={{marginHorizontal: 20, marginVertical: 80}}>
-          <View style={styles.inputView}>
-            <Text style={styles.lable}>Current Password</Text>
-            <TextInput
-              style={styles.TextInput}
-              secureTextEntry={true}
-              placeholder="Current Password"
-              placeholderTextColor="#003f5c"
-              value={currentPassword}
-              onChangeText={setCurrentPassword}
-            />
-          </View>
-          <View style={styles.inputView}>
-            <Text style={styles.lable}>New Password</Text>
-            <TextInput
-              style={styles.TextInput}
-              secureTextEntry={true}
-              placeholder="New Password"
-              placeholderTextColor="#003f5c"
-              value={newPassword}
-              onChangeText={setNewPassword}
-            />
-          </View>
-          <View style={styles.inputView}>
-            <Text style={styles.lable}>Confirm Password</Text>
-            <TextInput
-              style={styles.TextInput}
-              secureTextEntry={true}
-              placeholder="Confirm Password"
-              placeholderTextColor="#003f5c"
-              value={confirmPassword}
-              onChangeText={setConfirmPassword}
-            />
+      <LinearGradient
+        style={HeaderStyles.mainContainer}
+        colors={['#000', '#43116A']}
+        start={{x: 0, y: 0}}
+        end={{x: 1, y: 0}}>
+        <View style={HeaderStyles.container}>
+          <View style={HeaderStyles.topbar}>
+            <TouchableOpacity
+              style={HeaderStyles.iconContainer}
+              onPress={() => {
+                // Handle search icon press
+              }}>
+              <HEADERICON.leftArrow />
+            </TouchableOpacity>
+            <Text style={HeaderStyles.screenName}>Change Password</Text>
+            <View />
           </View>
         </View>
-        <TouchableOpacity onPress={handlePasswordUpdate}>
-          <ImageBackground
-            source={require('../../../assets/images/background.png')}
-            style={styles.loginBtn}>
-            <Text>Update Password</Text>
-          </ImageBackground>
-        </TouchableOpacity>
-      </View>
+        <View style={HeaderStyles.main}>
+          <View style={{marginHorizontal: 20, marginVertical: 80}}>
+            <View style={styles.inputView}>
+              <Text style={styles.lable}>Current Password</Text>
+              <TextInput
+                style={styles.TextInput}
+                secureTextEntry={true}
+                placeholder="Current Password"
+                placeholderTextColor="#003f5c"
+                value={currentPassword}
+                onChangeText={setCurrentPassword}
+              />
+            </View>
+            <View style={styles.inputView}>
+              <Text style={styles.lable}>New Password</Text>
+              <TextInput
+                style={styles.TextInput}
+                secureTextEntry={true}
+                placeholder="New Password"
+                placeholderTextColor="#003f5c"
+                value={newPassword}
+                onChangeText={setNewPassword}
+              />
+            </View>
+            <View style={styles.inputView}>
+              <Text style={styles.lable}>Confirm Password</Text>
+              <TextInput
+                style={styles.TextInput}
+                secureTextEntry={true}
+                placeholder="Confirm Password"
+                placeholderTextColor="#003f5c"
+                value={confirmPassword}
+                onChangeText={setConfirmPassword}
+              />
+            </View>
+          </View>
+          <TouchableOpacity onPress={handlePasswordUpdate}>
+            <ImageBackground
+              source={require('../../../assets/images/background.png')}
+              style={styles.loginBtn}>
+              <Text>Update Password</Text>
+            </ImageBackground>
+          </TouchableOpacity>
+        </View>
+      </LinearGradient>
     </>
   );
 }

@@ -3,22 +3,26 @@ import React, {Component} from 'react';
 import {styles} from './Style';
 import {USERPROFILEIMAGE} from '../../constants/assets/AllImages';
 import {useAuthContext} from '../../context/AuthContext';
-
-export default function User() {
-  const {user} = useAuthContext();
+interface UserInfoProps {
+  photoURL: string;
+  username: string;
+  status: string;
+}
+const User: React.FC<UserInfoProps> = ({photoURL, username, status}) => {
   return (
     <View style={styles.MainView}>
       <View style={styles.InnerView}>
-        {user.photoURL == null ? (
-          <USERPROFILEIMAGE.ProfileImage style={styles.Profile} />
+        {photoURL === null ? (
+          <USERPROFILEIMAGE.ProfileImage width={50} height={50} />
         ) : (
-          <Image source={user.photoURL} style={styles.Profile} />
+          <Image source={{uri: photoURL}} style={styles.Profile} />
         )}
         <View style={styles.TextView}>
-          <Text style={styles.Name}>{user.username}</Text>
-          <Text style={styles.Description}>{user.status}</Text>
+          <Text style={styles.Name}>{username}</Text>
+          <Text style={styles.Description}>{status}</Text>
         </View>
       </View>
     </View>
   );
-}
+};
+export default User;

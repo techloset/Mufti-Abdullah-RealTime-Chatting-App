@@ -3,12 +3,10 @@ import React, {useEffect, useState} from 'react';
 import auth from '@react-native-firebase/auth';
 import LinearGradient from 'react-native-linear-gradient';
 import {SafeAreaView, FlatList} from 'react-native';
-import {SwipeListView} from 'react-native-swipe-list-view';
+
+import {iconSearch} from '.../../../src/assets/icons/Search.png'; // Import the search icon
+import {SwipeListView} from 'react-native-swipe-list-view'; // Import SwipeListView
 import firestore from '@react-native-firebase/firestore';
-import {HomeStyles} from './HomeStyling';
-import UserInfo from '../../../components/userInfo/UserInfo';
-import {HEADERICON} from '../../../constants/assets/AllImages';
-import {HeaderStyles} from '../../../styles/headerStyling/HeaderStyling';
 interface UserData {
   photoURL: string;
   id: string;
@@ -18,7 +16,7 @@ interface UserData {
   timeAgo: string;
   description: string;
 }
-export default function Home() {
+export default function BAGHOME() {
   const user = auth().currentUser || undefined;
   const [usersData, setUsersData] = useState<UserData[]>();
 
@@ -38,33 +36,33 @@ export default function Home() {
 
   return (
     <LinearGradient
-      style={HeaderStyles.mainContainer}
+      style={MesssageStyles.mainContainer}
       colors={['#000', '#43116A']}
       start={{x: 0, y: 0}}
       end={{x: 1, y: 0}}>
-      <View style={HeaderStyles.container}>
-        <View style={HeaderStyles.topbar}>
+      <View style={MesssageStyles.container}>
+        <View style={MesssageStyles.topbar}>
           <TouchableOpacity
-            style={HeaderStyles.iconContainer}
+            style={MesssageStyles.iconSearchContainer}
             onPress={() => {
               // Handle search icon press
             }}>
-            <HEADERICON.search />
+            <Image source={iconSearch} style={MesssageStyles.imageSearch} />
           </TouchableOpacity>
-          <Text style={HeaderStyles.screenName}>Home</Text>
+          <Text style={MesssageStyles.screenName}>Home</Text>
           {user?.photoURL ? (
             <Image
               source={{uri: user?.photoURL || undefined}}
-              style={HeaderStyles.profilePhoto}
+              style={MesssageStyles.profilePhoto}
             />
           ) : (
-            <View style={HeaderStyles.alternatePhoto}></View>
+            <View style={MesssageStyles.alternatePhoto}></View>
           )}
         </View>
       </View>
 
-      <View style={HeaderStyles.main}>
-        <SafeAreaView style={HomeStyles.textContainer1}>
+      <View style={MesssageStyles.main}>
+        <SafeAreaView style={MesssageStyles.textContainer1}>
           <SwipeListView
             data={usersData}
             renderItem={({item}) => (
@@ -96,3 +94,87 @@ export default function Home() {
     </LinearGradient>
   );
 }
+
+import {StyleSheet} from 'react-native';
+import UserInfo from './src/components/userInfo/UserInfo';
+
+export const MesssageStyles = StyleSheet.create({
+  mainContainer: {
+    flex: 1,
+  },
+  container: {
+    paddingVertical: 27,
+  },
+  iconSearchContainer: {
+    height: 44,
+    width: 44,
+    borderRadius: 22,
+    justifyContent: 'center',
+    alignItems: 'center',
+    opacity: 0.5,
+    backgroundColor: 'white',
+  },
+  imageSearch: {
+    height: 22,
+    width: 22,
+  },
+  topbar: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    paddingHorizontal: 24,
+  },
+  profilePhoto: {
+    width: 44,
+    height: 44,
+    borderRadius: 30,
+  },
+  alternatePhoto: {
+    width: 44,
+    height: 44,
+    borderRadius: 22,
+    backgroundColor: 'black',
+    opacity: 0.4,
+  },
+  main: {
+    flex: 1,
+    backgroundColor: 'white',
+    borderTopLeftRadius: 40,
+    borderTopRightRadius: 40,
+    paddingTop: 27,
+  },
+  screenName: {
+    fontSize: 20,
+    color: 'white',
+    fontFamily: 'Poppins',
+  },
+  item: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    paddingVertical: 13,
+  },
+  image: {
+    width: 52,
+    height: 52,
+    backgroundColor: '#666',
+    borderRadius: 26,
+  },
+  textContainer: {
+    flex: 1,
+    paddingStart: 12,
+  },
+  textContainer1: {
+    flex: 1,
+  },
+  name: {
+    fontSize: 18,
+    fontWeight: 'bold',
+  },
+  timeAgo: {
+    fontSize: 14,
+    color: '#666',
+  },
+  description: {
+    fontSize: 16,
+  },
+});
