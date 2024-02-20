@@ -16,6 +16,8 @@ import LinearGradient from 'react-native-linear-gradient';
 import {HEADERICON} from '../../../constants/assets/AllImages';
 import {HeaderStyles} from '../../../styles/headerStyling/HeaderStyling';
 import {useNavigation} from '@react-navigation/native';
+import {RootStackParamsList} from '../../../navigation/SettingNavigation';
+import {StackNavigationProp} from '@react-navigation/stack';
 
 export default function ChangePassword() {
   const [currentPassword, setCurrentPassword] = useState('');

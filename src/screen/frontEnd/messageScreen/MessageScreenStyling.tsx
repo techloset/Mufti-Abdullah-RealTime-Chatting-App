@@ -87,4 +87,34 @@ export const styles = StyleSheet.create({
     marginHorizontal: 5,
     marginVertical: 5,
   },
+  bottom: {
+    width: 375,
+    height: 90,
+    display: 'flex',
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginHorizontal: 24,
+  },
+  attachment: {
+    marginRight: 4,
+    marginLeft: 0,
+  },
+  bootomView: {
+    backgroundColor: '#F3F6F6',
+    borderRadius: 8,
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    width: 260,
+    height: 40,
+
+    padding: 3,
+  },
+  bottomInput: {
+    color: '#797C7B80',
+  },
+  camera: {
+    marginLeft: 10,
+  },
 });

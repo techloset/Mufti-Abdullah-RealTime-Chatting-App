@@ -11,9 +11,11 @@ import {HEADERICON, HOMEICON} from '../../../constants/assets/AllImages';
 import {HeaderStyles} from '../../../styles/headerStyling/HeaderStyling';
 import {StackNavigationProp} from '@react-navigation/stack';
 import {RootStackParamsList} from '../../../navigation/HomeStackNavigation';
+import {useAuthContext} from '../../../context/AuthContext';
 interface UserData {
   photoURL: string;
   id: string;
+  uid: string;
   imageUrl: string;
   username: string;
   status: string;
@@ -21,7 +23,7 @@ interface UserData {
   description: string;
 }
 interface navigationProps {
-  navigation: StackNavigationProp<RootStackParamsList, 'home'> & {
+  navigation: StackNavigationProp<RootStackParamsList, 'HOMEPAGE'> & {
     navigate(screen: string, params: {userDetails: UserData}): void;
   };
 }
@@ -29,12 +31,14 @@ interface navigationProps {
 export default function Home({navigation}: navigationProps) {
   const user = auth().currentUser || undefined;
   const [usersData, setUsersData] = useState<UserData[]>();
-
+  const {Logout} = useAuthContext();
   useEffect(() => {
     const fetchUsers = async () => {
       try {
         const usersSnapshot = await firestore().collection('users').get();
-        const usersData = usersSnapshot.docs.map(doc => doc.data() as UserData);
+        const usersData = usersSnapshot.docs
+          .map(doc => doc.data() as UserData)
+          .filter(userData => userData.uid !== user?.uid);
         setUsersData(usersData);
       } catch (error) {
         console.error('Error fetching users:', error);
@@ -42,7 +46,7 @@ export default function Home({navigation}: navigationProps) {
     };
 
     fetchUsers();
-  }, []);
+  }, [user]);
 
   return (
     <LinearGradient
@@ -55,11 +59,13 @@ export default function Home({navigation}: navigationProps) {
           <TouchableOpacity
             style={HeaderStyles.iconContainer}
             onPress={() => {
-              navigation.navigate('search');
+              navigation.navigate('SEARCH');
             }}>
             <HEADERICON.search />
           </TouchableOpacity>
-          <Text style={HeaderStyles.screenName}>Home</Text>
+          <Text style={HeaderStyles.screenName} onPress={Logout}>
+            Home
+          </Text>
           {user?.photoURL ? (
             <Image
               source={{uri: user.photoURL || undefined}}
@@ -78,7 +84,7 @@ export default function Home({navigation}: navigationProps) {
             renderItem={({item}) => (
               <Pressable
                 onPress={() => {
-                  navigation.navigate('messages', {userDetails: item});
+                  navigation.navigate('CHATSCREEN', {userDetails: item});
                 }}>
                 <UserInfo
                   profileImage={item.photoURL}

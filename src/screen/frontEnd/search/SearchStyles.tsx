@@ -3,12 +3,15 @@ import {StyleSheet} from 'react-native';
 export const styles = StyleSheet.create({
   searchView: {
     marginHorizontal: 24,
+    padding: 6,
     marginVertical: 20,
     display: 'flex',
     flexDirection: 'row',
+    alignItems: 'center',
+    height: 44,
     width: 327,
     borderRadius: 12,
-    borderStartColor: '#F3F6F6',
+    backgroundColor: '#F3F6F6',
   },
   searchImage: {
     alignSelf: 'center',
@@ -18,7 +21,7 @@ export const styles = StyleSheet.create({
     height: 40,
     paddingLeft: 20,
     margin: 5,
-    width: 200,
+    width: 250,
     color: 'black',
   },
   removeImage: {

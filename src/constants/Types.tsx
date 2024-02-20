@@ -15,8 +15,7 @@ export interface FirebaseUser {
 export interface UserProfileData {
   confirmPassword?: string;
   email?: string;
-  password?: string;
-  role?: string;
+  password?: string | undefined;
   status?: string;
   uid?: string;
   username?: string;

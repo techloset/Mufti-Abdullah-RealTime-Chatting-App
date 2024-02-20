@@ -16,7 +16,7 @@ import {HEADERICON} from '../../../constants/assets/AllImages';
 import {HeaderStyles} from '../../../styles/headerStyling/HeaderStyling';
 import {StackNavigationProp} from '@react-navigation/stack';
 import {RootStackParamsList} from '../../../navigation/ContactStackNavigation';
-
+import auth from '@react-native-firebase/auth';
 interface UserData {
   confirmPassword: string;
   creationTime: string;
@@ -31,16 +31,20 @@ interface UserData {
 }
 
 interface navigationProps {
-  navigation: StackNavigationProp<RootStackParamsList, 'contact'>;
+  navigation: StackNavigationProp<RootStackParamsList, 'CONTACTPAGE'>;
 }
 export default function Contact({navigation}: navigationProps) {
+  const user = auth().currentUser;
   const [users, setUsers] = useState<{[key: string]: UserData[]}>({});
 
   useEffect(() => {
     const fetchUsers = async () => {
       try {
         const usersSnapshot = await firestore().collection('users').get();
-        const userData = usersSnapshot.docs.map(doc => doc.data() as UserData);
+        const userData = usersSnapshot.docs
+          .map(doc => doc.data() as UserData)
+          .filter(userData => userData.uid !== user?.uid);
+
         const groupedUsers: {[key: string]: UserData[]} = {};
         userData.forEach(user => {
           const firstLetter = user.username.charAt(0).toUpperCase();
@@ -70,7 +74,7 @@ export default function Contact({navigation}: navigationProps) {
             <TouchableOpacity
               style={HeaderStyles.iconContainer}
               onPress={() => {
-                navigation.navigate('search');
+                navigation.navigate('SEARCH');
               }}>
               <HEADERICON.search style={HeaderStyles.imageSearch} />
             </TouchableOpacity>

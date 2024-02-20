@@ -13,7 +13,7 @@ import {useAuthContext} from '../../../context/AuthContext';
 import {HeaderStyles} from '../../../styles/headerStyling/HeaderStyling';
 
 interface navigationProps {
-  navigation: StackNavigationProp<RootStackParamsList, 'setting', 'profile'>;
+  navigation: StackNavigationProp<RootStackParamsList, 'SETTING'>;
 }
 export default function Setting({navigation}: navigationProps) {
   const currentUser = auth().currentUser;
@@ -42,7 +42,7 @@ export default function Setting({navigation}: navigationProps) {
         <View style={HeaderStyles.main}>
           <TouchableOpacity
             onPress={() => {
-              navigation.navigate('profile');
+              navigation.navigate('PROFILE');
             }}>
             <View style={{marginLeft: 24, marginBottom: 16}}>
               <User
@@ -76,7 +76,7 @@ export default function Setting({navigation}: navigationProps) {
             />
             <TouchableOpacity
               onPress={() => {
-                navigation.navigate('changePassword');
+                navigation.navigate('CHANGE_PASSWORD');
               }}>
               <SettingInfo
                 name="Change Password"

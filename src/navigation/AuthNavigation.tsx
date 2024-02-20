@@ -1,13 +1,17 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {createStackNavigator} from '@react-navigation/stack';
 import {useAuthContext} from '../context/AuthContext';
 import StackNavigation from './StackNavigation';
 import Navigation from './TabNavigation';
+import {useDispatch, useSelector} from 'react-redux';
+import {selectAuthState} from '../redux/AuthSlice';
+import NewStack from './NewStack';
 
 const Stack = createStackNavigator();
 export default function AuthNavigation() {
-  const {isAuth} = useAuthContext();
-  console.log('isAuth', isAuth);
+  // const isAuth = useSelector(selectAuthState);
 
-  return <>{isAuth ? <Navigation /> : <StackNavigation />}</>;
+  const {isAuth} = useAuthContext();
+
+  return <>{isAuth ? <NewStack /> : <StackNavigation />}</>;
 }

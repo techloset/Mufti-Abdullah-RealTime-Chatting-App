@@ -1,10 +1,13 @@
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
-import {StyleSheet} from 'react-native';
 import {NavigationContainer} from '@react-navigation/native';
 import {IMAGES} from '../constants/assets/AllImages';
 import SettingNavigation from './SettingNavigation';
 import ContactStackNavigation from './ContactStackNavigation';
 import HomeStackNavigation from './HomeStackNavigation';
+import {BOTTOM_TAB_SCREEN} from '../constants/navigations/Navigations';
+import Contact from '../screen/frontEnd/contact/Contact';
+import Home from '../screen/frontEnd/home/Home';
+import Setting from '../screen/frontEnd/setting/Setting';
 
 const Tab = createBottomTabNavigator();
 const screenOptions = {
@@ -25,49 +28,48 @@ const screenOptions = {
 };
 
 export default function Navigation() {
+  const {HOME, CONTACT, SETTING} = BOTTOM_TAB_SCREEN;
   return (
-    <NavigationContainer>
-      <Tab.Navigator screenOptions={screenOptions}>
-        <Tab.Screen
-          options={{
-            tabBarLabel: 'Message',
-            tabBarLabelStyle: {
-              fontSize: 16,
-              fontWeight: 'bold',
-            },
-            tabBarIcon: ({focused}) =>
-              focused ? <IMAGES.Msg /> : <IMAGES.UnfocusMsg />,
-          }}
-          name="Home"
-          component={HomeStackNavigation}
-        />
-        <Tab.Screen
-          options={{
-            tabBarLabel: 'Contact',
-            tabBarLabelStyle: {
-              fontSize: 16,
-              fontWeight: 'bold',
-            },
-            tabBarIcon: ({focused}) =>
-              focused ? <IMAGES.FocusUser /> : <IMAGES.User />,
-          }}
-          name="Contact"
-          component={ContactStackNavigation}
-        />
-        <Tab.Screen
-          options={{
-            tabBarLabel: 'Setting',
-            tabBarLabelStyle: {
-              fontSize: 16,
-              fontWeight: 'bold',
-            },
-            tabBarIcon: ({focused}) =>
-              focused ? <IMAGES.FocusSetting /> : <IMAGES.Setting />,
-          }}
-          name="Setting"
-          component={SettingNavigation}
-        />
-      </Tab.Navigator>
-    </NavigationContainer>
+    <Tab.Navigator screenOptions={screenOptions}>
+      <Tab.Screen
+        options={{
+          tabBarLabel: 'Message',
+          tabBarLabelStyle: {
+            fontSize: 16,
+            fontWeight: 'bold',
+          },
+          tabBarIcon: ({focused}) =>
+            focused ? <IMAGES.Msg /> : <IMAGES.UnfocusMsg />,
+        }}
+        name={HOME}
+        component={Home}
+      />
+      <Tab.Screen
+        options={{
+          tabBarLabel: 'Contact',
+          tabBarLabelStyle: {
+            fontSize: 16,
+            fontWeight: 'bold',
+          },
+          tabBarIcon: ({focused}) =>
+            focused ? <IMAGES.FocusUser /> : <IMAGES.User />,
+        }}
+        name={CONTACT}
+        component={Contact}
+      />
+      <Tab.Screen
+        options={{
+          tabBarLabel: 'Setting',
+          tabBarLabelStyle: {
+            fontSize: 16,
+            fontWeight: 'bold',
+          },
+          tabBarIcon: ({focused}) =>
+            focused ? <IMAGES.FocusSetting /> : <IMAGES.Setting />,
+        }}
+        name={SETTING}
+        component={Setting}
+      />
+    </Tab.Navigator>
   );
 }

@@ -3,9 +3,10 @@ import React from 'react';
 import {createStackNavigator} from '@react-navigation/stack';
 import Contact from '../screen/frontEnd/contact/Contact';
 import Search from '../screen/frontEnd/search/Search';
+import {CONTACT_STACK_SCREENS_NAVIGATION} from '../constants/navigationScreens/NavigationScreens';
 export type RootStackParamsList = {
-  contact: undefined;
-  search: undefined;
+  CONTACTPAGE: undefined;
+  SEARCH: undefined;
 };
 const Stack = createStackNavigator<RootStackParamsList>();
 export default function ContactStackNavigation() {
@@ -14,14 +15,15 @@ export default function ContactStackNavigation() {
       screenOptions={{
         headerShown: false,
       }}>
-      <Stack.Screen name="contact" component={Contact} />
-      <Stack.Screen
-        name="search"
-        component={Search}
-        options={{
-          headerTitle: '',
-        }}
-      />
+      {CONTACT_STACK_SCREENS_NAVIGATION.map((item, index) => {
+        return (
+          <Stack.Screen
+            key={index}
+            name={item.name as keyof RootStackParamsList}
+            component={item.component}
+          />
+        );
+      })}
     </Stack.Navigator>
   );
 }

@@ -4,10 +4,11 @@ import {createStackNavigator} from '@react-navigation/stack';
 import Home from '../screen/frontEnd/home/Home';
 import Search from '../screen/frontEnd/search/Search';
 import MessageScreen from '../screen/frontEnd/messageScreen/MessageScreen';
+import {HOME_STACK_SCREENS_NAVIGATION} from '../constants/navigationScreens/NavigationScreens';
 export type RootStackParamsList = {
-  home: undefined;
-  search: undefined;
-  messages: undefined;
+  HOMEPAGE: undefined;
+  SEARCH: undefined;
+  CHATSCREEN: undefined;
 };
 const Stack = createStackNavigator<RootStackParamsList>();
 export default function HomeStackNavigation() {
@@ -16,9 +17,15 @@ export default function HomeStackNavigation() {
       screenOptions={{
         headerShown: false,
       }}>
-      <Stack.Screen name="home" component={Home} />
-      <Stack.Screen name="search" component={Search} />
-      <Stack.Screen name="messages" component={MessageScreen} />
+      {HOME_STACK_SCREENS_NAVIGATION.map((item, index) => {
+        return (
+          <Stack.Screen
+            key={index}
+            name={item.name as keyof RootStackParamsList}
+            component={item.component}
+          />
+        );
+      })}
     </Stack.Navigator>
   );
 }

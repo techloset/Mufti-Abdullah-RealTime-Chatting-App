@@ -3,11 +3,12 @@ import {createStackNavigator} from '@react-navigation/stack';
 import Setting from '../screen/frontEnd/setting/Setting';
 import Profile from '../screen/frontEnd/profile/Profile';
 import ChangePassword from '../screen/frontEnd/chnagePassword/ChangePassword';
+import {SETTING_STACK_SCREENS_NAVIGATION} from '../constants/navigationScreens/NavigationScreens';
 
 export type RootStackParamsList = {
-  profile: undefined;
-  changePassword: undefined;
-  setting: undefined;
+  PROFILE: undefined;
+  CHANGE_PASSWORD: undefined;
+  SETTING: undefined;
 };
 const Stack = createStackNavigator<RootStackParamsList>();
 export default function SettingNavigation() {
@@ -16,21 +17,16 @@ export default function SettingNavigation() {
       screenOptions={{
         headerShown: false,
       }}>
-      <Stack.Screen name="setting" component={Setting} />
-      <Stack.Screen
-        name="profile"
-        component={Profile}
-        options={{
-          headerTitle: '',
-        }}
-      />
-      <Stack.Screen
-        name="changePassword"
-        component={ChangePassword}
-        options={{
-          headerTitle: '',
-        }}
-      />
+      {SETTING_STACK_SCREENS_NAVIGATION.map((item, index) => {
+        return (
+          <Stack.Screen
+            key={index}
+            name={item.name as keyof RootStackParamsList}
+            component={item.component}
+            options={{headerShown: false}}
+          />
+        );
+      })}
     </Stack.Navigator>
   );
 }

@@ -16,6 +16,11 @@ import EditIcon from '../../assets/icons/Edit.svg';
 import DeleteIcon from '../../assets/icons/Trash.svg';
 import NavigationotificaionIcon from '../../assets/icons/notification.svg';
 import ArrowBlack from '../../assets/icons/Back.svg';
+import Camera from '../../assets/icons/Vector.svg';
+import File from '../../assets/icons/files.svg';
+import Attachment from '../../assets/icons/Group.svg';
+import BlackSearch from '../../assets/icons/SearchBlack.svg';
+import Remove from '../../assets/icons/remove.svg';
 
 /// Tab Navigation Images
 export const IMAGES = {
@@ -52,4 +57,17 @@ export const HEADERICON = {
 export const HOMEICON = {
   Noftification: NavigationotificaionIcon,
   DeleteIcon: DeleteIcon,
+};
+// Chat Page Icons
+
+export const CHATICON = {
+  Camera: Camera,
+  Attachment: Attachment,
+  File: File,
+};
+
+// Search Page Icons
+export const SEARCHPAGEICON = {
+  SearchBlack: BlackSearch,
+  Remove: Remove,
 };

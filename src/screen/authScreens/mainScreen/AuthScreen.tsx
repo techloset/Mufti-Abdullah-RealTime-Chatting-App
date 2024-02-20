@@ -33,7 +33,7 @@ GoogleSignin.configure({
 });
 
 interface LoginProps {
-  navigation: StackNavigationProp<RootStackParamsList, 'login', 'signup'>;
+  navigation: StackNavigationProp<RootStackParamsList, 'LOGIN', 'SIGNUP'>;
 }
 
 export default function AuthScreen({navigation}: LoginProps) {
@@ -91,13 +91,13 @@ export default function AuthScreen({navigation}: LoginProps) {
             <TouchableOpacity
               style={styles.loginBtnText}
               onPress={() => {
-                navigation.navigate('signup');
+                navigation.navigate('SIGNUP');
               }}>
               <Text>Sign up with mail</Text>
             </TouchableOpacity>
             <TouchableOpacity
               onPress={() => {
-                navigation.navigate('login');
+                navigation.navigate('LOGIN');
               }}>
               <Text style={styles.forgot_button}>
                 Existing account? <Text style={styles.login}> Log in</Text>

@@ -15,17 +15,23 @@ import {RootStackParamsList} from '../../../navigation/StackNavigation';
 import {useAuthContext} from '../../../context/AuthContext';
 import {FirebaseUser, UserProfileData} from '../../../constants/Types';
 import {styles} from './LoginStyle';
+import {useDispatch, useSelector} from 'react-redux';
+import {login, readUserProfile} from '../../../redux/AuthSlice';
 // import ToastManager, {Toast} from 'toastify-react-native';
 interface SignupScreenProps {
   navigation?: StackNavigationProp<RootStackParamsList, 'forgot'>;
 }
 
-type SigninUserData = /*unresolved*/ any;
+type SigninUserData = {
+  email: string;
+  password: string;
+};
 const initialState = {email: '', password: ''};
 export default function Login({navigation}: SignupScreenProps) {
   const [state, setState] = useState(initialState);
   const [loading, setisloading] = useState(false);
-  const {dispatch} = useAuthContext();
+  // const {dispatch} = useAuthContext();
+  const dispatch = useDispatch();
   const handleChange = (name: string, value: string): void => {
     setState(s => ({...s, [name]: value}));
   };
@@ -65,13 +71,11 @@ export default function Login({navigation}: SignupScreenProps) {
     auth()
       .signInWithEmailAndPassword(userData.email, userData.password)
       .then(() => {
-        console.log(
-          'User Login Successfully!',
-          'wellcome to instagramMeToYou app',
-          'success',
-        );
+        dispatch(login(userData));
+
+        console.log('User Login Successfully!', 'WEllCOME to TEXTit Chat app');
         setisloading(false);
-        dispatch({type: 'Login', payload: {userData: userData}});
+        // dispatch({type: 'Login', payload: {userData: userData}});
       })
       .catch(error => {
         if (error.code === 'auth/email-already-in-use') {

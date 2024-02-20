@@ -3,8 +3,10 @@ import {useEffect} from 'react';
 import SplashScreen from 'react-native-splash-screen';
 import AuthContextProvider from './src/context/AuthContext';
 import AuthNavigation from './src/navigation/AuthNavigation';
+import {Provider} from 'react-redux';
+import Store from './src/redux/Store';
 
-function App(): React.JSX.Element {
+function App() {
   useEffect(() => {
     const hideSplashScreen = () => {
       if (SplashScreen) {
@@ -19,9 +21,11 @@ function App(): React.JSX.Element {
 
   return (
     <>
-      <AuthContextProvider>
-        <AuthNavigation />
-      </AuthContextProvider>
+      <Provider store={Store}>
+        <AuthContextProvider>
+          <AuthNavigation />
+        </AuthContextProvider>
+      </Provider>
     </>
   );
 }
