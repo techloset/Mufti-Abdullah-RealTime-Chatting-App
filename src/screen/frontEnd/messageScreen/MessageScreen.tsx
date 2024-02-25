@@ -24,6 +24,9 @@ export default function MessageScreen({route}: any) {
   const [messages, setMessages] = useState<
     FirebaseFirestoreTypes.DocumentData[]
   >([]);
+  const [reciverMessages, setreciverMessages] = useState<
+    FirebaseFirestoreTypes.DocumentData[]
+  >([]);
 
   const handleSubmit = async () => {
     try {
@@ -39,38 +42,37 @@ export default function MessageScreen({route}: any) {
     console.log('messages', messages);
     if (!currentUser || !currentUser?.uid || !receiverId || !message) return;
 
-    const chatRef = firestore()
-      .collection('chats')
-      .doc(currentUser.uid)
-      .collection('messages')
-      .add({
-        senderId: currentUser.uid,
-        receiverId,
-        message,
-        timestamp: new Date().toLocaleTimeString(),
-        Date: new Date().toLocaleDateString(),
-      });
-    // await chatRef.add({
-    //   subchat: {},
-    // });
+    const chatRef = firestore().collection('chats');
+    await chatRef.add({
+      senderId: currentUser.uid,
+      receiverId,
+      message,
+      timestamp: new Date().toLocaleTimeString(),
+      Date: new Date().toLocaleDateString(),
+
+      //   subchat: {},
+    });
   };
 
   useEffect(() => {
     const fetchMessages = async () => {
       if (!currentUser || !userDetails) return;
+
       try {
         const querySnapshot = await firestore()
           .collection('chats')
-          .doc(currentUser.uid)
-          .collection('messages')
           .where('receiverId', 'in', [currentUser.uid, userDetails.uid])
           .where('senderId', 'in', [currentUser.uid, userDetails.uid])
           .orderBy('timestamp', 'asc')
           .get();
 
-        const fetchedMessages = querySnapshot.docs.map(doc => doc.data());
-
-        console.log('fetchedMessages', fetchedMessages);
+        const fetchedMessages = querySnapshot.docs.map(doc => ({
+          timestamp: doc.data().timestamp,
+          message: doc.data().message,
+          Date: doc.data().Date,
+          senderId: doc.data().senderId,
+          receiverId: doc.data().receiverId,
+        }));
         setMessages(fetchedMessages);
       } catch (error) {
         console.error('Error fetching messages:', error);
@@ -78,8 +80,30 @@ export default function MessageScreen({route}: any) {
     };
 
     fetchMessages();
-  }, [currentUser, userDetails, message]);
+  }, [currentUser, userDetails, message]); // removed `message` dependency as it might lead to infinite loop
+  // useEffect(() => {
+  //   const fetchMessages = async () => {
+  //     if (!currentUser || !userDetails) return;
 
+  //     try {
+  //       const querySnapshot = await firestore()
+  //         .collection('chats')
+  //         .doc(userDetails.uid)
+  //         .collection('messages')
+  //         .where('receiverId', 'in', [currentUser.uid, userDetails.uid])
+  //         .where('senderId', 'in', [currentUser.uid, userDetails.uid])
+  //         .orderBy('timestamp', 'asc')
+  //         .get();
+
+  //       const fetchedMessages = querySnapshot.docs.map(doc => doc.data());
+  //       setreciverMessages(fetchedMessages);
+  //     } catch (error) {
+  //       console.error('Error fetching messages:', error);
+  //     }
+  //   };
+
+  //   fetchMessages();
+  // }, [currentUser, userDetails, message]);
   return (
     <>
       <View style={styles.container}>
@@ -94,11 +118,9 @@ export default function MessageScreen({route}: any) {
       </View>
       <ScrollView>
         <View style={styles.main}>
-          {messages.map((message, index) => (
-            <Text key={index} style={styles.text}>
-              {message.Date}
-            </Text>
-          ))}
+          {/* {messages.map((message, index) => ( */}
+          <Text style={styles.text}>{/* {message.Date} */}TOday</Text>
+          {/* ))} */}
 
           {messages.map((message, index) => {
             console.log('Sender ID:', message.senderId);
@@ -135,6 +157,7 @@ export default function MessageScreen({route}: any) {
           )}
         </View>
       </ScrollView>
+
       <View style={styles.bottom}>
         <CHATICON.Attachment style={styles.attachment} />
         <View style={styles.bootomView}>

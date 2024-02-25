@@ -2,9 +2,6 @@ import {View, Text} from 'react-native';
 import React from 'react';
 import {createStackNavigator} from '@react-navigation/stack';
 import Navigation from './TabNavigation';
-import SettingNavigation from './SettingNavigation';
-import HomeStackNavigation, {RootStackParamsList} from './HomeStackNavigation';
-import ContactStackNavigation from './ContactStackNavigation';
 import {NavigationContainer} from '@react-navigation/native';
 import Search from '../screen/frontEnd/search/Search';
 import MessageScreen from '../screen/frontEnd/messageScreen/MessageScreen';
@@ -13,9 +10,14 @@ import {
   HOME_STACK_SCREENS_NAVIGATION,
   SETTING_STACK_SCREENS_NAVIGATION,
 } from '../constants/navigationScreens/NavigationScreens';
+import {
+  ContactStackParamsList,
+  HomeStackParamsList,
+  SettingStackParamsList,
+} from '../constants/Types';
 const Stack = createStackNavigator();
 
-export default function NewStack() {
+export default function MainStack() {
   return (
     <NavigationContainer>
       <Stack.Navigator
@@ -27,7 +29,7 @@ export default function NewStack() {
           return (
             <Stack.Screen
               key={index}
-              name={item.name as keyof RootStackParamsList}
+              name={item.name as keyof HomeStackParamsList}
               component={item.component}
             />
           );
@@ -36,7 +38,7 @@ export default function NewStack() {
           return (
             <Stack.Screen
               key={index}
-              name={item.name as keyof RootStackParamsList}
+              name={item.name as keyof ContactStackParamsList}
               component={item.component}
             />
           );
@@ -45,7 +47,7 @@ export default function NewStack() {
           return (
             <Stack.Screen
               key={index}
-              name={item.name as keyof RootStackParamsList}
+              name={item.name as keyof SettingStackParamsList}
               component={item.component}
               options={{headerShown: false}}
             />

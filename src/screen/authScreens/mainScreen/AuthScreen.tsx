@@ -10,7 +10,7 @@ import {
   Button,
 } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
-import {RootStackParamsList} from '../../../navigation/StackNavigation';
+import {RootStackParamsList} from '../../../navigation/AuthStackNavigation';
 import {StackNavigationProp} from '@react-navigation/stack';
 import {GoogleSignin} from '@react-native-google-signin/google-signin';
 import auth from '@react-native-firebase/auth';

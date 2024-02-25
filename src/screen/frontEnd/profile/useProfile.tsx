@@ -1,18 +1,6 @@
-import {
-  Alert,
-  Image,
-  ImageBackground,
-  Text,
-  TouchableOpacity,
-  View,
-} from 'react-native';
+import {Alert, Text, View} from 'react-native';
 import React, {useEffect, useState} from 'react';
-import {
-  HEADERICON,
-  USERPROFILEIMAGE,
-} from '../../../constants/assets/AllImages';
-import {styles} from '../../authScreens/signUp/SignUPStyles';
-import {TextInput} from 'react-native';
+
 import {useAuthContext} from '../../../context/AuthContext';
 import firestore from '@react-native-firebase/firestore';
 import auth from '@react-native-firebase/auth';
@@ -21,15 +9,13 @@ import ImagePicker, {
   ImagePickerResponse,
 } from 'react-native-image-picker';
 import storage from '@react-native-firebase/storage';
-import LinearGradient from 'react-native-linear-gradient';
-import {HeaderStyles} from '../../../styles/headerStyling/HeaderStyling';
 import {useNavigation} from '@react-navigation/native';
 interface Resource {
   uri?: string;
   data?: string;
 }
 
-export default function Profile() {
+export default function useProfile() {
   const [resource, setResource] = useState<Resource>({});
   const {user} = useAuthContext();
   const navigation = useNavigation();
@@ -140,99 +126,14 @@ export default function Profile() {
       console.error('Error uploading image to Firebase Storage:', error);
     }
   };
-
-  return (
-    <>
-      <LinearGradient
-        style={HeaderStyles.mainContainer}
-        colors={['#000', '#43116A']}
-        start={{x: 0, y: 0}}
-        end={{x: 1, y: 0}}>
-        <View style={HeaderStyles.container}>
-          <View style={HeaderStyles.topbar}>
-            <TouchableOpacity
-              style={HeaderStyles.iconContainerForSettingStack}
-              onPress={() => {
-                navigation.goBack();
-              }}>
-              <HEADERICON.leftArrow />
-            </TouchableOpacity>
-            <Text style={HeaderStyles.screenName}>Profile</Text>
-            <View />
-          </View>
-        </View>
-
-        <View style={HeaderStyles.mainContainerForPassword}>
-          <View
-            style={{
-              justifyContent: 'center',
-              alignItems: 'center',
-              marginVertical: 20,
-            }}>
-            {currentUser.photoURL == null ? (
-              <USERPROFILEIMAGE.ProfileImage height={120} width={120} />
-            ) : (
-              <Image
-                source={{uri: currentUser.photoURL}}
-                height={120}
-                width={120}
-                style={{
-                  borderRadius: 60,
-                }}
-              />
-            )}
-            <TouchableOpacity onPress={handlePicture}>
-              <View
-                style={{
-                  position: 'absolute',
-                  left: 35,
-                  top: -30,
-                  width: 60,
-                  height: 60,
-                }}>
-                <USERPROFILEIMAGE.UpdateProfile height={20} width={20} />
-              </View>
-            </TouchableOpacity>
-          </View>
-          <View style={{marginHorizontal: 20, marginVertical: 20}}>
-            <View style={styles.inputView}>
-              <Text style={styles.lable}>Your Name</Text>
-              <TextInput
-                style={styles.TextInput}
-                placeholderTextColor="#003f5c"
-                value={name}
-                onChangeText={setName}
-              />
-            </View>
-            <View style={styles.inputView}>
-              <Text style={styles.lable}>Your Email</Text>
-              <TextInput
-                style={styles.TextInput}
-                placeholder="Your Email."
-                placeholderTextColor="#003f5c"
-                value={user.email}
-              />
-            </View>
-            <View style={styles.inputView}>
-              <Text style={styles.lable}>Your Status</Text>
-              <TextInput
-                style={styles.TextInput}
-                placeholder="Your Status."
-                placeholderTextColor="#003f5c"
-                value={status}
-                onChangeText={setStatus}
-              />
-            </View>
-          </View>
-          <TouchableOpacity onPress={updateUserProfile}>
-            <ImageBackground
-              source={require('../../../assets/images/background.png')}
-              style={styles.loginBtn}>
-              <Text>Update Profile</Text>
-            </ImageBackground>
-          </TouchableOpacity>
-        </View>
-      </LinearGradient>
-    </>
-  );
+  return {
+    currentUser,
+    handlePicture,
+    setName,
+    user,
+    name,
+    status,
+    setStatus,
+    updateUserProfile,
+  };
 }

@@ -11,7 +11,7 @@ import {
   TouchableOpacity,
   ImageBackground,
 } from 'react-native';
-import {RootStackParamsList} from '../../../navigation/StackNavigation';
+import {RootStackParamsList} from '../../../navigation/AuthStackNavigation';
 import {useAuthContext} from '../../../context/AuthContext';
 import {FirebaseUser, UserProfileData} from '../../../constants/Types';
 import {styles} from './LoginStyle';

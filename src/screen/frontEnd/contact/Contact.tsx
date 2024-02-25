@@ -9,14 +9,14 @@ import {
 import React, {useEffect, useState} from 'react';
 import User from '../../../components/contactUserInfo/User';
 import {styles} from './ContactStyle';
-import ContactHeader from '../../../components/tabHeader/ContactHeader';
 import firestore from '@react-native-firebase/firestore';
 import LinearGradient from 'react-native-linear-gradient';
 import {HEADERICON} from '../../../constants/assets/AllImages';
 import {HeaderStyles} from '../../../styles/headerStyling/HeaderStyling';
 import {StackNavigationProp} from '@react-navigation/stack';
-import {RootStackParamsList} from '../../../navigation/ContactStackNavigation';
 import auth from '@react-native-firebase/auth';
+import {ContactStackParamsList} from '../../../constants/Types';
+import useContact from './useContact';
 interface UserData {
   confirmPassword: string;
   creationTime: string;
@@ -31,36 +31,10 @@ interface UserData {
 }
 
 interface navigationProps {
-  navigation: StackNavigationProp<RootStackParamsList, 'CONTACTPAGE'>;
+  navigation: StackNavigationProp<ContactStackParamsList, 'CONTACTPAGE'>;
 }
 export default function Contact({navigation}: navigationProps) {
-  const user = auth().currentUser;
-  const [users, setUsers] = useState<{[key: string]: UserData[]}>({});
-
-  useEffect(() => {
-    const fetchUsers = async () => {
-      try {
-        const usersSnapshot = await firestore().collection('users').get();
-        const userData = usersSnapshot.docs
-          .map(doc => doc.data() as UserData)
-          .filter(userData => userData.uid !== user?.uid);
-
-        const groupedUsers: {[key: string]: UserData[]} = {};
-        userData.forEach(user => {
-          const firstLetter = user.username.charAt(0).toUpperCase();
-          if (!groupedUsers[firstLetter]) {
-            groupedUsers[firstLetter] = [];
-          }
-          groupedUsers[firstLetter].push(user);
-        });
-        setUsers(groupedUsers);
-      } catch (error) {
-        console.error('Error fetching users:', error);
-      }
-    };
-
-    fetchUsers();
-  }, []);
+  const {users} = useContact();
 
   return (
     <>
