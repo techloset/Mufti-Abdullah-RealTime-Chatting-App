@@ -1,4 +1,4 @@
-import {createSlice, PayloadAction} from '@reduxjs/toolkit';
+import {createAsyncThunk, createSlice, PayloadAction} from '@reduxjs/toolkit';
 import firestore from '@react-native-firebase/firestore';
 import {FirebaseUser, UserProfileData} from '../constants/Types';
 import {RootState} from './Store';
@@ -32,27 +32,25 @@ const authSlice = createSlice({
     },
   },
 });
-
-export const readUserProfile =
-  (user: FirebaseUser) =>
-  async (
-    dispatch: (arg0: {
-      payload: boolean | UserProfileData;
-      type: 'auth/login' | 'auth/setIsAppLoading';
-    }) => void,
-  ) => {
-    firestore()
-      .collection('users')
-      .doc(user.uid)
-      .onSnapshot(documentSnapshot => {
-        const userData: UserProfileData | undefined =
-          documentSnapshot.data() as UserProfileData;
-        if (userData) {
-          dispatch(login(userData));
-        }
-        dispatch(setIsAppLoading(false));
-      });
-  };
+export const readUserProfile = createAsyncThunk(
+  'auth/readUserProfile',
+  async (user: FirebaseUser, thunkAPI) => {
+    try {
+      // Assuming you have a 'users' collection in Firestore
+      const userDoc = await firestore().collection('users').doc(user.uid).get();
+      if (userDoc.exists) {
+        const userData = userDoc.data() as UserProfileData;
+        return userData;
+      } else {
+        throw new Error('User document does not exist');
+      }
+    } catch (error) {
+      // Handle error
+      console.error('Error reading user profile:', error);
+      throw error;
+    }
+  },
+);
 
 // Selector to get authentication state
 export const {login, logout, setIsAppLoading} = authSlice.actions;

@@ -13,18 +13,20 @@ import {
 } from 'react-native';
 import {RootStackParamsList} from '../../../navigation/AuthStackNavigation';
 import {useAuthContext} from '../../../context/AuthContext';
+import firestore from '@react-native-firebase/firestore';
 import {FirebaseUser, UserProfileData} from '../../../constants/Types';
 import {styles} from './LoginStyle';
 import {useDispatch, useSelector} from 'react-redux';
 import {login, readUserProfile} from '../../../redux/AuthSlice';
 // import ToastManager, {Toast} from 'toastify-react-native';
 interface SignupScreenProps {
-  navigation?: StackNavigationProp<RootStackParamsList, 'forgot'>;
+  navigation?: StackNavigationProp<RootStackParamsList, 'LOGIN'>;
 }
 
 type SigninUserData = {
   email: string;
   password: string;
+  uid?: string;
 };
 const initialState = {email: '', password: ''};
 export default function Login({navigation}: SignupScreenProps) {
@@ -70,30 +72,53 @@ export default function Login({navigation}: SignupScreenProps) {
   const loginUser = (userData: SigninUserData): void => {
     auth()
       .signInWithEmailAndPassword(userData.email, userData.password)
-      .then(() => {
-        dispatch(login(userData));
-
-        console.log('User Login Successfully!', 'WEllCOME to TEXTit Chat app');
-        setisloading(false);
-        // dispatch({type: 'Login', payload: {userData: userData}});
+      .then(userCredential => {
+        // Get the user from the userCredential
+        const user = userCredential.user;
+        if (user) {
+          // If user exists, dispatch the login action
+          dispatch(login(userData));
+          console.log('User Login Successfully!', 'Welcome to TEXTit Chat app');
+          setisloading(false);
+          // Call readUserProfile with the user
+          readUserProfile(user);
+        }
       })
       .catch(error => {
+        // Handle login errors
+        setisloading(false);
         if (error.code === 'auth/email-already-in-use') {
-          setisloading(false);
           return console.log(
             'Email Error',
-            'That email address is already register!',
+            'That email address is already registered!',
             'error',
           );
         }
-
         if (error.code === 'auth/invalid-email') {
-          setisloading(false);
-          return console.log('Email|Password Error', 'plz try again', 'error');
+          return console.log(
+            'Email|Password Error',
+            'Please try again',
+            'error',
+          );
         }
-        setisloading(false);
-        return console.log('Email|Password Error', 'plz try again', 'error');
+        return console.log('Email|Password Error', 'Please try again', 'error');
       });
+  };
+
+  const readUserProfile = (user: FirebaseUser) => {
+    firestore()
+      .collection('users')
+      .doc(user.uid)
+      .onSnapshot(documentSnapshot => {
+        const userData: UserProfileData | undefined =
+          documentSnapshot.data() as UserProfileData;
+        if (userData) {
+          dispatch(login(userData));
+        }
+      });
+    setTimeout(() => {
+      // setIsAppLoading(false);
+    }, 2000);
   };
 
   return (
@@ -168,7 +193,7 @@ export default function Login({navigation}: SignupScreenProps) {
         <TouchableOpacity
           onPress={() => {
             console.log('Navigating to forgot screen');
-            navigation?.navigate('forgot');
+            navigation?.navigate('FORGOT_PASSWORD');
           }}>
           <Text style={styles.forgot_button}>Forgot Password?</Text>
         </TouchableOpacity>

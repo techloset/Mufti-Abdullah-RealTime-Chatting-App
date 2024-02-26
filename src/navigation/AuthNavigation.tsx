@@ -9,8 +9,8 @@ import {selectAuthState} from '../redux/AuthSlice';
 const Stack = createStackNavigator();
 export default function AuthNavigation() {
   const isAuth = useSelector(selectAuthState);
-
+  console.log('isAuth.auth', isAuth.isAuth);
   // const {isAuth} = useAuthContext();
 
-  return <>{isAuth ? <MainStack /> : <StackNavigation />}</>;
+  return <>{isAuth.isAuth ? <MainStack /> : <StackNavigation />}</>;
 }

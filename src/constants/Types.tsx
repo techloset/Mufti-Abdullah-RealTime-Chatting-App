@@ -10,7 +10,6 @@ export interface FirebaseUser {
   uid: string;
   displayName?: string | null;
   email?: string | null;
-  // Add any additional properties you need
 }
 export interface UserProfileData {
   confirmPassword?: string;
@@ -19,6 +18,18 @@ export interface UserProfileData {
   status?: string;
   uid?: string;
   username?: string;
+}
+export interface UserData {
+  photoURL?: string;
+  id?: string;
+  uid?: string;
+  imageUrl?: string;
+  username?: string;
+  status?: string;
+  timeAgo?: string;
+  description?: string;
+  email?: string;
+  displayName?: string;
 }
 
 export interface AuthState {
@@ -46,3 +57,9 @@ export type SettingStackParamsList = {
   CHANGE_PASSWORD: undefined;
   SETTING: undefined;
 };
+export interface usersData {
+  photoURL: any;
+  uid: any;
+  imageUrl: any;
+  username: any;
+}

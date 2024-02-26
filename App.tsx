@@ -22,9 +22,9 @@ function App() {
   return (
     <>
       <Provider store={Store}>
-        <AuthContextProvider>
-          <AuthNavigation />
-        </AuthContextProvider>
+        {/* <AuthContextProvider> */}
+        <AuthNavigation />
+        {/* </AuthContextProvider> */}
       </Provider>
     </>
   );

@@ -1,19 +1,35 @@
-import {useState} from 'react';
+import {useEffect, useState} from 'react';
 import {Alert} from 'react-native';
 import auth from '@react-native-firebase/auth';
 import firestore from '@react-native-firebase/firestore';
 import {useAuthContext} from '../../../context/AuthContext';
+import {UserData} from '../../../constants/Types';
 
 export default function useChangePassword() {
   const [currentPassword, setCurrentPassword] = useState('');
   const [newPassword, setNewPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
-  const {user} = useAuthContext();
-  console.log('user.password', user.password);
-  console.log('user.confirmPassword', user.confirmPassword);
-
+  const [usersData, setUsersData] = useState<UserData | null>({});
   const currentUser = auth().currentUser;
-  console.log('currentUser', currentUser);
+  // const {user} = useAuthContext();
+  useEffect(() => {
+    const fetchUsers = async () => {
+      try {
+        const usersSnapshot = await firestore().collection('users').get();
+        const userData = usersSnapshot.docs
+          .map(doc => doc.data() as UserData)
+          .filter(userData => userData.uid === (currentUser?.uid as UserData));
+        console.log('userData', userData);
+        setUsersData(userData[0] as UserData);
+      } catch (error) {
+        console.error('Error fetching users:', error);
+      }
+    };
+
+    fetchUsers();
+  }, [currentUser]);
+
+  // console.log('currentUser', currentUser);
   const handlePasswordUpdate = () => {
     if (!currentUser) {
       Alert.alert('Error', 'User not logged in');
@@ -45,7 +61,9 @@ export default function useChangePassword() {
         currentUser
           .updatePassword(newPassword)
           .then(() => {
-            const userDocRef = firestore().collection('users').doc(user.uid);
+            const userDocRef = firestore()
+              .collection('users')
+              .doc(usersData?.uid);
             userDocRef
               .update({
                 password: newPassword,

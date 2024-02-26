@@ -29,9 +29,9 @@ export default function ChangePassword() {
     handlePasswordUpdate,
   } = useChangePassword();
   const navigation = useNavigation();
-  const {user} = useAuthContext();
-  console.log('user.password', user.password);
-  console.log('user.confirmPassword', user.confirmPassword);
+  // const {user} = useAuthContext();
+  // // console.log('user.password', user.password);
+  // // console.log('user.confirmPassword', user.confirmPassword);
 
   const currentUser = auth().currentUser;
   console.log('currentUser', currentUser);

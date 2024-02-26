@@ -16,7 +16,10 @@ interface UserData {
 export default function uesHome() {
   const user = auth().currentUser || undefined;
   const [usersData, setUsersData] = useState<UserData[]>();
-  const {Logout} = useAuthContext();
+  // const {Logout} = useAuthContext();
+  const Logout = () => {
+    auth().signOut();
+  };
   useEffect(() => {
     const fetchUsers = async () => {
       try {

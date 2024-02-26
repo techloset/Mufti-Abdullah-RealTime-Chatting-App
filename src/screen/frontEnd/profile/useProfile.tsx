@@ -1,45 +1,78 @@
-import {Alert, Text, View} from 'react-native';
+import {Alert} from 'react-native';
 import React, {useEffect, useState} from 'react';
-
-import {useAuthContext} from '../../../context/AuthContext';
 import firestore from '@react-native-firebase/firestore';
-import auth from '@react-native-firebase/auth';
+import auth, {FirebaseAuthTypes} from '@react-native-firebase/auth';
 import ImagePicker, {
   launchImageLibrary,
   ImagePickerResponse,
 } from 'react-native-image-picker';
 import storage from '@react-native-firebase/storage';
-import {useNavigation} from '@react-navigation/native';
+import {UserData, usersData} from '../../../constants/Types';
+import {ClipPath} from 'react-native-svg';
 interface Resource {
   uri?: string;
   data?: string;
 }
+interface ProfileHook {
+  currentUser: FirebaseAuthTypes.User | null;
+  handlePicture: () => Promise<void>;
+  setName: React.Dispatch<React.SetStateAction<string>>;
+  name: string | null | undefined;
+  status: string | null | undefined;
+  setStatus: React.Dispatch<React.SetStateAction<string>>;
+  updateUserProfile: () => void;
+  usersData: UserData | null;
+}
 
-export default function useProfile() {
+export default function useProfile(): ProfileHook {
   const [resource, setResource] = useState<Resource>({});
-  const {user} = useAuthContext();
-  const navigation = useNavigation();
-  const [profileImage, setProfileImage] = useState<string | null>(null);
-  const [name, setName] = useState(user.username);
-  const [status, setStatus] = useState(user.status);
+  const [usersData, setUsersData] = useState<UserData | null>({});
+  // const {user} = useAuthContext();
   const currentUser = auth().currentUser;
+  const [profileImage, setProfileImage] = useState<string | null>(null);
+  const [name, setName] = useState(currentUser?.displayName ?? '');
+  const [status, setStatus] = useState(usersData?.status ?? '');
+  useEffect(() => {
+    if (usersData && usersData.status) {
+      setStatus(usersData.status);
+    }
+  }, [usersData]);
+
+  useEffect(() => {
+    const fetchUsers = async () => {
+      try {
+        const usersSnapshot = await firestore().collection('users').get();
+        const userData = usersSnapshot.docs
+          .map(doc => doc.data() as UserData)
+          .filter(userData => userData.uid === (currentUser?.uid as UserData));
+        console.log('userData', userData);
+        setUsersData(userData[0] as UserData);
+      } catch (error) {
+        console.error('Error fetching users:', error);
+      }
+    };
+
+    fetchUsers();
+  }, [currentUser]);
+
+  console.log('usersData lllll', usersData?.status);
   console.log('currentUser', currentUser);
   useEffect(() => {
-    if (user.photoURL) {
-      setProfileImage(user.photoURL);
+    if (usersData?.photoURL) {
+      setProfileImage(usersData.photoURL);
     }
-  }, [user.photoURL]);
+  }, [usersData?.photoURL]);
   if (!currentUser) {
     Alert.alert('Error', 'User not logged in');
-    return;
   }
 
   const updateUserProfile = () => {
-    currentUser.updateProfile({
-      displayName: name,
-    });
+    currentUser &&
+      currentUser.updateProfile({
+        displayName: name,
+      });
     // Update user profile information in Firestore
-    const userDocRef = firestore().collection('users').doc(user.uid);
+    const userDocRef = firestore().collection('users').doc(usersData?.uid);
     userDocRef
       .update({
         username: name,
@@ -106,7 +139,7 @@ export default function useProfile() {
       await ref.put(blob);
       const downloadURL = await ref.getDownloadURL();
       console.log('Image uploaded to Firebase Storage:', downloadURL);
-      const userDocRef = firestore().collection('users').doc(user.uid);
+      const userDocRef = firestore().collection('users').doc(usersData?.uid);
       userDocRef
         .update({
           photoURL: downloadURL,
@@ -119,9 +152,10 @@ export default function useProfile() {
           Alert.alert('Error', error.message);
         });
 
-      currentUser.updateProfile({
-        photoURL: downloadURL,
-      });
+      currentUser &&
+        currentUser.updateProfile({
+          photoURL: downloadURL,
+        });
     } catch (error) {
       console.error('Error uploading image to Firebase Storage:', error);
     }
@@ -130,7 +164,7 @@ export default function useProfile() {
     currentUser,
     handlePicture,
     setName,
-    user,
+    usersData,
     name,
     status,
     setStatus,

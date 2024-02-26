@@ -1,24 +1,56 @@
 import {Text, TouchableOpacity, View} from 'react-native';
-import React, {Component} from 'react';
+import React, {Component, useEffect, useState} from 'react';
 import User from '../../../components/contactUserInfo/User';
 import SettingInfo from '../../../components/settingPageComponents/SettingInfo';
 import {HEADERICON, SETTINGICON} from '../../../constants/assets/AllImages';
 import {styles} from '../../../components/settingPageComponents/Style';
 import SettingHeader from '../../../components/tabHeader/SettingHeader';
 import {StackNavigationProp} from '@react-navigation/stack';
-import {RootStackParamsList} from '../../../navigation/SettingNavigation';
 import LinearGradient from 'react-native-linear-gradient';
-import auth from '@react-native-firebase/auth';
+import auth, {FirebaseAuthTypes} from '@react-native-firebase/auth';
 import {useAuthContext} from '../../../context/AuthContext';
 import {HeaderStyles} from '../../../styles/headerStyling/HeaderStyling';
-
+import {SettingStackParamsList, UserData} from '../../../constants/Types';
+import {useDispatch, useSelector} from 'react-redux';
+import {selectAllUsers} from '../../../redux/UserSlice';
+import firestore, {
+  FirebaseFirestoreTypes,
+} from '@react-native-firebase/firestore';
 interface navigationProps {
-  navigation: StackNavigationProp<RootStackParamsList, 'SETTING'>;
+  navigation: StackNavigationProp<SettingStackParamsList, 'SETTING'>;
 }
 export default function Setting({navigation}: navigationProps) {
-  const currentUser = auth().currentUser;
-  const {user} = useAuthContext();
-  // console.log('user seting', user);
+  const user = auth().currentUser;
+  console.log('currentUser.uid', user);
+  // const dispatch = useDispatch();
+  // const users = useSelector(selectAllUsers);
+
+  // useEffect(() => {
+  //   dispatch(fetchAllUsers());
+  // }, [dispatch]);
+  const [usersData, setUsersData] = useState<UserData | null>(null);
+  console.log('usersData', usersData);
+  useEffect(() => {
+    const fetchUsers = async () => {
+      try {
+        if (user) {
+          const usersSnapshot = await firestore()
+            .collection('users')
+            .doc(user.uid)
+            .get();
+          const userData = usersSnapshot.data();
+
+          if (userData) {
+            setUsersData(userData);
+          }
+        }
+      } catch (error) {
+        console.error('Error fetching users:', error);
+      }
+    };
+
+    fetchUsers();
+  }, []);
   return (
     <>
       <LinearGradient
@@ -46,9 +78,9 @@ export default function Setting({navigation}: navigationProps) {
             }}>
             <View style={{marginLeft: 24, marginBottom: 16}}>
               <User
-                photoURL={currentUser?.photoURL}
-                username={currentUser?.displayName}
-                status={user.status}
+                photoURL={user?.photoURL}
+                username={user?.displayName}
+                status={usersData?.status}
               />
             </View>
           </TouchableOpacity>

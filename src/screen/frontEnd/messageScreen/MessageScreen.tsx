@@ -1,30 +1,27 @@
+import React, {useEffect, useState} from 'react';
 import {
-  Image,
-  ScrollView,
+  View,
   Text,
+  ScrollView,
   TextInput,
   TouchableOpacity,
-  View,
+  Image,
 } from 'react-native';
-import React, {useEffect, useState} from 'react';
 import auth from '@react-native-firebase/auth';
-import {CHATICON, HEADERICON} from '../../../constants/assets/AllImages';
-import User from '../../../components/contactUserInfo/User';
-import {styles} from './MessageScreenStyling';
-import {useNavigation} from '@react-navigation/native';
 import firestore, {
   FirebaseFirestoreTypes,
 } from '@react-native-firebase/firestore';
+import {useNavigation} from '@react-navigation/native';
+import {CHATICON, HEADERICON} from '../../../constants/assets/AllImages';
+import User from '../../../components/contactUserInfo/User';
+import {styles} from './MessageScreenStyling';
+
 export default function MessageScreen({route}: any) {
   const navigation = useNavigation();
-
   const currentUser = auth().currentUser;
   const {userDetails} = route.params;
   const [message, setMessage] = useState('');
   const [messages, setMessages] = useState<
-    FirebaseFirestoreTypes.DocumentData[]
-  >([]);
-  const [reciverMessages, setreciverMessages] = useState<
     FirebaseFirestoreTypes.DocumentData[]
   >([]);
 
@@ -39,7 +36,6 @@ export default function MessageScreen({route}: any) {
 
   const addMessageToChat = async (receiverId: string, message: string) => {
     const currentUser = auth().currentUser;
-    console.log('messages', messages);
     if (!currentUser || !currentUser?.uid || !receiverId || !message) return;
 
     const chatRef = firestore().collection('chats');
@@ -49,8 +45,6 @@ export default function MessageScreen({route}: any) {
       message,
       timestamp: new Date().toLocaleTimeString(),
       Date: new Date().toLocaleDateString(),
-
-      //   subchat: {},
     });
   };
 
@@ -63,15 +57,13 @@ export default function MessageScreen({route}: any) {
           .collection('chats')
           .where('receiverId', 'in', [currentUser.uid, userDetails.uid])
           .where('senderId', 'in', [currentUser.uid, userDetails.uid])
+          .orderBy('Date', 'asc')
           .orderBy('timestamp', 'asc')
           .get();
 
         const fetchedMessages = querySnapshot.docs.map(doc => ({
-          timestamp: doc.data().timestamp,
-          message: doc.data().message,
-          Date: doc.data().Date,
-          senderId: doc.data().senderId,
-          receiverId: doc.data().receiverId,
+          id: doc.id,
+          ...doc.data(),
         }));
         setMessages(fetchedMessages);
       } catch (error) {
@@ -80,34 +72,14 @@ export default function MessageScreen({route}: any) {
     };
 
     fetchMessages();
-  }, [currentUser, userDetails, message]); // removed `message` dependency as it might lead to infinite loop
-  // useEffect(() => {
-  //   const fetchMessages = async () => {
-  //     if (!currentUser || !userDetails) return;
+  }, [currentUser, userDetails, messages]);
 
-  //     try {
-  //       const querySnapshot = await firestore()
-  //         .collection('chats')
-  //         .doc(userDetails.uid)
-  //         .collection('messages')
-  //         .where('receiverId', 'in', [currentUser.uid, userDetails.uid])
-  //         .where('senderId', 'in', [currentUser.uid, userDetails.uid])
-  //         .orderBy('timestamp', 'asc')
-  //         .get();
-
-  //       const fetchedMessages = querySnapshot.docs.map(doc => doc.data());
-  //       setreciverMessages(fetchedMessages);
-  //     } catch (error) {
-  //       console.error('Error fetching messages:', error);
-  //     }
-  //   };
-
-  //   fetchMessages();
-  // }, [currentUser, userDetails, message]);
+  // Render the date only when it changes
+  let prevDate = '';
   return (
     <>
       <View style={styles.container}>
-        <TouchableOpacity onPress={navigation.goBack}>
+        <TouchableOpacity onPress={() => navigation.goBack()}>
           <HEADERICON.ArrowBlack style={styles.icons} width={30} height={30} />
         </TouchableOpacity>
         <User
@@ -118,43 +90,44 @@ export default function MessageScreen({route}: any) {
       </View>
       <ScrollView>
         <View style={styles.main}>
-          {/* {messages.map((message, index) => ( */}
-          <Text style={styles.text}>{/* {message.Date} */}TOday</Text>
-          {/* ))} */}
-
           {messages.map((message, index) => {
-            console.log('Sender ID:', message.senderId);
-            console.log('Current User ID:', currentUser?.uid);
+            const formattedDate = message.Date;
+            let showDate = false;
 
-            if (message.senderId !== currentUser?.uid) {
-              return (
-                <View key={index} style={styles.MainUser}>
-                  <View style={styles.user}>
-                    <Image
-                      source={{uri: userDetails.photoURL}}
-                      style={styles.image}
-                    />
+            // Check if the current date is different from the previous one
+            if (formattedDate !== prevDate) {
+              showDate = true;
+              prevDate = formattedDate;
+            }
+
+            return (
+              <View key={index}>
+                {showDate && <Text style={styles.text}>{formattedDate}</Text>}
+                {message.senderId !== currentUser?.uid ? (
+                  <View style={styles.MainUser}>
+                    <View style={styles.user}>
+                      <Image
+                        source={{uri: userDetails.photoURL}}
+                        style={styles.image}
+                      />
+                    </View>
+                    <View style={styles.userMessage}>
+                      <Text style={styles.Description}>
+                        {userDetails.username}
+                      </Text>
+                      <Text style={styles.MessageText}>{message.message}</Text>
+                      <Text style={styles.time}>{message.timestamp}</Text>
+                    </View>
                   </View>
-                  <View style={styles.userMessage}>
-                    <Text style={styles.Description}>
-                      {userDetails.username}
-                    </Text>
-                    <Text style={styles.MessageText}>{message.message}</Text>
+                ) : (
+                  <View style={styles.me}>
+                    <Text style={styles.myText}>{message.message}</Text>
                     <Text style={styles.time}>{message.timestamp}</Text>
                   </View>
-                </View>
-              );
-            }
+                )}
+              </View>
+            );
           })}
-          {messages.map(
-            (message, index) =>
-              message.senderId === currentUser?.uid && (
-                <View key={index} style={styles.me}>
-                  <Text style={styles.myText}>{message.message}</Text>
-                  <Text style={styles.time}>{message.timestamp}</Text>
-                </View>
-              ),
-          )}
         </View>
       </ScrollView>
 
