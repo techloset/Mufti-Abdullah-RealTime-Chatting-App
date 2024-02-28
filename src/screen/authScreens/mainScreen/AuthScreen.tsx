@@ -13,12 +13,24 @@ import LinearGradient from 'react-native-linear-gradient';
 import {RootStackParamsList} from '../../../navigation/AuthStackNavigation';
 import {StackNavigationProp} from '@react-navigation/stack';
 import {GoogleSignin} from '@react-native-google-signin/google-signin';
-import auth from '@react-native-firebase/auth';
-import {useAuthContext} from '../../../context/AuthContext';
+import auth, {FirebaseAuthTypes} from '@react-native-firebase/auth';
+import firestore from '@react-native-firebase/firestore';
+// import {useAuthContext} from '../../../context/AuthContext';
 import {UserProfileData} from '../../../constants/Types';
 import {FONTS} from '../../../constants/fonts/Font';
 import {styles} from './Style';
-
+import {useDispatch} from 'react-redux';
+import {login} from '../../../redux/AuthSlice';
+type UserData = {
+  username: string;
+  email: string;
+  password: string;
+  confirmPassword: string;
+  uid?: string;
+  photoURL?: string | null;
+  creationTime?: string;
+  status?: string;
+};
 GoogleSignin.configure({
   webClientId:
     '880655244940-tggqp0tccp4liuaj3r69m97hr9ljllds.apps.googleusercontent.com',
@@ -28,8 +40,8 @@ GoogleSignin.configure({
   forceCodeForRefreshToken: true, // [Android] related to `serverAuthCode`, read the docs link below *.
   accountName: '', // [Android] specifies an account name on the device that should be used
   googleServicePlistPath: '', // [iOS] if you renamed your GoogleService-Info file, new name here, e.g. GoogleService-Info-Staging
-  openIdRealm: '', // [iOS] The OpenID2 realm of the home web server. This allows Google to include the user's OpenID Identifier in the OpenID Connect ID token.
-  profileImageSize: 120, // [iOS] The desired height (and width) of the profile image. Defaults to 120p
+  openIdRealm: '',
+  profileImageSize: 120,
 });
 
 interface LoginProps {
@@ -37,26 +49,45 @@ interface LoginProps {
 }
 
 export default function AuthScreen({navigation}: LoginProps) {
-  const {dispatch} = useAuthContext();
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  // const {dispatch} = useAuthContext();
+  const dispatch = useDispatch();
   const LoginWithGoogle = async () => {
     try {
       await GoogleSignin.hasPlayServices({showPlayServicesUpdateDialog: true});
-      // Get the users ID token
       const {idToken} = await GoogleSignin.signIn();
-
-      // Create a Google credential with the token
       const googleCredential = auth.GoogleAuthProvider.credential(idToken);
+      const userCredential = await auth().signInWithCredential(
+        googleCredential,
+      );
 
-      // Sign-in the user with the credential
-      return auth().signInWithCredential(googleCredential);
+      console.log('🚀 ~ LoginWithGoogle ~ userCredential:', userCredential);
+      const userData = {
+        displayName: userCredential.user.displayName,
+        email: userCredential.user.email,
+        photoURL: userCredential.user.photoURL,
+        uid: userCredential.user.uid,
+        creationTime: userCredential.user.metadata.creationTime,
+      };
+
+      // Ensure the user is signed in before accessing their UID
+
+      // Set user data in Firestore
+      await firestore().collection('users').doc(userCredential.user.uid).set({
+        username: userData.displayName,
+        email: userData.email,
+        uid: userData.uid,
+        password: '',
+        confirmPassword: '',
+        photoURL: userData.photoURL,
+        creationTime: userData.creationTime,
+        status: 'Active',
+      });
+      dispatch(login(userData as any));
+      console.log('Success', 'User SignUp Successfully', 'success');
     } catch (error) {
       console.error('Error during Google sign-in:', error);
-      // Handle the error appropriately, e.g., display an error message to the user
     }
   };
-
   return (
     <>
       <LinearGradient

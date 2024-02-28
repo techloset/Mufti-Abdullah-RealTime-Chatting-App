@@ -27,7 +27,8 @@ interface navigationProps {
 }
 
 export default function Home({navigation}: navigationProps) {
-  const {Logout, usersData, user} = uesHome();
+  const {LogoutUser, usersData, user} = uesHome();
+  console.log('🚀 ~ Home ~ usersData:', usersData);
 
   return (
     <LinearGradient
@@ -44,7 +45,7 @@ export default function Home({navigation}: navigationProps) {
             }}>
             <HEADERICON.search />
           </TouchableOpacity>
-          <Text style={HeaderStyles.screenName} onPress={Logout}>
+          <Text style={HeaderStyles.screenName} onPress={LogoutUser}>
             Home
           </Text>
           {user?.photoURL ? (

@@ -11,11 +11,7 @@ import auth, {FirebaseAuthTypes} from '@react-native-firebase/auth';
 import {useAuthContext} from '../../../context/AuthContext';
 import {HeaderStyles} from '../../../styles/headerStyling/HeaderStyling';
 import {SettingStackParamsList, UserData} from '../../../constants/Types';
-import {useDispatch, useSelector} from 'react-redux';
-import {selectAllUsers} from '../../../redux/UserSlice';
-import firestore, {
-  FirebaseFirestoreTypes,
-} from '@react-native-firebase/firestore';
+import firestore from '@react-native-firebase/firestore';
 interface navigationProps {
   navigation: StackNavigationProp<SettingStackParamsList, 'SETTING'>;
 }

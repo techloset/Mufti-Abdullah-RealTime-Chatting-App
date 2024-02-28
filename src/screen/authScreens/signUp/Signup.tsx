@@ -11,6 +11,8 @@ import {
 import {styles} from './SignUPStyles';
 import {useAuthContext} from '../../../context/AuthContext';
 import {Toast} from 'toastify-react-native';
+import {useDispatch} from 'react-redux';
+import {login} from '../../../redux/AuthSlice';
 
 const initialState = {
   username: '',
@@ -29,7 +31,8 @@ type UserData = {
   status?: string;
 };
 export default function SignUp() {
-  const {dispatch} = useAuthContext();
+  // const {dispatch} = useAuthContext();
+  const dispatch = useDispatch();
   const [loading, setisloading] = useState(false);
   const [state, setState] = useState(initialState);
 
@@ -103,6 +106,7 @@ export default function SignUp() {
           .then(() => {
             // dispatch({type: 'Login', payload: {userData}});
             console.log('Success', 'User SignUp Successfully', 'success');
+            dispatch(login(userData));
             setisloading(false);
           })
           .catch((error: any) => {

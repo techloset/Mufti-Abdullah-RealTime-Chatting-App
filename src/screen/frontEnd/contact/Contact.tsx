@@ -1,22 +1,14 @@
-import {
-  Image,
-  SafeAreaView,
-  ScrollView,
-  Text,
-  TouchableOpacity,
-  View,
-} from 'react-native';
-import React, {useEffect, useState} from 'react';
+import {Modal, ScrollView, Text, TouchableOpacity, View} from 'react-native';
+import React, {useState} from 'react';
 import User from '../../../components/contactUserInfo/User';
 import {styles} from './ContactStyle';
-import firestore from '@react-native-firebase/firestore';
 import LinearGradient from 'react-native-linear-gradient';
 import {HEADERICON} from '../../../constants/assets/AllImages';
 import {HeaderStyles} from '../../../styles/headerStyling/HeaderStyling';
 import {StackNavigationProp} from '@react-navigation/stack';
-import auth from '@react-native-firebase/auth';
 import {ContactStackParamsList} from '../../../constants/Types';
 import useContact from './useContact';
+import Model from '../../../components/model/Model';
 interface UserData {
   confirmPassword: string;
   creationTime: string;
@@ -35,7 +27,12 @@ interface navigationProps {
 }
 export default function Contact({navigation}: navigationProps) {
   const {users} = useContact();
+  const [isModalVisible, setIsModalVisible] = useState(false); // State to manage modal visibility
 
+  // Function to toggle modal visibility
+  const toggleModal = () => {
+    setIsModalVisible(!isModalVisible);
+  };
   return (
     <>
       <LinearGradient
@@ -53,9 +50,11 @@ export default function Contact({navigation}: navigationProps) {
               <HEADERICON.search style={HeaderStyles.imageSearch} />
             </TouchableOpacity>
             <Text style={HeaderStyles.screenName}>Contact</Text>
-            <View style={HeaderStyles.image}>
-              <HEADERICON.AddUser />
-            </View>
+            <TouchableOpacity onPress={toggleModal}>
+              <View style={HeaderStyles.image}>
+                <HEADERICON.AddUser />
+              </View>
+            </TouchableOpacity>
           </View>
         </View>
         <ScrollView style={HeaderStyles.main}>
@@ -74,6 +73,7 @@ export default function Contact({navigation}: navigationProps) {
           ))}
         </ScrollView>
       </LinearGradient>
+      <Model isVisible={isModalVisible} />
     </>
   );
 }

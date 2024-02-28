@@ -34,18 +34,58 @@ export default function MessageScreen({route}: any) {
     }
   };
 
+  const randomId = Math.random()
+    .toString(36)
+    .replace(/[^a-z]+/g, '')
+    .substr(2, 10);
+
   const addMessageToChat = async (receiverId: string, message: string) => {
     const currentUser = auth().currentUser;
     if (!currentUser || !currentUser?.uid || !receiverId || !message) return;
 
-    const chatRef = firestore().collection('chats');
-    await chatRef.add({
-      senderId: currentUser.uid,
-      receiverId,
-      message,
-      timestamp: new Date().toLocaleTimeString(),
-      Date: new Date().toLocaleDateString(),
-    });
+    try {
+      // Check if the chat document exists, if not, create it
+      const chatRef = firestore().collection('chats').doc(randomId);
+      const chatDoc = await chatRef.get();
+
+      if (!chatDoc.exists) {
+        // Create the chat document
+        await chatRef.set(
+          {
+            members: [currentUser.uid, receiverId],
+            lastMessageSent: '',
+          },
+          {merge: true},
+        );
+      }
+      const chatMessages = firestore().collection('chatMessages').doc(randomId);
+      // Add message to 'chatMessages' collection
+      const messageRef = chatMessages.collection('messages').doc();
+      const usersChat = firestore()
+        .collection('usersChats')
+        .doc(currentUser.uid)
+        .collection('recivers')
+        .doc();
+      await usersChat.set({
+        chatId: randomId,
+        receiverId: userDetails.uid,
+      });
+      await chatMessages.set({
+        sentBy: currentUser.uid,
+        reciver: userDetails.uid,
+        messageDate: new Date().toLocaleDateString(),
+        messageTime: new Date().toLocaleTimeString(),
+        message: message,
+      });
+
+      // Update lastMessageSent in 'chats' collection
+      await chatRef.update({
+        lastMessageSent: messageRef.id,
+        members: firestore.FieldValue.arrayUnion(receiverId),
+      });
+    } catch (error) {
+      console.error('Error adding message to chat:', error);
+    }
   };
 
   useEffect(() => {
@@ -54,17 +94,13 @@ export default function MessageScreen({route}: any) {
 
       try {
         const querySnapshot = await firestore()
-          .collection('chats')
-          .where('receiverId', 'in', [currentUser.uid, userDetails.uid])
-          .where('senderId', 'in', [currentUser.uid, userDetails.uid])
-          .orderBy('Date', 'asc')
-          .orderBy('timestamp', 'asc')
+          .collection('chatMessages')
+          .where('reciver', 'in', [currentUser.uid, userDetails.uid])
+          .where('sentBy', 'in', [currentUser.uid, userDetails.uid])
+          .orderBy('messageDate', 'asc')
+          .orderBy('messageTime', 'asc')
           .get();
-
-        const fetchedMessages = querySnapshot.docs.map(doc => ({
-          id: doc.id,
-          ...doc.data(),
-        }));
+        const fetchedMessages = querySnapshot.docs.map(doc => doc.data());
         setMessages(fetchedMessages);
       } catch (error) {
         console.error('Error fetching messages:', error);
@@ -73,8 +109,9 @@ export default function MessageScreen({route}: any) {
 
     fetchMessages();
   }, [currentUser, userDetails, messages]);
-
+  // console.log('randomId', randomId);
   // Render the date only when it changes
+  console.log('messages', messages);
   let prevDate = '';
   return (
     <>
@@ -91,7 +128,7 @@ export default function MessageScreen({route}: any) {
       <ScrollView>
         <View style={styles.main}>
           {messages.map((message, index) => {
-            const formattedDate = message.Date;
+            const formattedDate = message.messageDate;
             let showDate = false;
 
             // Check if the current date is different from the previous one
@@ -103,7 +140,7 @@ export default function MessageScreen({route}: any) {
             return (
               <View key={index}>
                 {showDate && <Text style={styles.text}>{formattedDate}</Text>}
-                {message.senderId !== currentUser?.uid ? (
+                {message.sentBy !== currentUser?.uid ? (
                   <View style={styles.MainUser}>
                     <View style={styles.user}>
                       <Image
@@ -116,13 +153,13 @@ export default function MessageScreen({route}: any) {
                         {userDetails.username}
                       </Text>
                       <Text style={styles.MessageText}>{message.message}</Text>
-                      <Text style={styles.time}>{message.timestamp}</Text>
+                      <Text style={styles.time}>{message.messageTime}</Text>
                     </View>
                   </View>
                 ) : (
                   <View style={styles.me}>
                     <Text style={styles.myText}>{message.message}</Text>
-                    <Text style={styles.time}>{message.timestamp}</Text>
+                    <Text style={styles.time}>{message.messageTime}</Text>
                   </View>
                 )}
               </View>
