@@ -27,9 +27,10 @@ interface navigationProps {
 }
 
 export default function Home({navigation}: navigationProps) {
-  const {LogoutUser, usersData, user} = uesHome();
-  console.log('🚀 ~ Home ~ usersData:', usersData);
-
+  const {LogoutUser, usersData, user, deleteUser} = uesHome();
+  const handleDeleteUser = (userId: string) => {
+    deleteUser(userId);
+  };
   return (
     <LinearGradient
       style={HeaderStyles.mainContainer}
@@ -58,42 +59,50 @@ export default function Home({navigation}: navigationProps) {
           )}
         </View>
       </View>
-
       <View style={HeaderStyles.main}>
         <SafeAreaView style={HomeStyles.textContainer1}>
-          <SwipeListView
-            data={usersData}
-            renderItem={({item}) => (
-              <Pressable
-                onPress={() => {
-                  navigation.navigate('CHATSCREEN', {userDetails: item});
-                }}>
-                <UserInfo
-                  profileImage={item.photoURL}
-                  displayName={item.username}
-                  status={item.status}
-                  lastActive={item.timeAgo}
-                />
-              </Pressable>
-            )}
-            renderHiddenItem={() => (
-              <View
-                style={{
-                  display: 'flex',
-                  flexDirection: 'row',
-                  backgroundColor: 'transparent',
-                  justifyContent: 'flex-end',
-                  marginHorizontal: 10,
-                  paddingTop: 13,
-                  paddingHorizontal: 5,
-                  gap: 6,
-                }}>
-                <HOMEICON.Noftification />
-                <HOMEICON.DeleteIcon />
-              </View>
-            )}
-            rightOpenValue={-105}
-          />
+          {usersData && usersData.length > 0 ? (
+            <SwipeListView
+              data={usersData}
+              renderItem={({item}) => (
+                <Pressable
+                  onPress={() => {
+                    navigation.navigate('CHATSCREEN', {userDetails: item});
+                  }}>
+                  <UserInfo
+                    profileImage={item.photoURL}
+                    displayName={item.username}
+                    status={item.status}
+                    lastActive={item.timeAgo}
+                  />
+                </Pressable>
+              )}
+              renderHiddenItem={({item}) => (
+                <View
+                  style={{
+                    display: 'flex',
+                    flexDirection: 'row',
+                    backgroundColor: 'transparent',
+                    justifyContent: 'flex-end',
+                    marginHorizontal: 10,
+                    paddingTop: 13,
+                    paddingHorizontal: 5,
+                    gap: 6,
+                  }}>
+                  <HOMEICON.Noftification />
+                  <TouchableOpacity
+                    onPress={() => {
+                      handleDeleteUser(item.uid);
+                    }}>
+                    <HOMEICON.DeleteIcon />
+                  </TouchableOpacity>
+                </View>
+              )}
+              rightOpenValue={-105}
+            />
+          ) : (
+            <Text>Loading...</Text>
+          )}
         </SafeAreaView>
       </View>
     </LinearGradient>

@@ -61,14 +61,11 @@ export default function MessageScreen({route}: any) {
       const chatMessages = firestore().collection('chatMessages').doc(randomId);
       // Add message to 'chatMessages' collection
       const messageRef = chatMessages.collection('messages').doc();
-      const usersChat = firestore()
-        .collection('usersChats')
-        .doc(currentUser.uid)
-        .collection('recivers')
-        .doc();
+      const usersChat = firestore().collection('usersChats').doc();
       await usersChat.set({
         chatId: randomId,
         receiverId: userDetails.uid,
+        sendby: currentUser.uid,
       });
       await chatMessages.set({
         sentBy: currentUser.uid,

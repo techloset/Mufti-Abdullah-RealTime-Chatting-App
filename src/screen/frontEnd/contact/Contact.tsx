@@ -1,4 +1,11 @@
-import {Modal, ScrollView, Text, TouchableOpacity, View} from 'react-native';
+import {
+  Modal,
+  Pressable,
+  ScrollView,
+  Text,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 import React, {useState} from 'react';
 import User from '../../../components/contactUserInfo/User';
 import {styles} from './ContactStyle';
@@ -23,7 +30,9 @@ interface UserData {
 }
 
 interface navigationProps {
-  navigation: StackNavigationProp<ContactStackParamsList, 'CONTACTPAGE'>;
+  navigation: StackNavigationProp<ContactStackParamsList, 'CONTACTPAGE'> & {
+    navigate(screen: string, params: {userDetails: UserData}): void;
+  };
 }
 export default function Contact({navigation}: navigationProps) {
   const {users} = useContact();
@@ -62,12 +71,17 @@ export default function Contact({navigation}: navigationProps) {
             <View key={letter} style={styles.LettersView}>
               <Text style={styles.LetterText}>{letter}</Text>
               {users.map((user, index) => (
-                <User
-                  key={index}
-                  photoURL={user.photoURL}
-                  username={user.username}
-                  status={user.status}
-                />
+                <Pressable
+                  onPress={() => {
+                    navigation.navigate('CHATSCREEN', {userDetails: user});
+                  }}>
+                  <User
+                    key={index}
+                    photoURL={user.photoURL}
+                    username={user.username}
+                    status={user.status}
+                  />
+                </Pressable>
               ))}
             </View>
           ))}
