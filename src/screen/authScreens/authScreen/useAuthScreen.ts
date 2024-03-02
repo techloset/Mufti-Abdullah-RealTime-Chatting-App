@@ -9,12 +9,11 @@ import {ShowToast} from '../../../components/toast/ShowToast';
 GoogleSignin.configure({
   webClientId:
     '880655244940-tggqp0tccp4liuaj3r69m97hr9ljllds.apps.googleusercontent.com',
-  scopes: ['profile', 'email'], // what API you want to access on behalf of the user, default is email and profile
-  offlineAccess: true, // if you want to access Google API on behalf of the user FROM YOUR SERVER
-  hostedDomain: '', // specifies a hosted domain restriction
-  forceCodeForRefreshToken: true, // [Android] related to `serverAuthCode`, read the docs link below *.
-  accountName: '', // [Android] specifies an account name on the device that should be used
-  googleServicePlistPath: '', // [iOS] if you renamed your GoogleService-Info file, new name here, e.g. GoogleService-Info-Staging
+  scopes: ['profile', 'email'],
+  offlineAccess: true,
+  hostedDomain: '',
+  forceCodeForRefreshToken: true,
+  accountName: '',
   openIdRealm: '',
   profileImageSize: 120,
 });

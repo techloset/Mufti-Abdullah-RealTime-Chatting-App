@@ -1,6 +1,6 @@
 import {StyleSheet} from 'react-native';
-import {FONTS} from '../../constants/fonts/Font';
-import {COLORS} from '../../constants/colors/Color';
+import {FONTS} from '../constants/fonts/Font';
+import {COLORS} from '../constants/colors/Color';
 export const HeaderStyles = StyleSheet.create({
   mainContainer: {
     flex: 1,
@@ -25,7 +25,7 @@ export const HeaderStyles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    paddingHorizontal: 24,
+    paddingHorizontal: 14,
   },
   profilePhoto: {
     width: 44,

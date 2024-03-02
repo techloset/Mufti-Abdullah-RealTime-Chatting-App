@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import {createStackNavigator} from '@react-navigation/stack';
 import AuthScreen from '../screen/authScreens/authScreen/AuthScreen';
 import Login from '../screen/authScreens/login/Login';
-import SignUp from '../screen/authScreens/signUp/Signup';
+import SignUp from '../screen/authScreens/signup/Signup';
 import Forgot from '../screen/authScreens/forget/Forget';
 import {NavigationContainer} from '@react-navigation/native';
 import {AUTH_STACK_SCREENS_NAVIGATION} from '../constants/navigationScreens/NavigationScreens';

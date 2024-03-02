@@ -19,7 +19,6 @@ export default function useChangePassword() {
         const userData = usersSnapshot.docs
           .map(doc => doc.data() as UserData)
           .filter(userData => userData.uid === currentUser?.uid);
-        console.log('userData', userData);
         setUsersData(userData[0] as UserData);
       } catch (error) {
         console.error('Error fetching users:', error);

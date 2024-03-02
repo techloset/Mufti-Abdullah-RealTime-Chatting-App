@@ -8,14 +8,10 @@ import {
   TouchableOpacity,
   ActivityIndicator,
 } from 'react-native';
-import {styles} from '../../authScreens/signUp/SignUPStyles';
-import SettingHeader from '../../../components/tabHeader/SettingHeader';
-import auth from '@react-native-firebase/auth';
-import firestore from '@react-native-firebase/firestore';
-import {useAuthContext} from '../../../context/AuthContext';
+import {styles} from '../../authScreens/signup/SignupStyles';
 import LinearGradient from 'react-native-linear-gradient';
 import {HEADERICON} from '../../../constants/assets/AllImages';
-import {HeaderStyles} from '../../../styles/headerStyling/HeaderStyling';
+import {HeaderStyles} from '../../../styles/HeaderStyling';
 import {useNavigation} from '@react-navigation/native';
 import useChangePassword from './useChangePassword';
 import {chnagepasswordStyles} from './ChangePasswordStyles';

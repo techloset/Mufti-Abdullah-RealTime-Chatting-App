@@ -1,7 +1,7 @@
 import Forgot from '../../screen/authScreens/forget/Forget';
 import Login from '../../screen/authScreens/login/Login';
 import AuthScreen from '../../screen/authScreens/authScreen/AuthScreen';
-import SignUp from '../../screen/authScreens/signUp/Signup';
+import SignUp from '../../screen/authScreens/signup/Signup';
 import ChangePassword from '../../screen/frontEnd/chnagePassword/ChangePassword';
 import Contact from '../../screen/frontEnd/contact/Contact';
 import Home from '../../screen/frontEnd/home/Home';
@@ -35,7 +35,6 @@ export const HOME_STACK_SCREENS_NAVIGATION = [
 ];
 export const CONTACT_STACK_SCREENS_NAVIGATION = [
   {name: CONTACT_STACK_SCREENS.CONTACTPAGE, component: Contact},
-  // {name: CONTACT_STACK_SCREENS.SEARCHCNTACT, component: Search},
 ];
 export const SETTING_STACK_SCREENS_NAVIGATION = [
   {name: SETTING_STACK_SCREENS.SETTING_PAGE, component: Setting},

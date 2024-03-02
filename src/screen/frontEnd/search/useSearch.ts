@@ -36,7 +36,6 @@ export default function useSearch() {
         userData.username &&
         userData.username.toLowerCase().includes(text.toLowerCase()),
     );
-    console.log('filteredUsers', filteredUsers);
     setUsersData(filteredUsers);
   };
   return {handleSearch, loading, query, setQuery, usersData};

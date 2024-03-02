@@ -17,7 +17,7 @@ import {
   HOMEICON,
   USERPROFILEIMAGE,
 } from '../../../constants/assets/AllImages';
-import {HeaderStyles} from '../../../styles/headerStyling/HeaderStyling';
+import {HeaderStyles} from '../../../styles/HeaderStyling';
 import {StackNavigationProp} from '@react-navigation/stack';
 import {HomeStackParamsList, HomeUser} from '../../../constants/Types';
 import uesHome from './uesHome';
@@ -97,16 +97,16 @@ export default function Home({navigation}: navigationProps) {
                   gap: 6,
                 }}>
                 <HOMEICON.Noftification />
-                {isAppLoading ? (
-                  <ActivityIndicator color={'red'} size={'large'} />
-                ) : (
-                  <TouchableOpacity
-                    onPress={() => {
-                      handleDeleteUser(item.uid);
-                    }}>
+                <TouchableOpacity
+                  onPress={() => {
+                    handleDeleteUser(item.uid);
+                  }}>
+                  {isAppLoading ? (
+                    <ActivityIndicator color={'red'} size={'large'} />
+                  ) : (
                     <HOMEICON.DeleteIcon />
-                  </TouchableOpacity>
-                )}
+                  )}
+                </TouchableOpacity>
               </View>
             )}
             rightOpenValue={-105}

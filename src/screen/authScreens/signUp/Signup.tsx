@@ -1,6 +1,4 @@
-import React, {useState} from 'react';
-import auth, {FirebaseAuthTypes} from '@react-native-firebase/auth';
-import firestore from '@react-native-firebase/firestore';
+import React from 'react';
 import {
   Text,
   View,
@@ -8,7 +6,7 @@ import {
   TouchableOpacity,
   ImageBackground,
 } from 'react-native';
-import {styles} from './SignUPStyles';
+import {styles} from './SignupStyles';
 import useSignup from './useSignup';
 import Loader from '../../../components/loader/Loader';
 export default function SignUp() {

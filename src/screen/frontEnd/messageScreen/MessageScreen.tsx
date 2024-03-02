@@ -7,12 +7,14 @@ import {
   TouchableOpacity,
   Image,
   Pressable,
+  ActivityIndicator,
 } from 'react-native';
 import {CHATICON, HEADERICON} from '../../../constants/assets/AllImages';
 import User from '../../../components/contactUserInfo/User';
 import {styles} from './MessageScreenStyling';
 import Loader from '../../../components/loader/Loader';
 import useMessageScreen from './useMessageScreen';
+import {COLORS} from '../../../constants/colors/Color';
 
 export default function MessageScreen({route}: any) {
   const {
@@ -24,6 +26,7 @@ export default function MessageScreen({route}: any) {
     message,
     setMessage,
     handleSubmit,
+    messageLoading,
   } = useMessageScreen({route});
   let prevDate = '';
   return (
@@ -95,14 +98,18 @@ export default function MessageScreen({route}: any) {
         <View style={styles.bootomView}>
           <TextInput
             placeholder="write Your Message"
-            placeholderTextColor={'#797C7B80'}
+            placeholderTextColor={COLORS.PLACEHOLDER}
             value={message}
             onChangeText={setMessage}
             style={styles.bottomInput}
           />
           {message ? (
             <Pressable onPress={handleSubmit}>
-              <Text style={styles.Send}>Send</Text>
+              {messageLoading ? (
+                <ActivityIndicator size={'large'} color={COLORS.BLACK} />
+              ) : (
+                <Text style={styles.Send}>Send</Text>
+              )}
             </Pressable>
           ) : (
             ''

@@ -11,7 +11,7 @@ import User from '../../../components/contactUserInfo/User';
 import {styles} from './ContactStyle';
 import LinearGradient from 'react-native-linear-gradient';
 import {HEADERICON} from '../../../constants/assets/AllImages';
-import {HeaderStyles} from '../../../styles/headerStyling/HeaderStyling';
+import {HeaderStyles} from '../../../styles/HeaderStyling';
 import {StackNavigationProp} from '@react-navigation/stack';
 import {ContactStackParamsList, UserData} from '../../../constants/Types';
 import useContact from './useContact';

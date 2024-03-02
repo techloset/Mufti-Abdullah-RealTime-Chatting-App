@@ -18,6 +18,9 @@ export const styles = StyleSheet.create({
   },
   Send: {
     color: COLORS.BLACK,
+    width: 50,
+    padding: 5,
+    height: 30,
   },
   text: {
     color: COLORS.BLACK,
@@ -115,6 +118,7 @@ export const styles = StyleSheet.create({
   },
   bottomInput: {
     color: COLORS.TIME,
+    width: 170,
   },
   camera: {
     marginLeft: 10,

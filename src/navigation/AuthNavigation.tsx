@@ -19,7 +19,6 @@ export default function AuthNavigation() {
     auth().onAuthStateChanged((user: FirebaseUser | null) => {
       if (user) {
         readUserProfile(user);
-        console.log('user', user);
       } else {
         setIsAppLoading(false);
       }

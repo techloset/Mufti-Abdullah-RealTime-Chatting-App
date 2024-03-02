@@ -6,7 +6,7 @@ import {HEADERICON, SETTINGICON} from '../../../constants/assets/AllImages';
 import {styles} from '../../../components/settingPageComponents/Style';
 import {StackNavigationProp} from '@react-navigation/stack';
 import LinearGradient from 'react-native-linear-gradient';
-import {HeaderStyles} from '../../../styles/headerStyling/HeaderStyling';
+import {HeaderStyles} from '../../../styles/HeaderStyling';
 import {SettingStackParamsList, UserData} from '../../../constants/Types';
 
 import {SettingStyles} from './SettingStyles';
@@ -26,11 +26,7 @@ export default function Setting({navigation}: navigationProps) {
         end={{x: 1, y: 0}}>
         <View style={HeaderStyles.container}>
           <View style={HeaderStyles.topbar}>
-            <TouchableOpacity
-              style={HeaderStyles.iconContainerForSettingStack}
-              onPress={() => {
-                // Handle search icon press
-              }}>
+            <TouchableOpacity style={HeaderStyles.iconContainerForSettingStack}>
               <HEADERICON.leftArrow style={HeaderStyles.imageSearch} />
             </TouchableOpacity>
             <Text style={HeaderStyles.screenName}>Setting</Text>

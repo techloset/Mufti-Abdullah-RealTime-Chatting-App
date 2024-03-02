@@ -19,26 +19,33 @@ export default function useLogin() {
     let validRegex =
       /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
     if (!email) {
-      return console.log(
-        'plz Enter Email',
-        ' formate like: abc@gmail.com',
-        'error',
-      );
+      ShowToast('danger', 'plz Enter Email');
+      console.log('plz Enter Email', ' formate like: abc@gmail.com', 'error');
+      return;
     }
     if (!validRegex.test(email)) {
-      return console.log(
+      ShowToast(
+        'danger',
+        'Invalid Email Format formate like: abc@gmail.complz Enter Email',
+      );
+
+      console.log(
         'Invalid Email Format',
         ' formate like: abc@gmail.com',
         'error',
       );
+      return;
     }
 
-    if (password.length < 6) {
-      return console.log(
+    if (password.length < 8) {
+      ShowToast('danger', 'Password length minimum 8 character');
+
+      console.log(
         'Invalid Password',
         'Password length minimum 6 character',
         'error',
       );
+      return;
     }
     let userData = {email, password};
     setisloading(true);
@@ -61,6 +68,8 @@ export default function useLogin() {
       .catch(error => {
         setisloading(false);
         if (error.code === 'auth/email-already-in-use') {
+          ShowToast('danger', 'That email address is already registered!');
+
           return console.log(
             'Email Error',
             'That email address is already registered!',
@@ -68,11 +77,10 @@ export default function useLogin() {
           );
         }
         if (error.code === 'auth/invalid-email') {
-          return console.log(
-            'Email|Password Error',
-            'Please try again',
-            'error',
-          );
+          ShowToast('danger', 'Email|Password Error');
+
+          console.log('Email|Password Error', 'Please try again', 'error');
+          return;
         }
         return console.log('Email|Password Error', 'Please try again', 'error');
       });

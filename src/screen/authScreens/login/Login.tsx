@@ -14,7 +14,6 @@ import {styles} from './LoginStyle';
 import useLogin from './useLogin';
 import Loader from '../../../components/loader/Loader';
 import {COLORS} from '../../../constants/colors/Color';
-// import ToastManager, {Toast} from 'toastify-react-native';
 interface SignupScreenProps {
   navigation?: StackNavigationProp<RootStackParamsList, 'LOGIN'>;
 }

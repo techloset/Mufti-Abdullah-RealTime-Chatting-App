@@ -9,6 +9,7 @@ import {Toast} from 'react-native-toast-notifications';
 export default function useMessageScreen({route}: any) {
   const navigation = useNavigation();
   const [loading, setLoading] = useState(true);
+  const [messageLoading, setMessageLoading] = useState(false);
   const currentUser = auth().currentUser;
   const {userDetails} = route.params;
   const [message, setMessage] = useState('');
@@ -18,16 +19,18 @@ export default function useMessageScreen({route}: any) {
   function getCurrentDate() {
     var currentDate = new Date();
     var day = String(currentDate.getDate()).padStart(2, '0');
-    var month = String(currentDate.getMonth() + 1).padStart(2, '0'); // January is 0!
+    var month = String(currentDate.getMonth() + 1).padStart(2, '0');
     var year = currentDate.getFullYear();
 
     return day + ' /' + month + ' /' + year;
   }
   const handleSubmit = async () => {
+    setMessageLoading(true);
     try {
       await addMessageToChat(userDetails.uid, message);
       Toast.show('message send', {type: 'success', placement: 'top'});
       setMessage('');
+      setMessageLoading(false);
     } catch (error) {
       console.error('Error submitting message:', error);
     }
@@ -43,8 +46,6 @@ export default function useMessageScreen({route}: any) {
     if (!currentUser || !currentUser?.uid || !receiverId || !message) return;
 
     try {
-      const chatRef = firestore().collection('chats').doc(randomId);
-      const chatDoc = await chatRef.get();
       const chatMessages = firestore().collection('chatMessages').doc(randomId);
       const messageRef = chatMessages.collection('messages').doc();
       const usersChat = firestore().collection('usersChats').doc();
@@ -60,25 +61,10 @@ export default function useMessageScreen({route}: any) {
         messageTime: new Date().toLocaleTimeString(),
         message: message,
       });
-      if (!chatDoc.exists) {
-        await chatRef.set(
-          {
-            members: [currentUser.uid, receiverId],
-            lastMessageSent: '',
-          },
-          {merge: true},
-        );
-      }
-
-      await chatRef.update({
-        lastMessageSent: messageRef.id,
-        members: firestore.FieldValue.arrayUnion(receiverId),
-      });
     } catch (error) {
       console.error('Error adding message to chat:', error);
     }
   };
-
   useEffect(() => {
     const fetchMessages = async () => {
       if (!currentUser || !userDetails) return;
@@ -90,6 +76,7 @@ export default function useMessageScreen({route}: any) {
           .where('sentBy', 'in', [currentUser.uid, userDetails.uid])
           .orderBy('messageDate', 'desc')
           .orderBy('messageTime', 'asc')
+          .limit(50)
           .get();
         const fetchedMessages = querySnapshot.docs.map(doc => doc.data());
         setMessages(fetchedMessages);
@@ -112,5 +99,6 @@ export default function useMessageScreen({route}: any) {
     setMessage,
     setMessages,
     handleSubmit,
+    messageLoading,
   };
 }
