@@ -6,6 +6,7 @@ import {
   View,
   Alert,
   TouchableOpacity,
+  ActivityIndicator,
 } from 'react-native';
 import {styles} from '../../authScreens/signUp/SignUPStyles';
 import SettingHeader from '../../../components/tabHeader/SettingHeader';
@@ -17,6 +18,7 @@ import {HEADERICON} from '../../../constants/assets/AllImages';
 import {HeaderStyles} from '../../../styles/headerStyling/HeaderStyling';
 import {useNavigation} from '@react-navigation/native';
 import useChangePassword from './useChangePassword';
+import {chnagepasswordStyles} from './ChangePasswordStyles';
 
 export default function ChangePassword() {
   const {
@@ -27,31 +29,9 @@ export default function ChangePassword() {
     setNewPassword,
     setCurrentPassword,
     handlePasswordUpdate,
+    loading,
   } = useChangePassword();
   const navigation = useNavigation();
-  // const {user} = useAuthContext();
-  // // console.log('user.password', user.password);
-  // // console.log('user.confirmPassword', user.confirmPassword);
-
-  const currentUser = auth().currentUser;
-  console.log('currentUser', currentUser);
-  // const updateFiretoreUSer = () => {
-  //   const userDocRef = firestore().collection('users').doc(user.id);
-  //   userDocRef
-  //     .update({
-  //       password: newPassword,
-  //       confirmPassword: confirmPassword,
-  //     })
-  //     .then(() => {
-  //       Alert.alert('Success', 'Password updated successfully');
-  //       setCurrentPassword('');
-  //       setNewPassword('');
-  //       setConfirmPassword('');
-  //     })
-  //     .catch(error => {
-  //       Alert.alert('Firestore Error', error.message);
-  //     });
-  // };
   return (
     <>
       <LinearGradient
@@ -73,7 +53,8 @@ export default function ChangePassword() {
           </View>
         </View>
         <View style={HeaderStyles.mainContainerForPassword}>
-          <View style={{marginHorizontal: 20, marginVertical: 80}}>
+          <View style={chnagepasswordStyles.nouch}></View>
+          <View style={chnagepasswordStyles.mainView}>
             <View style={styles.inputView}>
               <Text style={styles.lable}>Current Password</Text>
               <TextInput
@@ -112,7 +93,11 @@ export default function ChangePassword() {
             <ImageBackground
               source={require('../../../assets/images/background.png')}
               style={styles.loginBtn}>
-              <Text>Update Password</Text>
+              {loading ? (
+                <ActivityIndicator size="large" color="#352869" />
+              ) : (
+                <Text>Update Password</Text>
+              )}
             </ImageBackground>
           </TouchableOpacity>
         </View>

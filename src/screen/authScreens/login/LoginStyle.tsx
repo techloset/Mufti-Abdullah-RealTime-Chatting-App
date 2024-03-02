@@ -1,9 +1,11 @@
 import {StyleSheet} from 'react-native';
+import {COLORS} from '../../../constants/colors/Color';
+import {FONTS} from '../../../constants/fonts/Font';
 
 export const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: COLORS.WHITE,
     alignItems: 'center',
     justifyContent: 'center',
   },
@@ -11,28 +13,27 @@ export const styles = StyleSheet.create({
   inputView: {
     borderRadius: 20,
     width: 331,
-
     height: 58,
     marginBottom: 40,
   },
   TextInput: {
     borderBottomWidth: 1,
-    borderBottomColor: '#CDD1D0',
-    color: 'black',
+    borderBottomColor: COLORS.BG,
+    color: COLORS.BLACK,
   },
   lable: {
-    fontFamily: 'Poppins',
+    fontFamily: FONTS.REGULAR,
     fontSize: 14,
-    lineHeight: 14,
+    lineHeight: 18,
     fontWeight: '500',
-    color: '#3D4A7A',
+    color: COLORS.LABLE,
   },
   forgot_button: {
-    fontFamily: 'Poppins',
+    fontFamily: FONTS.REGULAR,
     fontSize: 14,
-    lineHeight: 14,
+    lineHeight: 16,
     fontWeight: '500',
-    color: '#3D4A7A',
+    color: COLORS.LABLE,
     top: 20,
   },
   loginBtn: {
@@ -45,11 +46,11 @@ export const styles = StyleSheet.create({
     backgroundColor: 'transparent',
   },
   loginBtnText: {
-    color: '#FFFFFF',
+    color: COLORS.WHITE,
     fontSize: 16,
     lineHeight: 16,
     fontWeight: '700',
-    fontFamily: 'Poppins',
+    fontFamily: FONTS.REGULAR,
   },
   main: {
     width: 160,
@@ -58,7 +59,7 @@ export const styles = StyleSheet.create({
     fontWeight: '700',
     fontSize: 18,
     lineHeight: 18,
-    color: '#3D4A7A',
+    color: COLORS.LABLE,
     marginBottom: 5,
   },
   des: {
@@ -68,8 +69,8 @@ export const styles = StyleSheet.create({
     fontWeight: '300',
     lineHeight: 20,
     fontSize: 14,
-    color: '#797C7B',
-    fontFamily: 'Poppins',
+    color: COLORS.LIGHT,
+    fontFamily: FONTS.REGULAR,
   },
   img: {
     height: 48,
@@ -78,5 +79,33 @@ export const styles = StyleSheet.create({
     marginBottom: 20,
     marginLeft: 15,
     justifyContent: 'center',
+  },
+  bellowGoogle: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    width: 332,
+    height: 14,
+    marginBottom: 30,
+  },
+  view2nd: {
+    flex: 1,
+    width: 132,
+    height: 1,
+    backgroundColor: COLORS.BG,
+  },
+  orLeft: {
+    color: COLORS.LIGHT,
+    fontWeight: '900',
+    fontSize: 14,
+    lineHeight: 14,
+    textAlign: 'center',
+    marginLeft: 10,
+    marginRight: 10,
+  },
+  orRight: {
+    flex: 1,
+    width: 132,
+    height: 1,
+    backgroundColor: COLORS.BG,
   },
 });

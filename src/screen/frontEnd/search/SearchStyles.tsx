@@ -1,4 +1,5 @@
 import {StyleSheet} from 'react-native';
+import {COLORS} from '../../../constants/colors/Color';
 
 export const styles = StyleSheet.create({
   searchView: {
@@ -11,18 +12,18 @@ export const styles = StyleSheet.create({
     height: 44,
     width: 327,
     borderRadius: 12,
-    backgroundColor: '#F3F6F6',
+    backgroundColor: COLORS.BOTTOM,
   },
   searchImage: {
     alignSelf: 'center',
-    tintColor: 'black',
+    tintColor: COLORS.BLACK,
   },
   Input: {
     height: 40,
     paddingLeft: 20,
     margin: 5,
     width: 250,
-    color: 'black',
+    color: COLORS.BLACK,
   },
   removeImage: {
     justifyContent: 'flex-end',
@@ -31,20 +32,26 @@ export const styles = StyleSheet.create({
   HeadingView: {
     marginHorizontal: 24,
     marginVertical: 20,
-    width: 185,
   },
   PeopleText: {
-    color: 'black',
+    color: COLORS.BLACK,
     marginBottom: 10,
     fontSize: 16,
     fontWeight: '500',
     lineHeight: 16,
   },
   GroupText: {
-    color: 'black',
+    color: COLORS.BLACK,
     marginBottom: 10,
     fontSize: 16,
     fontWeight: '500',
     lineHeight: 16,
+  },
+  nouch: {
+    width: 30,
+    height: 3,
+    marginBottom: 24,
+    backgroundColor: '#E6E6E6',
+    alignSelf: 'center',
   },
 });

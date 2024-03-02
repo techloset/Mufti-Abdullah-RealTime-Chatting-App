@@ -1,32 +1,12 @@
 import {useEffect, useState} from 'react';
 import auth from '@react-native-firebase/auth';
 import firestore from '@react-native-firebase/firestore';
-import {useDispatch, useSelector} from 'react-redux';
-import {logout} from '../../../redux/AuthSlice';
-import {getUsers} from '../../../redux/UserSlice';
-import {useAppDispatch, useAppSelector} from '../../../redux/Store';
-
-interface UserData {
-  photoURL: string;
-  id: string;
-  uid: string;
-  imageUrl: string;
-  username: string;
-  status: string;
-  timeAgo: string;
-  description: string;
-}
+import {HomeUser} from '../../../constants/Types';
 
 export default function useHome() {
-  const user = auth().currentUser || undefined;
-  const [usersData, setUsersData] = useState<UserData[] | null>(null);
-  const dispatch = useAppDispatch();
-  const users = useAppSelector(state => state.users.Users);
-
-  const Logout = useSelector(logout);
-  const LogoutUser = () => {
-    dispatch(Logout);
-  };
+  const user = auth().currentUser;
+  const [usersData, setUsersData] = useState<HomeUser[] | undefined>(undefined);
+  const [isAppLoading, setIsAppLoading] = useState(false);
 
   const fetchUsersData = async () => {
     if (!user) return;
@@ -49,7 +29,7 @@ export default function useHome() {
           .collection('users')
           .doc(receiverId)
           .get();
-        return userDoc.data() as UserData;
+        return userDoc.data() as HomeUser;
       });
 
       const resolvedUsersData = await Promise.all(usersDataPromises);
@@ -61,10 +41,9 @@ export default function useHome() {
   useEffect(() => {
     fetchUsersData();
   }, [user?.uid, usersData]);
-  console.log('usersData', usersData);
   const deleteUser = async (userId: string) => {
     try {
-      // Delete chat messages where sender ID matches the user's ID
+      setIsAppLoading(true);
       await firestore()
         .collection('chatMessages')
         .where('reciver', '==', userId)
@@ -75,10 +54,6 @@ export default function useHome() {
             doc.ref.delete();
           });
         });
-
-      console.log('Chat messages deleted where user was sender or receiver');
-
-      // Remove user ID from usersChats collection
       await firestore()
         .collection('usersChats')
         .where('receiverId', '==', userId)
@@ -90,14 +65,22 @@ export default function useHome() {
         });
 
       console.log('User ID removed from usersChats collection');
-
-      // Fetch updated users data
       fetchUsersData();
-      console.log('User data updated after deletion');
+      setIsAppLoading(false);
     } catch (error) {
       console.error('Error deleting user:', error);
     }
   };
+  const handleDeleteUser = (userId: string) => {
+    deleteUser(userId);
+  };
 
-  return {LogoutUser, usersData, user, deleteUser};
+  return {
+    usersData,
+    user,
+    isAppLoading,
+    setIsAppLoading,
+    handleDeleteUser,
+    deleteUser,
+  };
 }

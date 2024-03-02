@@ -1,4 +1,5 @@
 import {StyleSheet} from 'react-native';
+import {COLORS} from '../../../constants/colors/Color';
 
 export const HomeStyles = StyleSheet.create({
   item: {
@@ -12,5 +13,12 @@ export const HomeStyles = StyleSheet.create({
   },
   textContainer1: {
     flex: 1,
+  },
+  nouch: {
+    width: 30,
+    height: 3,
+    marginBottom: 24,
+    backgroundColor: COLORS.NOCH,
+    alignSelf: 'center',
   },
 });

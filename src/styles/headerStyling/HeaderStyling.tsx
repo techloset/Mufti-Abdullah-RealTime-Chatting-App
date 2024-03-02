@@ -1,5 +1,6 @@
 import {StyleSheet} from 'react-native';
-
+import {FONTS} from '../../constants/fonts/Font';
+import {COLORS} from '../../constants/colors/Color';
 export const HeaderStyles = StyleSheet.create({
   mainContainer: {
     flex: 1,
@@ -14,7 +15,7 @@ export const HeaderStyles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     opacity: 0.5,
-    backgroundColor: 'white',
+    backgroundColor: COLORS.WHITE,
   },
   imageSearch: {
     height: 22,
@@ -35,25 +36,25 @@ export const HeaderStyles = StyleSheet.create({
     width: 44,
     height: 44,
     borderRadius: 22,
-    backgroundColor: 'black',
+    backgroundColor: COLORS.BLACK,
     opacity: 0.4,
   },
   main: {
     flex: 1,
-    backgroundColor: 'white',
+    backgroundColor: COLORS.WHITE,
     borderTopLeftRadius: 40,
     borderTopRightRadius: 40,
     paddingTop: 27,
   },
   screenName: {
     fontSize: 20,
-    color: 'white',
-    fontFamily: 'Poppins',
+    color: COLORS.WHITE,
+    fontFamily: FONTS.BOLD,
   },
   image: {
     width: 42,
     height: 42,
-    backgroundColor: '#666',
+    backgroundColor: COLORS.ONE,
     borderRadius: 26,
     justifyContent: 'center',
     alignItems: 'center',
@@ -68,7 +69,7 @@ export const HeaderStyles = StyleSheet.create({
   },
   mainContainerForPassword: {
     flex: 1,
-    backgroundColor: 'white',
+    backgroundColor: COLORS.WHITE,
     borderTopLeftRadius: 40,
     borderTopRightRadius: 40,
     paddingTop: 27,

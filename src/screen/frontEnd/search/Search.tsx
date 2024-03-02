@@ -1,51 +1,53 @@
 import {
+  ActivityIndicator,
   FlatList,
-  Image,
-  PushNotificationIOS,
   ScrollView,
   Text,
   TextInput,
   TouchableOpacity,
   View,
 } from 'react-native';
-import React, {useEffect, useState} from 'react';
-import auth from '@react-native-firebase/auth';
-import User from '../../../components/contactUserInfo/User';
 import {styles} from './SearchStyles';
 import {SEARCHPAGEICON} from '../../../constants/assets/AllImages';
-import {UserProfileData} from '../../../constants/Types';
-import firestore, {
-  FirebaseFirestoreTypes,
-} from '@react-native-firebase/firestore';
-export default function Search() {
-  const user = auth().currentUser || undefined;
-  const [query, setQuery] = useState('');
-  const [usersData, setUsersData] = useState<
-    FirebaseFirestoreTypes.DocumentData[]
-  >([]);
-
-  useEffect(() => {
-    const fetchUsers = async () => {
-      try {
-        const usersSnapshot = await firestore().collection('users').get();
-        const usersData = usersSnapshot.docs.map(doc => doc.data());
-        setUsersData(usersData.filter(userData => userData.uid !== user?.uid));
-      } catch (error) {
-        console.error('Error fetching users:', error);
-      }
+import useSearch from './useSearch';
+import SearchUser from '../../../components/searchUser/SearchUser';
+import {StackNavigationProp} from '@react-navigation/stack';
+import {HomeStackParamsList, HomeUser} from '../../../constants/Types';
+import {FirebaseFirestoreTypes} from '@react-native-firebase/firestore';
+import Loader from '../../../components/loader/Loader';
+import {COLORS} from '../../../constants/colors/Color';
+interface navigationProps {
+  navigation: StackNavigationProp<HomeStackParamsList, 'HOMEPAGE'> & {
+    navigate(screen: string, params: {userDetails: HomeUser}): void;
+  };
+}
+export default function Search({navigation}: navigationProps) {
+  const {handleSearch, query, setQuery, loading, usersData} = useSearch();
+  const navigateToChatScreen = (userDetails: HomeUser) => {
+    navigation.navigate('CHATSCREEN', {userDetails});
+  };
+  const renderItem = ({item}: {item: FirebaseFirestoreTypes.DocumentData}) => {
+    const user: HomeUser = {
+      photoURL: item.photoURL,
+      username: item.username,
+      status: item.status,
+      lastSeen: item.lastSeen,
+      timeAgo: item.timeAgo,
+      description: item.description,
+      id: item.id,
+      uid: item.uid,
+      imageUrl: item.imageUrl,
     };
-
-    fetchUsers();
-  }, [user]);
-  const handleSearch = (text: string) => {
-    setQuery(text);
-    const filteredUsers = usersData.filter(
-      userData =>
-        userData.username &&
-        userData.username.toLowerCase().includes(text.toLowerCase()),
+    return (
+      <TouchableOpacity onPress={() => navigateToChatScreen(user)}>
+        <SearchUser
+          photoURL={user.photoURL}
+          username={user.username}
+          status={user.status}
+          key={user.id}
+        />
+      </TouchableOpacity>
     );
-    console.log('filteredUsers', filteredUsers);
-    setUsersData(filteredUsers);
   };
 
   return (
@@ -63,30 +65,24 @@ export default function Search() {
           <SEARCHPAGEICON.Remove style={styles.removeImage} />
         </TouchableOpacity>
       </View>
-      <ScrollView>
-        <View style={styles.HeadingView}>
-          <Text style={styles.PeopleText}>People</Text>
-          <FlatList
-            data={usersData}
-            keyExtractor={item => item.uid}
-            renderItem={({item}) => (
-              <User
-                photoURL={item.photoURL}
-                username={item.username}
-                status={item.status}
-              />
-            )}
-          />
-        </View>
-        <View style={styles.HeadingView}>
-          <Text style={styles.GroupText}>Group Chat</Text>
-          <User photoURL={undefined} username={undefined} status={''} />
-          <User photoURL={undefined} username={undefined} status={''} />
-          <User photoURL={undefined} username={undefined} status={''} />
-          <User photoURL={undefined} username={undefined} status={''} />
-          <User photoURL={undefined} username={undefined} status={''} />
-        </View>
-      </ScrollView>
+
+      <View style={styles.HeadingView}>
+        <Text style={styles.PeopleText}>People</Text>
+        {loading ? (
+          <ActivityIndicator size={'large'} color={COLORS.BLACK} />
+        ) : (
+          <>
+            <FlatList
+              data={usersData}
+              keyExtractor={item => item.id}
+              renderItem={renderItem}
+            />
+          </>
+        )}
+      </View>
+      <View style={styles.HeadingView}>
+        <Text style={styles.GroupText}>Group Chat</Text>
+      </View>
     </>
   );
 }

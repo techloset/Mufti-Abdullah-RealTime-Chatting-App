@@ -7,34 +7,23 @@ import ImagePicker, {
   ImagePickerResponse,
 } from 'react-native-image-picker';
 import storage from '@react-native-firebase/storage';
-import {UserData, usersData} from '../../../constants/Types';
-import {ClipPath} from 'react-native-svg';
-interface Resource {
-  uri?: string;
-  data?: string;
-}
-interface ProfileHook {
-  currentUser: FirebaseAuthTypes.User | null;
-  handlePicture: () => Promise<void>;
-  setName: React.Dispatch<React.SetStateAction<string>>;
-  name: string | null | undefined;
-  status: string | null | undefined;
-  setStatus: React.Dispatch<React.SetStateAction<string>>;
-  updateUserProfile: () => void;
-  usersData: UserData | null;
-}
+import {ProfileHook, Resource, UserData} from '../../../constants/Types';
+import {Toast} from 'react-native-toast-notifications';
+import {ShowToast} from '../../../components/toast/ShowToast';
 
 export default function useProfile(): ProfileHook {
-  const [resource, setResource] = useState<Resource>({});
-  const [usersData, setUsersData] = useState<UserData | null>({});
-  // const {user} = useAuthContext();
   const currentUser = auth().currentUser;
+  const [loading, setLoading] = useState(false);
+  const [imageUploading, setImageUploading] = useState(false);
+  const [resource, setResource] = useState<Resource>({});
+  const [usersData, setUsersData] = useState<UserData | null>(null);
   const [profileImage, setProfileImage] = useState<string | null>(null);
-  const [name, setName] = useState(currentUser?.displayName ?? '');
+  const [name, setName] = useState(usersData?.username ?? '');
   const [status, setStatus] = useState(usersData?.status ?? '');
   useEffect(() => {
-    if (usersData && usersData.status) {
+    if (usersData && usersData.status && usersData.username) {
       setStatus(usersData.status);
+      setName(usersData.username);
     }
   }, [usersData]);
 
@@ -44,8 +33,7 @@ export default function useProfile(): ProfileHook {
         const usersSnapshot = await firestore().collection('users').get();
         const userData = usersSnapshot.docs
           .map(doc => doc.data() as UserData)
-          .filter(userData => userData.uid === (currentUser?.uid as UserData));
-        console.log('userData', userData);
+          .filter(userData => userData.uid === currentUser?.uid);
         setUsersData(userData[0] as UserData);
       } catch (error) {
         console.error('Error fetching users:', error);
@@ -55,8 +43,6 @@ export default function useProfile(): ProfileHook {
     fetchUsers();
   }, [currentUser]);
 
-  console.log('usersData lllll', usersData?.status);
-  console.log('currentUser', currentUser);
   useEffect(() => {
     if (usersData?.photoURL) {
       setProfileImage(usersData.photoURL);
@@ -67,11 +53,11 @@ export default function useProfile(): ProfileHook {
   }
 
   const updateUserProfile = () => {
+    setLoading(true);
     currentUser &&
       currentUser.updateProfile({
         displayName: name,
       });
-    // Update user profile information in Firestore
     const userDocRef = firestore().collection('users').doc(usersData?.uid);
     userDocRef
       .update({
@@ -79,9 +65,11 @@ export default function useProfile(): ProfileHook {
         status: status,
       })
       .then(() => {
-        Alert.alert('Success', 'Profile updated successfully');
+        ShowToast('success', 'Profile updated successfully');
+        setLoading(false);
       })
       .catch(error => {
+        ShowToast('danger', 'Profile updating Error');
         Alert.alert('Error', error.message);
       });
   };
@@ -128,6 +116,7 @@ export default function useProfile(): ProfileHook {
   };
   const uploadImageToFirebaseStorage = async (uri: string) => {
     try {
+      setImageUploading(true);
       const imageName = uri.substring(uri.lastIndexOf('/') + 1);
       console.log('imageName', imageName);
       const response = await fetch(uri);
@@ -145,11 +134,14 @@ export default function useProfile(): ProfileHook {
           photoURL: downloadURL,
         })
         .then(() => {
-          Alert.alert('Success', 'Profile updated successfully');
+          ShowToast('success', 'Image updated successfully');
           setProfileImage(downloadURL);
+          setImageUploading(false);
         })
         .catch(error => {
-          Alert.alert('Error', error.message);
+          ShowToast('danger', 'Error While Uploading Image');
+
+          console.log('Error', error.message);
         });
 
       currentUser &&
@@ -168,6 +160,8 @@ export default function useProfile(): ProfileHook {
     name,
     status,
     setStatus,
+    loading,
     updateUserProfile,
+    imageUploading,
   };
 }

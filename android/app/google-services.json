@@ -22,6 +22,14 @@
           }
         },
         {
+          "client_id": "880655244940-shb7bpsjaqllfm7lljqf0c33url4mg53.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.textitapp",
+            "certificate_hash": "b8c77c2f5359b191d03f669d694b5e3e84289f69"
+          }
+        },
+        {
           "client_id": "880655244940-tggqp0tccp4liuaj3r69m97hr9ljllds.apps.googleusercontent.com",
           "client_type": 3
         }

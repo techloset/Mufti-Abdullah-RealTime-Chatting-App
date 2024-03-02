@@ -1,25 +1,26 @@
 import {StyleSheet} from 'react-native';
+import {COLORS} from '../../../constants/colors/Color';
 
 export const styles = StyleSheet.create({
   container: {
     display: 'flex',
     flexDirection: 'row',
-    // backgroundColor: 'black',
-    // color: 'white',
     alignItems: 'center',
     gap: 10,
   },
   icons: {
     alignSelf: 'center',
-    // justifyContent: 'center',
     marginVertical: 10,
-    // backgroundColor: 'black',
+    marginHorizontal: 5,
   },
   main: {
     flex: 1,
   },
+  Send: {
+    color: COLORS.BLACK,
+  },
   text: {
-    color: 'black',
+    color: COLORS.BLACK,
     fontSize: 12,
     fontWeight: 'bold',
     textAlign: 'center',
@@ -48,20 +49,21 @@ export const styles = StyleSheet.create({
   Description: {
     fontSize: 14,
     marginBottom: 5,
-    color: 'black',
+    color: COLORS.BLACK,
     fontWeight: '500',
   },
   MessageText: {
-    backgroundColor: '#F2F7FB',
+    backgroundColor: COLORS.RECIVER,
     borderTopRightRadius: 10,
     borderBottomLeftRadius: 10,
     borderBottomRightRadius: 10,
     padding: 8,
-    color: 'black',
+    color: COLORS.BLACK,
   },
   time: {
-    color: '#797C7B80',
+    color: COLORS.TIME,
     textAlign: 'right',
+    fontSize: 10,
   },
   me: {
     display: 'flex',
@@ -73,17 +75,18 @@ export const styles = StyleSheet.create({
     marginVertical: 10,
   },
   myText: {
-    color: 'white',
-    backgroundColor: '#3D4A7A',
+    color: COLORS.WHITE,
+    backgroundColor: COLORS.LABLE,
     borderTopLeftRadius: 10,
     borderBottomLeftRadius: 10,
     borderBottomRightRadius: 10,
     padding: 8,
   },
   myTime: {
-    color: '#797C7B80',
+    color: COLORS.TIME,
     textAlign: 'right',
     width: 46,
+    fontSize: 10,
     marginHorizontal: 5,
     marginVertical: 5,
   },
@@ -100,7 +103,7 @@ export const styles = StyleSheet.create({
     marginLeft: 0,
   },
   bootomView: {
-    backgroundColor: '#F3F6F6',
+    backgroundColor: COLORS.BOTTOM,
     borderRadius: 8,
     display: 'flex',
     flexDirection: 'row',
@@ -108,11 +111,10 @@ export const styles = StyleSheet.create({
     alignItems: 'center',
     width: 260,
     height: 40,
-
-    padding: 3,
+    paddingStart: 3,
   },
   bottomInput: {
-    color: '#797C7B80',
+    color: COLORS.TIME,
   },
   camera: {
     marginLeft: 10,

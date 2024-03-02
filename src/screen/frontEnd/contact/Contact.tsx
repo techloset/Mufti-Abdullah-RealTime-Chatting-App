@@ -13,21 +13,9 @@ import LinearGradient from 'react-native-linear-gradient';
 import {HEADERICON} from '../../../constants/assets/AllImages';
 import {HeaderStyles} from '../../../styles/headerStyling/HeaderStyling';
 import {StackNavigationProp} from '@react-navigation/stack';
-import {ContactStackParamsList} from '../../../constants/Types';
+import {ContactStackParamsList, UserData} from '../../../constants/Types';
 import useContact from './useContact';
-import Model from '../../../components/model/Model';
-interface UserData {
-  confirmPassword: string;
-  creationTime: string;
-  email: string;
-  password: string;
-  photoURL: string;
-  uid: string;
-  profileImage: string;
-  username: string;
-  status: string;
-  lastActive: string;
-}
+import Loader from '../../../components/loader/Loader';
 
 interface navigationProps {
   navigation: StackNavigationProp<ContactStackParamsList, 'CONTACTPAGE'> & {
@@ -35,13 +23,7 @@ interface navigationProps {
   };
 }
 export default function Contact({navigation}: navigationProps) {
-  const {users} = useContact();
-  const [isModalVisible, setIsModalVisible] = useState(false); // State to manage modal visibility
-
-  // Function to toggle modal visibility
-  const toggleModal = () => {
-    setIsModalVisible(!isModalVisible);
-  };
+  const {users, loading} = useContact();
   return (
     <>
       <LinearGradient
@@ -59,35 +41,45 @@ export default function Contact({navigation}: navigationProps) {
               <HEADERICON.search style={HeaderStyles.imageSearch} />
             </TouchableOpacity>
             <Text style={HeaderStyles.screenName}>Contact</Text>
-            <TouchableOpacity onPress={toggleModal}>
-              <View style={HeaderStyles.image}>
-                <HEADERICON.AddUser />
-              </View>
-            </TouchableOpacity>
+
+            <View style={HeaderStyles.image}>
+              <HEADERICON.AddUser />
+            </View>
           </View>
         </View>
+
         <ScrollView style={HeaderStyles.main}>
-          {Object.entries(users).map(([letter, users]) => (
-            <View key={letter} style={styles.LettersView}>
-              <Text style={styles.LetterText}>{letter}</Text>
-              {users.map((user, index) => (
-                <Pressable
-                  onPress={() => {
-                    navigation.navigate('CHATSCREEN', {userDetails: user});
-                  }}>
-                  <User
-                    key={index}
-                    photoURL={user.photoURL}
-                    username={user.username}
-                    status={user.status}
-                  />
-                </Pressable>
+          <View style={styles.nouch}></View>
+          <Text style={styles.TextHeading}>My Contact</Text>
+          {loading ? (
+            <Loader />
+          ) : (
+            <View>
+              {Object.entries(users).map(([letter, users]) => (
+                <View key={letter} style={styles.LettersView}>
+                  <Text style={styles.LetterText}>{letter}</Text>
+                  {users.map((user, index) => (
+                    <Pressable
+                      key={index}
+                      onPress={() => {
+                        navigation.navigate('CHATSCREEN', {
+                          userDetails: user as UserData,
+                        });
+                      }}>
+                      <User
+                        key={index}
+                        photoURL={user.photoURL}
+                        username={user.username}
+                        status={user.status}
+                      />
+                    </Pressable>
+                  ))}
+                </View>
               ))}
             </View>
-          ))}
+          )}
         </ScrollView>
       </LinearGradient>
-      <Model isVisible={isModalVisible} />
     </>
   );
 }

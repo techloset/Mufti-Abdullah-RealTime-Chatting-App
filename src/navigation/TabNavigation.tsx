@@ -4,22 +4,18 @@ import {BOTTOM_TAB_SCREEN} from '../constants/navigations/Navigations';
 import Contact from '../screen/frontEnd/contact/Contact';
 import Home from '../screen/frontEnd/home/Home';
 import Setting from '../screen/frontEnd/setting/Setting';
+import {COLORS} from '../constants/colors/Color';
 
 const Tab = createBottomTabNavigator();
 const screenOptions = {
   tabBarShowLabel: true,
   headerShown: false,
-  tabBarActiveTintColor: '#3D4A7A',
-  tabBarInactiveTintColor: '#797C7B63',
-  tabBarstyle: {
-    position: 'absolute',
-    bottom: 0,
-    top: 20,
-    left: 20,
-    right: 20,
-    elevation: 0,
-    heigt: 60,
-    background: 'black',
+  tabBarActiveTintColor: COLORS.LABLE,
+  tabBarInactiveTintColor: COLORS.INACTIVE,
+  tabBarStyle: {
+    height: 70,
+    paddingTop: 10,
+    paddingBottom: 10,
   },
 };
 

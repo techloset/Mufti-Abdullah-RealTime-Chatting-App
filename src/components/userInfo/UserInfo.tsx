@@ -7,7 +7,7 @@ interface UserInfoProps {
   profileImage: string;
   displayName: string;
   status: string;
-  lastActive: string;
+  lastActive: string | undefined;
 }
 
 const UserInfo: React.FC<UserInfoProps> = ({

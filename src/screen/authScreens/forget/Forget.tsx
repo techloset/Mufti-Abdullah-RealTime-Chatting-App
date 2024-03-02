@@ -1,61 +1,48 @@
-import React, {useState} from 'react';
-import auth from '@react-native-firebase/auth';
-import ToastManager, {Toast} from 'toastify-react-native';
-
 import {
   TextInput,
   TouchableOpacity,
   ImageBackground,
   Text,
   View,
+  ScrollView,
+  ActivityIndicator,
 } from 'react-native';
 import {styles} from './ForgotStyle';
+import useForget from './useForget';
+import {COLORS} from '../../../constants/colors/Color';
 export default function Forgot() {
-  const [email, setEmail] = useState('');
-  const handleSubmit = () => {
-    auth()
-      .sendPasswordResetEmail(email)
-      .then(() => {
-        // Toast.success('Check Email For reset Password');
-        console.log('link sent successfully');
-        setEmail('');
-      })
-      .catch(error => {
-        // Toast.show({
-        //   type: 'error',
-        //   text1: 'server error',
-        // });
-        console.log('server error');
-        console.error(error);
-        // Toast.error;
-      });
-  };
+  const {handleSubmit, setEmail, loading} = useForget();
   return (
-    <View style={styles.container}>
-      {/* <ToastManager /> */}
-      <Text style={styles.main}>Forget Password</Text>
-      <Text style={styles.des}>
-        Forgot your password? Don’t worry, we’ll send you a magic link right at
-        your inbox!{' '}
-      </Text>
+    <ScrollView>
+      <View style={styles.container}>
+        <Text style={styles.main}>Forget Password</Text>
+        <Text style={styles.des}>
+          Forgot your password? Don’t worry, we’ll send you a magic link right
+          at your inbox!{' '}
+        </Text>
 
-      <View style={styles.inputView}>
-        <Text style={styles.lable}>Your Email</Text>
-        <TextInput
-          style={styles.TextInput}
-          placeholder="Email."
-          placeholderTextColor="#003f5c"
-          onChangeText={email => setEmail(email)}
-        />
+        <View style={styles.inputView}>
+          <Text style={styles.lable}>Your Email</Text>
+          <TextInput
+            style={styles.TextInput}
+            placeholder="Email."
+            placeholderTextColor="#003f5c"
+            onChangeText={email => setEmail(email)}
+          />
+        </View>
+
+        <TouchableOpacity onPress={handleSubmit}>
+          <ImageBackground
+            style={styles.loginBtn}
+            source={require('../../../assets/images/background.png')}>
+            {loading ? (
+              <ActivityIndicator size="large" color={COLORS.WHITE} />
+            ) : (
+              <Text style={styles.loginBtnText}>Forgot Password</Text>
+            )}
+          </ImageBackground>
+        </TouchableOpacity>
       </View>
-
-      <TouchableOpacity onPress={handleSubmit}>
-        <ImageBackground
-          style={styles.loginBtn}
-          source={require('../../../assets/images/background.png')}>
-          <Text style={styles.loginBtnText}>Create an account</Text>
-        </ImageBackground>
-      </TouchableOpacity>
-    </View>
+    </ScrollView>
   );
 }

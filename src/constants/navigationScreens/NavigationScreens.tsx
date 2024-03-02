@@ -1,6 +1,6 @@
 import Forgot from '../../screen/authScreens/forget/Forget';
 import Login from '../../screen/authScreens/login/Login';
-import AuthScreen from '../../screen/authScreens/mainScreen/AuthScreen';
+import AuthScreen from '../../screen/authScreens/authScreen/AuthScreen';
 import SignUp from '../../screen/authScreens/signUp/Signup';
 import ChangePassword from '../../screen/frontEnd/chnagePassword/ChangePassword';
 import Contact from '../../screen/frontEnd/contact/Contact';

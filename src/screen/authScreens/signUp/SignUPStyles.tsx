@@ -1,9 +1,11 @@
 import {StyleSheet} from 'react-native';
+import {COLORS} from '../../../constants/colors/Color';
+import {FONTS} from '../../../constants/fonts/Font';
 
 export const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: COLORS.WHITE,
     alignItems: 'center',
     justifyContent: 'center',
   },
@@ -11,29 +13,20 @@ export const styles = StyleSheet.create({
   inputView: {
     borderRadius: 20,
     width: 331,
-
     height: 58,
     marginBottom: 40,
   },
   TextInput: {
     borderBottomWidth: 1,
-    borderBottomColor: '#CDD1D0',
-    color: '#000E08',
+    borderBottomColor: COLORS.BG,
+    color: COLORS.BLACK,
   },
   lable: {
-    fontFamily: 'Poppins',
+    fontFamily: FONTS.REGULAR,
     fontSize: 14,
-    lineHeight: 14,
+    lineHeight: 16,
     fontWeight: '500',
-    color: '#3D4A7A',
-  },
-  forgot_button: {
-    fontFamily: 'Poppins',
-    fontSize: 14,
-    lineHeight: 14,
-    fontWeight: '500',
-    color: '#3D4A7A',
-    top: 20,
+    color: COLORS.LABLE,
   },
   loginBtn: {
     width: 327,
@@ -44,12 +37,15 @@ export const styles = StyleSheet.create({
     marginTop: 20,
     backgroundColor: 'transparent',
   },
+  btnTxt: {
+    color: COLORS.WHITE,
+  },
   loginBtnText: {
-    color: '#FFFFFF',
+    color: COLORS.WHITE,
     fontSize: 16,
     lineHeight: 16,
     fontWeight: '700',
-    fontFamily: 'Poppins',
+    fontFamily: FONTS.REGULAR,
   },
   main: {
     width: 160,
@@ -58,7 +54,7 @@ export const styles = StyleSheet.create({
     fontWeight: '700',
     fontSize: 18,
     lineHeight: 18,
-    color: '#3D4A7A',
+    color: COLORS.LABLE,
     marginBottom: 5,
   },
   des: {
@@ -68,8 +64,8 @@ export const styles = StyleSheet.create({
     fontWeight: '300',
     lineHeight: 20,
     fontSize: 14,
-    color: '#797C7B',
-    fontFamily: 'Poppins',
+    color: COLORS.LIGHT,
+    fontFamily: FONTS.REGULAR,
     marginBottom: 50,
   },
   img: {

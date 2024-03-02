@@ -2,31 +2,22 @@ import {Text, View} from 'react-native';
 import React, {useEffect, useState} from 'react';
 import firestore from '@react-native-firebase/firestore';
 import auth from '@react-native-firebase/auth';
-interface UserData {
-  confirmPassword: string;
-  creationTime: string;
-  email: string;
-  password: string;
-  photoURL: string;
-  uid: string;
-  profileImage: string;
-  username: string;
-  status: string;
-  lastActive: string;
-}
+import {HomeUser} from '../../../constants/Types';
+
 export default function useContact() {
   const user = auth().currentUser;
-  const [users, setUsers] = useState<{[key: string]: UserData[]}>({});
+  const [loading, setLoading] = useState(true);
+  const [users, setUsers] = useState<{[key: string]: HomeUser[]}>({});
 
   useEffect(() => {
     const fetchUsers = async () => {
       try {
         const usersSnapshot = await firestore().collection('users').get();
         const userData = usersSnapshot.docs
-          .map(doc => doc.data() as UserData)
+          .map(doc => doc.data() as HomeUser)
           .filter(userData => userData.uid !== user?.uid);
 
-        const groupedUsers: {[key: string]: UserData[]} = {};
+        const groupedUsers: {[key: string]: HomeUser[]} = {};
         userData.forEach(user => {
           const firstLetter = user.username.charAt(0).toUpperCase();
           if (!groupedUsers[firstLetter]) {
@@ -34,13 +25,21 @@ export default function useContact() {
           }
           groupedUsers[firstLetter].push(user);
         });
-        setUsers(groupedUsers);
+        const sortedKeys = Object.keys(groupedUsers).sort();
+        const sortedUsers: {[key: string]: HomeUser[]} = {};
+        sortedKeys.forEach(key => {
+          sortedUsers[key] = groupedUsers[key];
+        });
+        setUsers(sortedUsers);
+        setLoading(false);
       } catch (error) {
         console.error('Error fetching users:', error);
+        setLoading(false);
       }
     };
 
     fetchUsers();
   }, []);
-  return {users};
+
+  return {users, loading};
 }

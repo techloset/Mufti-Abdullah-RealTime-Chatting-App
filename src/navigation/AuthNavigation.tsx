@@ -1,16 +1,44 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {createStackNavigator} from '@react-navigation/stack';
-import {useAuthContext} from '../context/AuthContext';
+
 import StackNavigation from './AuthStackNavigation';
+import auth, {FirebaseAuthTypes} from '@react-native-firebase/auth';
+import firestore from '@react-native-firebase/firestore';
 import MainStack from './MainStack';
 import {useSelector} from 'react-redux';
-import {selectAuthState} from '../redux/AuthSlice';
+import {login, selectAuthState} from '../store/slices/AuthSlice';
+import {FirebaseUser, UserData, UserProfileData} from '../constants/Types';
+import {useAppDispatch} from '../store/Store';
 
 const Stack = createStackNavigator();
 export default function AuthNavigation() {
+  const [isAppLoading, setIsAppLoading] = useState(true);
   const isAuth = useSelector(selectAuthState);
-  console.log('isAuth.auth', isAuth.isAuth);
-  // const {isAuth} = useAuthContext();
+  const dispatch = useAppDispatch();
+  useEffect(() => {
+    auth().onAuthStateChanged((user: FirebaseUser | null) => {
+      if (user) {
+        readUserProfile(user);
+        console.log('user', user);
+      } else {
+        setIsAppLoading(false);
+      }
+    });
+    return;
+  }, [auth]);
 
+  const readUserProfile = (user: FirebaseUser) => {
+    firestore()
+      .collection('users')
+      .doc(user.uid)
+      .onSnapshot(documentSnapshot => {
+        const userData: UserProfileData =
+          documentSnapshot.data() as UserProfileData;
+        dispatch(login(userData as FirebaseAuthTypes.User));
+      });
+    setTimeout(() => {
+      setIsAppLoading(false);
+    }, 2000);
+  };
   return <>{isAuth.isAuth ? <MainStack /> : <StackNavigation />}</>;
 }

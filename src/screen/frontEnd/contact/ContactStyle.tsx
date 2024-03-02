@@ -1,4 +1,5 @@
 import {StyleSheet} from 'react-native';
+import {COLORS} from '../../../constants/colors/Color';
 
 export const styles = StyleSheet.create({
   TextView: {
@@ -6,9 +7,10 @@ export const styles = StyleSheet.create({
     marginVertical: 20,
   },
   TextHeading: {
-    color: 'black',
+    color: COLORS.BLACK,
     fontWeight: '500',
     fontSize: 16,
+    marginLeft: 24,
   },
   LettersView: {
     marginHorizontal: 24,
@@ -16,7 +18,15 @@ export const styles = StyleSheet.create({
     width: 185,
   },
   LetterText: {
-    color: 'black',
+    color: COLORS.BLACK,
     marginBottom: 10,
+    fontWeight: '700',
+  },
+  nouch: {
+    width: 30,
+    height: 3,
+    marginBottom: 24,
+    backgroundColor: COLORS.NOCH,
+    alignSelf: 'center',
   },
 });
