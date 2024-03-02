@@ -34,7 +34,6 @@ export default function useChangePassword() {
 
       return;
     }
-
     if (newPassword !== confirmPassword) {
       ShowToast('danger', 'New password and confirm password do not match');
       return;
