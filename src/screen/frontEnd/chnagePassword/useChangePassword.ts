@@ -30,8 +30,7 @@ export default function useChangePassword() {
 
   const handlePasswordUpdate = () => {
     if (!currentUser) {
-      ShowToast('danger', 'user Not Found');
-
+      ShowToast('danger', 'User Not Found');
       return;
     }
     if (newPassword !== confirmPassword) {

@@ -28,7 +28,6 @@ interface navigationProps {
     navigate(screen: string, params: {userDetails: HomeUser}): void;
   };
 }
-
 export default function Home({navigation}: navigationProps) {
   const {usersData, user, handleDeleteUser, isAppLoading} = uesHome();
 
