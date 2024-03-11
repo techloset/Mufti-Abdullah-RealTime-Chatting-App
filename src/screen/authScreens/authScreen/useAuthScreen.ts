@@ -5,6 +5,7 @@ import {UserData} from '../../../constants/Types';
 import {useDispatch} from 'react-redux';
 import {login} from '../../../store/slices/AuthSlice';
 import {ShowToast} from '../../../components/toast/ShowToast';
+import {FIREBASE_COLLECTIONS} from '../../../constants/firebaseCollections/FirebaseCollectoin';
 
 GoogleSignin.configure({
   webClientId:
@@ -35,17 +36,20 @@ export default function UseAuthScreen() {
         uid: userCredential.user.uid,
         creationTime: userCredential.user.metadata.creationTime,
       };
-      await firestore().collection('users').doc(userCredential.user.uid).set({
-        username: userData.displayName,
-        email: userData.email,
-        uid: userData.uid,
-        password: '',
-        confirmPassword: '',
-        photoURL: userData.photoURL,
-        creationTime: userData.creationTime,
-        status: 'Active',
-        lastSeen: new Date().toLocaleDateString(),
-      });
+      await firestore()
+        .collection(FIREBASE_COLLECTIONS.USER)
+        .doc(userCredential.user.uid)
+        .set({
+          username: userData.displayName,
+          email: userData.email,
+          uid: userData.uid,
+          password: '',
+          confirmPassword: '',
+          photoURL: userData.photoURL,
+          creationTime: userData.creationTime,
+          status: 'Active',
+          lastSeen: new Date().toLocaleDateString(),
+        });
       dispatch(login(userData as UserData));
       console.log('Success', 'User SignUp Successfully', 'success');
       ShowToast('sucess', 'User SignUp Successfully');

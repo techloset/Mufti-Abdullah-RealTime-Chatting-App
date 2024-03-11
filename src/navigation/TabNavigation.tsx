@@ -1,10 +1,7 @@
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
-import {IMAGES} from '../constants/assets/AllImages';
 import {BOTTOM_TAB_SCREEN} from '../constants/navigations/Navigations';
-import Contact from '../screen/frontEnd/contact/Contact';
-import Home from '../screen/frontEnd/home/Home';
-import Setting from '../screen/frontEnd/setting/Setting';
 import {COLORS} from '../constants/colors/Color';
+import {BOTTOM_TAB_SCREENS_NAVIGATION} from '../constants/navigationScreens/NavigationScreens';
 
 const Tab = createBottomTabNavigator();
 const screenOptions = {
@@ -23,45 +20,21 @@ export default function Navigation() {
   const {HOME, CONTACT, SETTING} = BOTTOM_TAB_SCREEN;
   return (
     <Tab.Navigator screenOptions={screenOptions}>
-      <Tab.Screen
-        options={{
-          tabBarLabel: 'Message',
-          tabBarLabelStyle: {
-            fontSize: 16,
-            fontWeight: 'bold',
-          },
-          tabBarIcon: ({focused}) =>
-            focused ? <IMAGES.Msg /> : <IMAGES.UnfocusMsg />,
-        }}
-        name={HOME}
-        component={Home}
-      />
-      <Tab.Screen
-        options={{
-          tabBarLabel: 'Contact',
-          tabBarLabelStyle: {
-            fontSize: 16,
-            fontWeight: 'bold',
-          },
-          tabBarIcon: ({focused}) =>
-            focused ? <IMAGES.FocusUser /> : <IMAGES.User />,
-        }}
-        name={CONTACT}
-        component={Contact}
-      />
-      <Tab.Screen
-        options={{
-          tabBarLabel: 'Setting',
-          tabBarLabelStyle: {
-            fontSize: 16,
-            fontWeight: 'bold',
-          },
-          tabBarIcon: ({focused}) =>
-            focused ? <IMAGES.FocusSetting /> : <IMAGES.Setting />,
-        }}
-        name={SETTING}
-        component={Setting}
-      />
+      {BOTTOM_TAB_SCREENS_NAVIGATION.map(
+        ({name, component, options}, index) => (
+          <Tab.Screen
+            key={index}
+            name={name}
+            component={component}
+            options={{
+              ...options,
+              tabBarLabelStyle: {
+                ...(options.tabBarLabelStyle as {}),
+              },
+            }}
+          />
+        ),
+      )}
     </Tab.Navigator>
   );
 }

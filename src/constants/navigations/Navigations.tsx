@@ -1,3 +1,5 @@
+import {IMAGES} from '../assets/AllImages';
+
 export const BOTTOM_TAB_SCREEN = {
   HOME: 'HOME',
   CONTACT: 'CONTACT',
@@ -23,4 +25,26 @@ export const SETTING_STACK_SCREENS = {
   SETTING_PAGE: 'SETTINGPAGE',
   PROFILE: 'PROFILE',
   CHANGE_PASSWOED: 'CHANGE_PASSWORD',
+};
+
+export const TAB_OPTIONS = {
+  tabBarLabelStyle: {
+    fontSize: 16,
+    fontWeight: 'bold',
+  },
+};
+
+export const TAB_ICONS = {
+  Home: {
+    focused: <IMAGES.Msg />,
+    unfocused: <IMAGES.UnfocusMsg />,
+  },
+  Contact: {
+    focused: <IMAGES.FocusUser />,
+    unfocused: <IMAGES.User />,
+  },
+  Setting: {
+    focused: <IMAGES.FocusSetting />,
+    unfocused: <IMAGES.Setting />,
+  },
 };

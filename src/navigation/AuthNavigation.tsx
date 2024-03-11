@@ -9,6 +9,7 @@ import {useSelector} from 'react-redux';
 import {login, selectAuthState} from '../store/slices/AuthSlice';
 import {FirebaseUser, UserData, UserProfileData} from '../constants/Types';
 import {useAppDispatch} from '../store/Store';
+import {FIREBASE_COLLECTIONS} from '../constants/firebaseCollections/FirebaseCollectoin';
 
 const Stack = createStackNavigator();
 export default function AuthNavigation() {
@@ -28,7 +29,7 @@ export default function AuthNavigation() {
 
   const readUserProfile = (user: FirebaseUser) => {
     firestore()
-      .collection('users')
+      .collection(FIREBASE_COLLECTIONS.USER)
       .doc(user.uid)
       .onSnapshot(documentSnapshot => {
         const userData: UserProfileData =

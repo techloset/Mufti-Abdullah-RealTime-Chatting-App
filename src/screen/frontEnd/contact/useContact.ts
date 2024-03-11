@@ -3,6 +3,7 @@ import React, {useEffect, useState} from 'react';
 import firestore from '@react-native-firebase/firestore';
 import auth from '@react-native-firebase/auth';
 import {HomeUser} from '../../../constants/Types';
+import {FIREBASE_COLLECTIONS} from '../../../constants/firebaseCollections/FirebaseCollectoin';
 
 export default function useContact() {
   const user = auth().currentUser;
@@ -12,7 +13,9 @@ export default function useContact() {
   useEffect(() => {
     const fetchUsers = async () => {
       try {
-        const usersSnapshot = await firestore().collection('users').get();
+        const usersSnapshot = await firestore()
+          .collection(FIREBASE_COLLECTIONS.USER)
+          .get();
         const userData = usersSnapshot.docs
           .map(doc => doc.data() as HomeUser)
           .filter(userData => userData.uid !== user?.uid);

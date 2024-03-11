@@ -21,4 +21,14 @@ export const HomeStyles = StyleSheet.create({
     backgroundColor: COLORS.NOCH,
     alignSelf: 'center',
   },
+  hiddenItem: {
+    display: 'flex',
+    flexDirection: 'row',
+    backgroundColor: 'transparent',
+    justifyContent: 'flex-end',
+    marginHorizontal: 10,
+    paddingTop: 13,
+    paddingHorizontal: 5,
+    gap: 6,
+  },
 });

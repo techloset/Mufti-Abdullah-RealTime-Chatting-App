@@ -10,6 +10,7 @@ import storage from '@react-native-firebase/storage';
 import {ProfileHook, Resource, UserData} from '../../../constants/Types';
 import {Toast} from 'react-native-toast-notifications';
 import {ShowToast} from '../../../components/toast/ShowToast';
+import {FIREBASE_COLLECTIONS} from '../../../constants/firebaseCollections/FirebaseCollectoin';
 
 export default function useProfile(): ProfileHook {
   const currentUser = auth().currentUser;
@@ -30,7 +31,9 @@ export default function useProfile(): ProfileHook {
   useEffect(() => {
     const fetchUsers = async () => {
       try {
-        const usersSnapshot = await firestore().collection('users').get();
+        const usersSnapshot = await firestore()
+          .collection(FIREBASE_COLLECTIONS.USER)
+          .get();
         const userData = usersSnapshot.docs
           .map(doc => doc.data() as UserData)
           .filter(userData => userData.uid === currentUser?.uid);
@@ -58,7 +61,9 @@ export default function useProfile(): ProfileHook {
       currentUser.updateProfile({
         displayName: name,
       });
-    const userDocRef = firestore().collection('users').doc(usersData?.uid);
+    const userDocRef = firestore()
+      .collection(FIREBASE_COLLECTIONS.USER)
+      .doc(usersData?.uid);
     userDocRef
       .update({
         username: name,
@@ -128,7 +133,9 @@ export default function useProfile(): ProfileHook {
       await ref.put(blob);
       const downloadURL = await ref.getDownloadURL();
       console.log('Image uploaded to Firebase Storage:', downloadURL);
-      const userDocRef = firestore().collection('users').doc(usersData?.uid);
+      const userDocRef = firestore()
+        .collection(FIREBASE_COLLECTIONS.USER)
+        .doc(usersData?.uid);
       userDocRef
         .update({
           photoURL: downloadURL,

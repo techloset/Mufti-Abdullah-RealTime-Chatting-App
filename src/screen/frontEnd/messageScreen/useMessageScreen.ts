@@ -5,6 +5,7 @@ import firestore, {
 } from '@react-native-firebase/firestore';
 import {useNavigation} from '@react-navigation/native';
 import {Toast} from 'react-native-toast-notifications';
+import {FIREBASE_COLLECTIONS} from '../../../constants/firebaseCollections/FirebaseCollectoin';
 
 export default function useMessageScreen({route}: any) {
   const navigation = useNavigation();
@@ -46,9 +47,12 @@ export default function useMessageScreen({route}: any) {
     if (!currentUser || !currentUser?.uid || !receiverId || !message) return;
 
     try {
-      const chatMessages = firestore().collection('chatMessages').doc(randomId);
-      const messageRef = chatMessages.collection('messages').doc();
-      const usersChat = firestore().collection('usersChats').doc();
+      const chatMessages = firestore()
+        .collection(FIREBASE_COLLECTIONS.CHATMESSAGES)
+        .doc(randomId);
+      const usersChat = firestore()
+        .collection(FIREBASE_COLLECTIONS.USERSCHATS)
+        .doc();
       await usersChat.set({
         chatId: randomId,
         receiverId: userDetails.uid,
@@ -71,7 +75,7 @@ export default function useMessageScreen({route}: any) {
 
       try {
         const querySnapshot = await firestore()
-          .collection('chatMessages')
+          .collection(FIREBASE_COLLECTIONS.CHATMESSAGES)
           .where('reciver', 'in', [currentUser.uid, userDetails.uid])
           .where('sentBy', 'in', [currentUser.uid, userDetails.uid])
           .orderBy('messageDate', 'desc')

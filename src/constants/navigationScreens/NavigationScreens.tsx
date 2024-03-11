@@ -12,15 +12,55 @@ import Setting from '../../screen/frontEnd/setting/Setting';
 import {
   AUTH_STACK_SCREEN,
   BOTTOM_TAB_SCREEN,
+  TAB_ICONS,
+  TAB_OPTIONS,
   CONTACT_STACK_SCREENS,
   HOME_STACK_SCREENS,
   SETTING_STACK_SCREENS,
 } from '../navigations/Navigations';
+import {IMAGES} from '../assets/AllImages';
 
 export const BOTTOM_TAB_SCREENS_NAVIGATION = [
-  {name: BOTTOM_TAB_SCREEN.HOME, component: Home},
-  {name: BOTTOM_TAB_SCREEN.CONTACT, component: Contact},
-  {name: BOTTOM_TAB_SCREEN.SETTING, component: Setting},
+  {
+    name: BOTTOM_TAB_SCREEN.HOME,
+
+    component: Home,
+    options: {
+      tabBarLabel: 'Message',
+      tabBarLabelStyle: {
+        fontSize: 16,
+        fontWeight: 'bold',
+      },
+      tabBarIcon: ({focused}: {focused: boolean}) =>
+        focused ? <IMAGES.Msg /> : <IMAGES.UnfocusMsg />,
+    },
+  },
+  {
+    name: BOTTOM_TAB_SCREEN.CONTACT,
+    component: Contact,
+    options: {
+      tabBarLabel: 'Contact',
+      tabBarLabelStyle: {
+        fontSize: 16,
+        fontWeight: 'bold',
+      },
+      tabBarIcon: ({focused}: {focused: boolean}) =>
+        focused ? <IMAGES.FocusUser /> : <IMAGES.User />,
+    },
+  },
+  {
+    name: BOTTOM_TAB_SCREEN.SETTING,
+    component: Setting,
+    options: {
+      tabBarLabel: 'Setting',
+      tabBarLabelStyle: {
+        fontSize: 16,
+        fontWeight: 'bold',
+      },
+      tabBarIcon: ({focused}: {focused: boolean}) =>
+        focused ? <IMAGES.FocusSetting /> : <IMAGES.Setting />,
+    },
+  },
 ];
 export const AUTH_STACK_SCREENS_NAVIGATION = [
   {name: AUTH_STACK_SCREEN.AUTH, component: AuthScreen},

@@ -21,7 +21,6 @@ import {HeaderStyles} from '../../../styles/HeaderStyling';
 import {StackNavigationProp} from '@react-navigation/stack';
 import {HomeStackParamsList, HomeUser} from '../../../constants/Types';
 import uesHome from './uesHome';
-import Loader from '../../../components/loader/Loader';
 
 interface navigationProps {
   navigation: StackNavigationProp<HomeStackParamsList, 'HOMEPAGE'> & {
@@ -84,17 +83,7 @@ export default function Home({navigation}: navigationProps) {
               );
             }}
             renderHiddenItem={({item}) => (
-              <View
-                style={{
-                  display: 'flex',
-                  flexDirection: 'row',
-                  backgroundColor: 'transparent',
-                  justifyContent: 'flex-end',
-                  marginHorizontal: 10,
-                  paddingTop: 13,
-                  paddingHorizontal: 5,
-                  gap: 6,
-                }}>
+              <View style={HomeStyles.hiddenItem}>
                 <HOMEICON.Noftification />
                 <TouchableOpacity
                   onPress={() => {

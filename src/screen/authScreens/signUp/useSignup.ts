@@ -5,6 +5,7 @@ import {useDispatch} from 'react-redux';
 import {login} from '../../../store/slices/AuthSlice';
 import {SignupUser} from '../../../constants/Types';
 import {ShowToast} from '../../../components/toast/ShowToast';
+import {FIREBASE_COLLECTIONS} from '../../../constants/firebaseCollections/FirebaseCollectoin';
 
 const initialState = {
   username: '',
@@ -26,18 +27,19 @@ export default function useSignup() {
     let validRegex =
       /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
     if (username.length < 3) {
-      return console.log(
+      console.log(
         'plz Enter Username',
         'username length minimum 3 character ',
         'error',
       );
+      return ShowToast(
+        'danger',
+        'plz Enter Username username length minimum 3 character ',
+      );
     }
     if (!email) {
-      return console.log(
-        'plz Enter Email',
-        ' formate like: abc@gmail.com',
-        'error',
-      );
+      console.log('plz Enter Email', ' formate like: abc@gmail.com', 'error');
+      return ShowToast('danger', 'plz Enter Email ');
     }
     if (!validRegex.test(email)) {
       return console.log(
@@ -81,7 +83,7 @@ export default function useSignup() {
         userData.lastSeen = new Date().toLocaleTimeString();
 
         firestore()
-          .collection('users')
+          .collection(FIREBASE_COLLECTIONS.USER)
           .doc(userData.uid)
           .set(userData)
           .then(() => {
@@ -98,11 +100,12 @@ export default function useSignup() {
       .catch(error => {
         if (error.code === 'auth/email-already-in-use') {
           setisloading(false);
-          return console.log(
+          console.log(
             'Email Error',
             'That email address is already register!',
             'error',
           );
+          return ShowToast('danger', 'That email address is already register!');
         }
 
         if (error.code === 'auth/invalid-email') {

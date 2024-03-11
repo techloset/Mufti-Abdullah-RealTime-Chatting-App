@@ -4,6 +4,7 @@ import auth from '@react-native-firebase/auth';
 import firestore from '@react-native-firebase/firestore';
 import {UserData} from '../../../constants/Types';
 import {ShowToast} from '../../../components/toast/ShowToast';
+import {FIREBASE_COLLECTIONS} from '../../../constants/firebaseCollections/FirebaseCollectoin';
 
 export default function useChangePassword() {
   const [currentPassword, setCurrentPassword] = useState('');
@@ -15,7 +16,9 @@ export default function useChangePassword() {
   useEffect(() => {
     const fetchUsers = async () => {
       try {
-        const usersSnapshot = await firestore().collection('users').get();
+        const usersSnapshot = await firestore()
+          .collection(FIREBASE_COLLECTIONS.USER)
+          .get();
         const userData = usersSnapshot.docs
           .map(doc => doc.data() as UserData)
           .filter(userData => userData.uid === currentUser?.uid);
@@ -58,7 +61,7 @@ export default function useChangePassword() {
           .updatePassword(newPassword)
           .then(() => {
             const userDocRef = firestore()
-              .collection('users')
+              .collection(FIREBASE_COLLECTIONS.USER)
               .doc(usersData?.uid);
             userDocRef
               .update({

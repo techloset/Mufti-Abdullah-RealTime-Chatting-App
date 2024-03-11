@@ -1,6 +1,7 @@
 import {createAsyncThunk, createSlice} from '@reduxjs/toolkit';
 import firestore from '@react-native-firebase/firestore';
 import auth from '@react-native-firebase/auth';
+import {FIREBASE_COLLECTIONS} from '../../constants/firebaseCollections/FirebaseCollectoin';
 export type UserData = {
   email: string;
   password: string;
@@ -24,7 +25,9 @@ const initialState: CounterState = {
 
 export const getUsers = createAsyncThunk('users', async () => {
   try {
-    const usersSnapshot = await firestore().collection('users').get();
+    const usersSnapshot = await firestore()
+      .collection(FIREBASE_COLLECTIONS.USER)
+      .get();
     const users = usersSnapshot.docs.map(doc => doc.data());
     const filteredUsers = users.filter(
       user => user.uid !== auth().currentUser?.uid,

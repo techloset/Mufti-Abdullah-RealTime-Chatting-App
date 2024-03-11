@@ -2,6 +2,7 @@ import {useEffect, useState} from 'react';
 import auth from '@react-native-firebase/auth';
 import firestore from '@react-native-firebase/firestore';
 import {HomeUser} from '../../../constants/Types';
+import {FIREBASE_COLLECTIONS} from '../../../constants/firebaseCollections/FirebaseCollectoin';
 
 export default function useHome() {
   const user = auth().currentUser;
@@ -12,7 +13,7 @@ export default function useHome() {
     if (!user) return;
     try {
       const usersChatQuerySnapshot = await firestore()
-        .collection('usersChats')
+        .collection(FIREBASE_COLLECTIONS.USERSCHATS)
         .where('sendby', '==', user.uid)
         .get();
 
@@ -26,7 +27,7 @@ export default function useHome() {
 
       const usersDataPromises = receiverIds.map(async receiverId => {
         const userDoc = await firestore()
-          .collection('users')
+          .collection(FIREBASE_COLLECTIONS.USER)
           .doc(receiverId)
           .get();
         return userDoc.data() as HomeUser;
@@ -45,7 +46,7 @@ export default function useHome() {
     try {
       setIsAppLoading(true);
       await firestore()
-        .collection('chatMessages')
+        .collection(FIREBASE_COLLECTIONS.CHATMESSAGES)
         .where('reciver', '==', userId)
         .where('sentBy', '==', user?.uid)
         .get()
@@ -55,7 +56,7 @@ export default function useHome() {
           });
         });
       await firestore()
-        .collection('usersChats')
+        .collection(FIREBASE_COLLECTIONS.USERSCHATS)
         .where('receiverId', '==', userId)
         .get()
         .then(querySnapshot => {

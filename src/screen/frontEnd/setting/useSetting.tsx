@@ -4,6 +4,7 @@ import {UserData} from '../../../constants/Types';
 import firestore from '@react-native-firebase/firestore';
 import {useAppDispatch} from '../../../store/Store';
 import {logout} from '../../../store/slices/AuthSlice';
+import {FIREBASE_COLLECTIONS} from '../../../constants/firebaseCollections/FirebaseCollectoin';
 export default function useSetting() {
   const dispatch = useAppDispatch();
   const user = auth().currentUser;
@@ -14,7 +15,7 @@ export default function useSetting() {
       try {
         if (user) {
           const usersSnapshot = await firestore()
-            .collection('users')
+            .collection(FIREBASE_COLLECTIONS.USER)
             .doc(user.uid)
             .get();
           const userData = usersSnapshot.data();
@@ -33,7 +34,9 @@ export default function useSetting() {
   const handleLogout = async () => {
     setLoading(true);
     if (user) {
-      const userRef = firestore().collection('users').doc(user.uid);
+      const userRef = firestore()
+        .collection(FIREBASE_COLLECTIONS.USER)
+        .doc(user.uid);
       const userDoc = await userRef.get();
 
       if (userDoc.exists) {
