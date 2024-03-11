@@ -2,15 +2,8 @@ import {createAsyncThunk, createSlice} from '@reduxjs/toolkit';
 import firestore from '@react-native-firebase/firestore';
 import auth from '@react-native-firebase/auth';
 import {FIREBASE_COLLECTIONS} from '../../constants/firebaseCollections/FirebaseCollectoin';
-export type UserData = {
-  email: string;
-  password: string;
-  status: string | null;
-  uid: string;
-  displayName: string;
-  photoUrl: string | null;
-  confirmPassword: string | null;
-};
+import {UserData} from '../../constants/Types';
+
 export interface CounterState {
   Users: UserData[];
   loading: boolean;
