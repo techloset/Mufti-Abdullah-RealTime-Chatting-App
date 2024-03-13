@@ -58,6 +58,7 @@ export default function useHome() {
       await firestore()
         .collection(FIREBASE_COLLECTIONS.USERSCHATS)
         .where('receiverId', '==', userId)
+        .where('sendby', '==', user?.uid)
         .get()
         .then(querySnapshot => {
           querySnapshot.forEach(doc => {

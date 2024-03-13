@@ -78,8 +78,8 @@ export default function useMessageScreen({route}: any) {
           .collection(FIREBASE_COLLECTIONS.CHATMESSAGES)
           .where('reciver', 'in', [currentUser.uid, userDetails.uid])
           .where('sentBy', 'in', [currentUser.uid, userDetails.uid])
-          .orderBy('messageDate', 'desc')
           .orderBy('messageTime', 'asc')
+          .orderBy('messageDate', 'desc')
           .limit(50)
           .get();
         const fetchedMessages = querySnapshot.docs.map(doc => doc.data());

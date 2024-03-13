@@ -73,7 +73,6 @@ export default function MessageScreen({route}: any) {
                           {message.message}
                         </Text>
                         <Text style={styles.time}>
-                          {' '}
                           {message.messageTime.split(':').slice(0, 2).join(':')}
                         </Text>
                       </View>
