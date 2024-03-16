@@ -14,8 +14,7 @@ export const HeaderStyles = StyleSheet.create({
     borderRadius: 22,
     justifyContent: 'center',
     alignItems: 'center',
-    opacity: 0.5,
-    backgroundColor: COLORS.WHITE,
+    backgroundColor: COLORS.BACKGROUND,
   },
   imageSearch: {
     height: 22,
@@ -49,12 +48,13 @@ export const HeaderStyles = StyleSheet.create({
   screenName: {
     fontSize: 20,
     color: COLORS.WHITE,
-    fontFamily: FONTS.BOLD,
+    fontFamily: FONTS.REGULAR,
+    fontWeight: '500',
   },
   image: {
     width: 42,
     height: 42,
-    backgroundColor: COLORS.ONE,
+    backgroundColor: COLORS.BACKGROUND,
     borderRadius: 26,
     justifyContent: 'center',
     alignItems: 'center',

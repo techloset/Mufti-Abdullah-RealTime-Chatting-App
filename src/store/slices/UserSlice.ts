@@ -2,7 +2,7 @@ import {createAsyncThunk, createSlice} from '@reduxjs/toolkit';
 import firestore from '@react-native-firebase/firestore';
 import auth from '@react-native-firebase/auth';
 import {FIREBASE_COLLECTIONS} from '../../constants/firebaseCollections/FirebaseCollectoin';
-import {UserData} from '../../constants/Types';
+import {UserData} from '../../constants/types/Types';
 
 export interface CounterState {
   Users: UserData[];

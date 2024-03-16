@@ -1,5 +1,6 @@
 import {StyleSheet} from 'react-native';
 import {COLORS} from '../../constants/colors/Color';
+import {FONTS} from '../../constants/fonts/Font';
 
 export const styles = StyleSheet.create({
   MainView: {
@@ -21,7 +22,7 @@ export const styles = StyleSheet.create({
     flexDirection: 'row',
   },
   Image: {
-    borderRadius: 22,
+    borderRadius: 26,
     height: 52,
     width: 52,
   },
@@ -32,19 +33,21 @@ export const styles = StyleSheet.create({
     marginLeft: 4,
   },
   FirstText: {
-    color: COLORS.BLACK,
+    color: COLORS.DARKBLACK,
     padding: 2,
+    fontFamily: FONTS.REGULAR,
+    fontWeight: '500',
     fontSize: 20,
     lineHeight: 20,
   },
   SecondText: {
-    color: COLORS.BLACK,
+    color: COLORS.STATUS,
     padding: 2,
     fontSize: 12,
     lineHeight: 12,
   },
   ThirdText: {
-    color: COLORS.BLACK,
+    color: COLORS.STATUS,
     alignSelf: 'center',
   },
 });

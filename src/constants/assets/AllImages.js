@@ -21,6 +21,7 @@ import File from '../../assets/icons/files.svg';
 import Attachment from '../../assets/icons/Group.svg';
 import BlackSearch from '../../assets/icons/SearchBlack.svg';
 import Remove from '../../assets/icons/remove.svg';
+import Icon from '../../assets/images/Ellipse 385.svg';
 
 /// Tab Navigation Images
 export const IMAGES = {
@@ -52,6 +53,7 @@ export const HEADERICON = {
   search: Seacrh,
   leftArrow: leftArrow,
   ArrowBlack: ArrowBlack,
+  ICON: Icon,
 };
 // Home Icons
 export const HOMEICON = {

@@ -16,9 +16,9 @@ export const styles = StyleSheet.create({
     flexDirection: 'row',
   },
   Profile: {
-    borderRadius: 26,
-    height: 52,
-    width: 52,
+    borderRadius: 22,
+    height: 44,
+    width: 44,
   },
   TextView: {
     display: 'flex',
@@ -28,11 +28,11 @@ export const styles = StyleSheet.create({
   },
   Name: {
     color: COLORS.DARKBLACK,
-    fontFamily: FONTS.REGULAR,
+    fontFamily: FONTS.MEDIUM,
     fontWeight: '500',
     padding: 2,
-    fontSize: 18,
-    lineHeight: 20,
+    fontSize: 16,
+    lineHeight: 18,
   },
   Description: {
     color: COLORS.STATUS,

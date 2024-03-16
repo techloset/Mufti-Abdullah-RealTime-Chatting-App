@@ -7,8 +7,12 @@ import firestore from '@react-native-firebase/firestore';
 import MainStack from './MainStack';
 import {useSelector} from 'react-redux';
 import {login, selectAuthState} from '../store/slices/AuthSlice';
-import {FirebaseUser, UserData, UserProfileData} from '../constants/Types';
-import {useAppDispatch} from '../store/Store';
+import {
+  FirebaseUser,
+  UserData,
+  UserProfileData,
+} from '../constants/types/Types';
+import {useAppDispatch} from '../store/store';
 import {FIREBASE_COLLECTIONS} from '../constants/firebaseCollections/FirebaseCollectoin';
 
 const Stack = createStackNavigator();

@@ -1,5 +1,6 @@
 import {StyleSheet} from 'react-native';
 import {COLORS} from '../../constants/colors/Color';
+import {FONTS} from '../../constants/fonts/Font';
 
 export const styles = StyleSheet.create({
   MainView: {
@@ -25,13 +26,14 @@ export const styles = StyleSheet.create({
     marginLeft: 4,
   },
   Name: {
-    color: COLORS.BLACK,
+    color: COLORS.DARKBLACK,
+    fontFamily: FONTS.MEDIUM,
     padding: 2,
-    fontSize: 20,
-    lineHeight: 20,
+    fontSize: 16,
+    lineHeight: 16,
   },
   Description: {
-    color: COLORS.BLACK,
+    color: COLORS.STATUS,
     padding: 2,
     fontSize: 12,
     lineHeight: 12,

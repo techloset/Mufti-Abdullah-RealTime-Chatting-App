@@ -28,10 +28,10 @@ export const styles = StyleSheet.create({
   },
   Name: {
     color: COLORS.DARKBLACK,
-    fontFamily: FONTS.REGULAR,
-    fontWeight: '500',
+    fontFamily: FONTS.BOLD,
+    fontWeight: '700',
     padding: 2,
-    fontSize: 18,
+    fontSize: 20,
     lineHeight: 20,
   },
   Description: {

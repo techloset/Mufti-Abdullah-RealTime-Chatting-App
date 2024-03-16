@@ -14,7 +14,7 @@ import {
   ContactStackParamsList,
   HomeStackParamsList,
   SettingStackParamsList,
-} from '../constants/Types';
+} from '../constants/types/Types';
 const Stack = createStackNavigator();
 
 export default function MainStack() {

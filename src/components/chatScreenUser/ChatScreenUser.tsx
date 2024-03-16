@@ -7,7 +7,11 @@ interface UserInfoProps {
   username: string | null | undefined;
   status: string | undefined;
 }
-const User: React.FC<UserInfoProps> = ({photoURL, username, status}) => {
+const ChatScreenUser: React.FC<UserInfoProps> = ({
+  photoURL,
+  username,
+  status,
+}) => {
   return (
     <View style={styles.MainView}>
       <View style={styles.InnerView}>
@@ -16,6 +20,7 @@ const User: React.FC<UserInfoProps> = ({photoURL, username, status}) => {
         ) : (
           <>
             <Image source={{uri: photoURL}} style={styles.Profile} />
+            <HEADERICON.ICON style={{marginTop: 38, marginLeft: -4}} />
           </>
         )}
         <View style={styles.TextView}>
@@ -26,4 +31,4 @@ const User: React.FC<UserInfoProps> = ({photoURL, username, status}) => {
     </View>
   );
 };
-export default User;
+export default ChatScreenUser;
