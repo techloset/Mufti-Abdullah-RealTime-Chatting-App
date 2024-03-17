@@ -6,18 +6,18 @@ import {
   View,
 } from 'react-native';
 import React from 'react';
-import SettingInfo from '../../../components/settingPageComponents/SettingInfo';
-import {HEADERICON, SETTINGICON} from '../../../constants/assets/AllImages';
-import {styles} from '../../../components/settingPageComponents/Style';
+import SettingInfo from '../../components/settingPageComponents/SettingInfo';
+import {HEADERICON, SETTINGICON} from '../../constants/assets/AllImages';
+import {styles} from '../../components/settingPageComponents/Style';
 import {StackNavigationProp} from '@react-navigation/stack';
-import LinearGradient from 'react-native-linear-gradient';
-import {HeaderStyles} from '../../../styles/HeaderStyling';
-import {SettingStackParamsList, UserData} from '../../../constants/types/Types';
+
+import {HeaderStyles} from '../../styles/HeaderStyling';
+import {SettingStackParamsList, UserData} from '../../constants/types/Types';
 
 import {SettingStyles} from './SettingStyles';
 import useSetting from './useSetting';
-import Loader from '../../../components/loader/Loader';
-import SettingUser from '../../../components/settingUser/SettingUser';
+import Loader from '../../components/loader/Loader';
+import SettingUser from '../../components/settingUser/SettingUser';
 interface navigationProps {
   navigation: StackNavigationProp<SettingStackParamsList, 'SETTING'>;
 }
@@ -27,7 +27,7 @@ export default function Setting({navigation}: navigationProps) {
     <>
       <ImageBackground
         style={HeaderStyles.mainContainer}
-        source={require('../../../assets/images/a0b7afd36c9b9128fdc5ae0e32bdfd6c.png')}>
+        source={require('../../assets/images/a0b7afd36c9b9128fdc5ae0e32bdfd6c.png')}>
         <View style={HeaderStyles.container}>
           <View style={HeaderStyles.topbar}>
             <TouchableOpacity style={HeaderStyles.iconContainerForSettingStack}>

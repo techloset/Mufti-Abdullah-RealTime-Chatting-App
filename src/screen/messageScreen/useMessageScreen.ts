@@ -5,7 +5,7 @@ import firestore, {
 } from '@react-native-firebase/firestore';
 import {useNavigation} from '@react-navigation/native';
 import {Toast} from 'react-native-toast-notifications';
-import {FIREBASE_COLLECTIONS} from '../../../constants/firebaseCollections/FirebaseCollectoin';
+import {FIREBASE_COLLECTIONS} from '../../constants/firebaseCollections/FirebaseCollectoin';
 
 export default function useMessageScreen({route}: any) {
   const navigation = useNavigation();

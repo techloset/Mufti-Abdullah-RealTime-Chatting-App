@@ -8,10 +8,10 @@ import {
   TouchableOpacity,
   ActivityIndicator,
 } from 'react-native';
-import {styles} from '../../authScreens/signup/SignupStyles';
+import {styles} from '../signup/SignupStyles';
 import LinearGradient from 'react-native-linear-gradient';
-import {HEADERICON} from '../../../constants/assets/AllImages';
-import {HeaderStyles} from '../../../styles/HeaderStyling';
+import {HEADERICON} from '../../constants/assets/AllImages';
+import {HeaderStyles} from '../../styles/HeaderStyling';
 import {useNavigation} from '@react-navigation/native';
 import useChangePassword from './useChangePassword';
 import {chnagepasswordStyles} from './ChangePasswordStyles';
@@ -32,7 +32,7 @@ export default function ChangePassword() {
     <>
       <ImageBackground
         style={HeaderStyles.mainContainer}
-        source={require('../../../assets/images/a0b7afd36c9b9128fdc5ae0e32bdfd6c.png')}>
+        source={require('../../assets/images/a0b7afd36c9b9128fdc5ae0e32bdfd6c.png')}>
         <View style={HeaderStyles.container}>
           <View style={HeaderStyles.topbar}>
             <TouchableOpacity
@@ -85,7 +85,7 @@ export default function ChangePassword() {
           </View>
           <TouchableOpacity onPress={handlePasswordUpdate}>
             <ImageBackground
-              source={require('../../../assets/images/background.png')}
+              source={require('../../assets/images/background.png')}
               style={styles.loginBtn}>
               {loading ? (
                 <ActivityIndicator size="large" color="#352869" />

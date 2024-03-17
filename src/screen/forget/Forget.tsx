@@ -9,7 +9,7 @@ import {
 } from 'react-native';
 import {styles} from './ForgotStyle';
 import useForget from './useForget';
-import {COLORS} from '../../../constants/colors/Color';
+import {COLORS} from '../../constants/colors/Color';
 export default function Forgot() {
   const {handleSubmit, setEmail, loading} = useForget();
   return (
@@ -34,7 +34,7 @@ export default function Forgot() {
         <TouchableOpacity onPress={handleSubmit}>
           <ImageBackground
             style={styles.loginBtn}
-            source={require('../../../assets/images/background.png')}>
+            source={require('../../assets/images/background.png')}>
             {loading ? (
               <ActivityIndicator size="large" color={COLORS.WHITE} />
             ) : (

@@ -1,8 +1,8 @@
 import {useEffect, useState} from 'react';
 import auth from '@react-native-firebase/auth';
 import firestore from '@react-native-firebase/firestore';
-import {HomeUser} from '../../../constants/types/Types';
-import {FIREBASE_COLLECTIONS} from '../../../constants/firebaseCollections/FirebaseCollectoin';
+import {HomeUser} from '../../constants/types/Types';
+import {FIREBASE_COLLECTIONS} from '../../constants/firebaseCollections/FirebaseCollectoin';
 
 export default function useHome() {
   const user = auth().currentUser;

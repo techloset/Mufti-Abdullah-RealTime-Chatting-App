@@ -8,12 +8,12 @@ import {
   TouchableOpacity,
   ImageBackground,
 } from 'react-native';
-import {RootStackParamsList} from '../../../navigation/AuthStackNavigation';
+import {RootStackParamsList} from '../../navigation/AuthStackNavigation';
 import {styles} from './LoginStyle';
 
 import useLogin from './useLogin';
-import Loader from '../../../components/loader/Loader';
-import {COLORS} from '../../../constants/colors/Color';
+import Loader from '../../components/loader/Loader';
+import {COLORS} from '../../constants/colors/Color';
 interface SignupScreenProps {
   navigation?: StackNavigationProp<RootStackParamsList, 'LOGIN'>;
 }
@@ -33,7 +33,7 @@ export default function Login({navigation}: SignupScreenProps) {
             us
           </Text>
           <View style={styles.img}>
-            <Image source={require('../../../assets/icons/Google.png')} />
+            <Image source={require('../../assets/icons/Google.png')} />
           </View>
           <View style={styles.bellowGoogle}>
             <View style={styles.view2nd} />
@@ -66,7 +66,7 @@ export default function Login({navigation}: SignupScreenProps) {
           <TouchableOpacity onPress={handleLogin}>
             <ImageBackground
               style={styles.loginBtn}
-              source={require('../../../assets/images/background.png')}>
+              source={require('../../assets/images/background.png')}>
               <Text style={styles.loginBtnText}>LOGIN</Text>
             </ImageBackground>
           </TouchableOpacity>

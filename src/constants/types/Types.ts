@@ -1,26 +1,26 @@
 import {FirebaseAuthTypes} from '@react-native-firebase/auth';
 
-export interface AuthContextProps {
+export type AuthContextProps = {
   isAuth: boolean;
   user: Record<string, any>;
   dispatch: React.Dispatch<AuthAction>;
   isAppLoading: boolean;
   Logout: () => void;
-}
+};
 
-export interface FirebaseUser {
+export type FirebaseUser = {
   uid: string;
   displayName?: string | null;
   email?: string | null;
-}
-export interface UserProfileData {
+};
+export type UserProfileData = {
   confirmPassword?: string;
   email?: string;
   password?: string | undefined;
   status?: string;
   uid?: string;
   username?: string;
-}
+};
 export type HomeUser = {
   photoURL: string;
   id: string;
@@ -52,10 +52,10 @@ export type SigninUserData = {
   password: string;
   uid?: string;
 };
-export interface AuthState {
+export type AuthState = {
   isAuth: boolean;
   user: UserProfileData;
-}
+};
 
 export type AuthAction =
   | {type: 'Login'; payload: {userData?: UserProfileData}}
@@ -77,12 +77,12 @@ export type SettingStackParamsList = {
   CHANGE_PASSWORD: undefined;
   SETTING: undefined;
 };
-export interface usersData {
-  photoURL: any;
-  uid: any;
-  imageUrl: any;
-  username: any;
-}
+export type usersData = {
+  photoURL: string;
+  uid: string;
+  imageUrl: string;
+  username: string;
+};
 
 export type ProfileHook = {
   currentUser: FirebaseAuthTypes.User | null;

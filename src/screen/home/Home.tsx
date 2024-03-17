@@ -8,19 +8,19 @@ import {
   ImageBackground,
 } from 'react-native';
 import React from 'react';
-import LinearGradient from 'react-native-linear-gradient';
+
 import {SafeAreaView, FlatList} from 'react-native';
 import {SwipeListView} from 'react-native-swipe-list-view';
 import {HomeStyles} from './HomeStyling';
-import UserInfo from '../../../components/userInfo/UserInfo';
+import UserInfo from '../../components/userInfo/UserInfo';
 import {
   HEADERICON,
   HOMEICON,
   USERPROFILEIMAGE,
-} from '../../../constants/assets/AllImages';
-import {HeaderStyles} from '../../../styles/HeaderStyling';
+} from '../../constants/assets/AllImages';
+import {HeaderStyles} from '../../styles/HeaderStyling';
 import {StackNavigationProp} from '@react-navigation/stack';
-import {HomeStackParamsList, HomeUser} from '../../../constants/types/Types';
+import {HomeStackParamsList, HomeUser} from '../../constants/types/Types';
 import uesHome from './uesHome';
 
 interface navigationProps {
@@ -34,7 +34,7 @@ export default function Home({navigation}: navigationProps) {
   return (
     <ImageBackground
       style={HeaderStyles.mainContainer}
-      source={require('../../../assets/images/a0b7afd36c9b9128fdc5ae0e32bdfd6c.png')}>
+      source={require('../../assets/images/a0b7afd36c9b9128fdc5ae0e32bdfd6c.png')}>
       <View style={HeaderStyles.container}>
         <View style={HeaderStyles.topbar}>
           <TouchableOpacity

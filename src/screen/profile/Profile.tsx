@@ -8,14 +8,10 @@ import {
   View,
 } from 'react-native';
 import React from 'react';
-import {
-  HEADERICON,
-  USERPROFILEIMAGE,
-} from '../../../constants/assets/AllImages';
-import {styles} from '../../authScreens/signup/SignupStyles';
+import {HEADERICON, USERPROFILEIMAGE} from '../../constants/assets/AllImages';
+import {styles} from '../signup/SignupStyles';
 import {TextInput} from 'react-native';
-import LinearGradient from 'react-native-linear-gradient';
-import {HeaderStyles} from '../../../styles/HeaderStyling';
+import {HeaderStyles} from '../../styles/HeaderStyling';
 import {useNavigation} from '@react-navigation/native';
 import useProfile from './useProfile';
 import {profileStyles} from './ProfileStyles';
@@ -38,7 +34,7 @@ export default function Profile() {
     <>
       <ImageBackground
         style={HeaderStyles.mainContainer}
-        source={require('../../../assets/images/a0b7afd36c9b9128fdc5ae0e32bdfd6c.png')}>
+        source={require('../../assets/images/a0b7afd36c9b9128fdc5ae0e32bdfd6c.png')}>
         <View style={HeaderStyles.container}>
           <View style={HeaderStyles.topbar}>
             <TouchableOpacity
@@ -104,7 +100,7 @@ export default function Profile() {
           </View>
           <TouchableOpacity onPress={updateUserProfile}>
             <ImageBackground
-              source={require('../../../assets/images/background.png')}
+              source={require('../../assets/images/background.png')}
               style={styles.loginBtn}>
               {imageUploading || loading ? (
                 <ActivityIndicator size="large" color="white" />

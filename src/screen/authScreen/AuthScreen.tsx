@@ -6,7 +6,7 @@ import {
   TouchableOpacity,
   ImageBackground,
 } from 'react-native';
-import {RootStackParamsList} from '../../../navigation/AuthStackNavigation';
+import {RootStackParamsList} from '../../navigation/AuthStackNavigation';
 import {StackNavigationProp} from '@react-navigation/stack';
 import {styles} from './AuthStyle';
 import UseAuthScreen from './useAuthScreen';
@@ -19,11 +19,11 @@ export default function AuthScreen({navigation}: LoginProps) {
   return (
     <>
       <ImageBackground
-        source={require('../../../assets/images/a0b7afd36c9b9128fdc5ae0e32bdfd6c.png')}
+        source={require('../../assets/images/a0b7afd36c9b9128fdc5ae0e32bdfd6c.png')}
         style={styles.container}>
         <View style={styles.container}>
           <ImageBackground
-            source={require('../../../assets/images/Ellipse 1226.png')}
+            source={require('../../assets/images/Ellipse 1226.png')}
             style={styles.container}>
             <Text style={styles.mainHeading}>
               Connect friends easily & quickly
@@ -34,7 +34,7 @@ export default function AuthScreen({navigation}: LoginProps) {
             </Text>
             <TouchableOpacity onPress={LoginWithGoogle}>
               <View style={styles.img}>
-                <Image source={require('../../../assets/icons/Google.png')} />
+                <Image source={require('../../assets/icons/Google.png')} />
               </View>
             </TouchableOpacity>
             <View style={styles.orMainView}>

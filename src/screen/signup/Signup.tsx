@@ -8,7 +8,7 @@ import {
 } from 'react-native';
 import {styles} from './SignupStyles';
 import useSignup from './useSignup';
-import Loader from '../../../components/loader/Loader';
+import Loader from '../../components/loader/Loader';
 export default function SignUp() {
   const {loading, state, handleChange, handleRegister} = useSignup();
   return (
@@ -69,7 +69,7 @@ export default function SignUp() {
           <TouchableOpacity onPress={handleRegister}>
             <ImageBackground
               style={styles.loginBtn}
-              source={require('../../../assets/images/background.png')}>
+              source={require('../../assets/images/background.png')}>
               <Text style={styles.loginBtnText}>Create Account</Text>
             </ImageBackground>
           </TouchableOpacity>

@@ -1,10 +1,10 @@
 import auth, {FirebaseAuthTypes} from '@react-native-firebase/auth';
 import {useState} from 'react';
 import {useDispatch} from 'react-redux';
-import {SigninUserData, usersData} from '../../../constants/types/Types';
-import {login} from '../../../store/slices/AuthSlice';
-import {useAppDispatch} from '../../../store/store';
-import {ShowToast} from '../../../components/toast/ShowToast';
+import {SigninUserData, usersData} from '../../constants/types/Types';
+import {login} from '../../store/slices/AuthSlice';
+import {useAppDispatch} from '../../store/store';
+import {ShowToast} from '../../components/toast/ShowToast';
 
 const initialState = {email: '', password: ''};
 export default function useLogin() {

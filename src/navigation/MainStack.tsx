@@ -1,10 +1,8 @@
-import {View, Text} from 'react-native';
 import React from 'react';
 import {createStackNavigator} from '@react-navigation/stack';
 import Navigation from './TabNavigation';
 import {NavigationContainer} from '@react-navigation/native';
-import Search from '../screen/frontEnd/search/Search';
-import MessageScreen from '../screen/frontEnd/messageScreen/MessageScreen';
+
 import {
   CONTACT_STACK_SCREENS_NAVIGATION,
   HOME_STACK_SCREENS_NAVIGATION,

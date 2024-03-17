@@ -2,9 +2,9 @@ import {useEffect, useState} from 'react';
 import {Alert} from 'react-native';
 import auth from '@react-native-firebase/auth';
 import firestore from '@react-native-firebase/firestore';
-import {UserData} from '../../../constants/types/Types';
-import {ShowToast} from '../../../components/toast/ShowToast';
-import {FIREBASE_COLLECTIONS} from '../../../constants/firebaseCollections/FirebaseCollectoin';
+import {UserData} from '../../constants/types/Types';
+import {ShowToast} from '../../components/toast/ShowToast';
+import {FIREBASE_COLLECTIONS} from '../../constants/firebaseCollections/FirebaseCollectoin';
 
 export default function useChangePassword() {
   const [currentPassword, setCurrentPassword] = useState('');

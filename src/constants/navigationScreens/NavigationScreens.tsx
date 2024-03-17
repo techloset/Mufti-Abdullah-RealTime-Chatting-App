@@ -1,14 +1,3 @@
-import Forgot from '../../screen/authScreens/forget/Forget';
-import Login from '../../screen/authScreens/login/Login';
-import AuthScreen from '../../screen/authScreens/authScreen/AuthScreen';
-import SignUp from '../../screen/authScreens/signup/Signup';
-import ChangePassword from '../../screen/frontEnd/chnagePassword/ChangePassword';
-import Contact from '../../screen/frontEnd/contact/Contact';
-import Home from '../../screen/frontEnd/home/Home';
-import MessageScreen from '../../screen/frontEnd/messageScreen/MessageScreen';
-import Profile from '../../screen/frontEnd/profile/Profile';
-import Search from '../../screen/frontEnd/search/Search';
-import Setting from '../../screen/frontEnd/setting/Setting';
 import {
   AUTH_STACK_SCREEN,
   BOTTOM_TAB_SCREEN,
@@ -19,6 +8,17 @@ import {
   SETTING_STACK_SCREENS,
 } from '../navigations/Navigations';
 import {IMAGES} from '../assets/AllImages';
+import Home from '../../screen/home/Home';
+import Contact from '../../screen/contact/Contact';
+import Setting from '../../screen/setting/Setting';
+import AuthScreen from '../../screen/authScreen/AuthScreen';
+import Login from '../../screen/login/Login';
+import SignUp from '../../screen/signup/Signup';
+import Forgot from '../../screen/forget/Forget';
+import Search from '../../screen/search/Search';
+import MessageScreen from '../../screen/messageScreen/MessageScreen';
+import Profile from '../../screen/profile/Profile';
+import ChangePassword from '../../screen/chnagePassword/ChangePassword';
 
 export const BOTTOM_TAB_SCREENS_NAVIGATION = [
   {

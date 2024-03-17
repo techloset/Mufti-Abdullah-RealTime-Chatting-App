@@ -8,15 +8,15 @@ import {
   View,
 } from 'react-native';
 import React, {useState} from 'react';
-import User from '../../../components/contactUserInfo/User';
+import User from '../../components/contactUserInfo/User';
 import {styles} from './ContactStyle';
 import LinearGradient from 'react-native-linear-gradient';
-import {HEADERICON} from '../../../constants/assets/AllImages';
-import {HeaderStyles} from '../../../styles/HeaderStyling';
+import {HEADERICON} from '../../constants/assets/AllImages';
+import {HeaderStyles} from '../../styles/HeaderStyling';
 import {StackNavigationProp} from '@react-navigation/stack';
-import {ContactStackParamsList, UserData} from '../../../constants/types/Types';
+import {ContactStackParamsList, UserData} from '../../constants/types/Types';
 import useContact from './useContact';
-import Loader from '../../../components/loader/Loader';
+import Loader from '../../components/loader/Loader';
 
 interface navigationProps {
   navigation: StackNavigationProp<ContactStackParamsList, 'CONTACTPAGE'> & {
@@ -29,7 +29,7 @@ export default function Contact({navigation}: navigationProps) {
     <>
       <ImageBackground
         style={HeaderStyles.mainContainer}
-        source={require('../../../assets/images/a0b7afd36c9b9128fdc5ae0e32bdfd6c.png')}>
+        source={require('../../assets/images/a0b7afd36c9b9128fdc5ae0e32bdfd6c.png')}>
         <View style={HeaderStyles.container}>
           <View style={HeaderStyles.topbar}>
             <TouchableOpacity
