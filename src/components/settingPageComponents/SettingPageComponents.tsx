@@ -1,7 +1,6 @@
 import {Image, Text, View} from 'react-native';
 import React, {Component} from 'react';
 import {styles} from './Style';
-import {SETTINGICON} from '../../constants/assets/AllImages';
 
 type Props = {
   icon: JSX.Element;

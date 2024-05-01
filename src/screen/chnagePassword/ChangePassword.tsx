@@ -8,13 +8,13 @@ import {
   TouchableOpacity,
   ActivityIndicator,
 } from 'react-native';
-import {styles} from '../signup/SignupStyles';
+import {styles} from '../signup/signupStyles';
 import LinearGradient from 'react-native-linear-gradient';
-import {HEADERICON} from '../../constants/assets/AllImages';
-import {HeaderStyles} from '../../styles/HeaderStyling';
+import {HEADERICON} from '../../constants/assets/allImages';
+import {HeaderStyles} from '../../styles/headerStyling';
 import {useNavigation} from '@react-navigation/native';
 import useChangePassword from './useChangePassword';
-import {chnagepasswordStyles} from './ChangePasswordStyles';
+import {chnagepasswordStyles} from './changePasswordStyles';
 
 export default function ChangePassword() {
   const {

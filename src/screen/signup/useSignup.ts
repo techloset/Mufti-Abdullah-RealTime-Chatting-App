@@ -2,10 +2,10 @@ import {useState} from 'react';
 import auth from '@react-native-firebase/auth';
 import firestore from '@react-native-firebase/firestore';
 import {useDispatch} from 'react-redux';
-import {login} from '../../store/slices/AuthSlice';
-import {SignupUser} from '../../constants/types/Types';
-import {ShowToast} from '../../components/toast/ShowToast';
-import {FIREBASE_COLLECTIONS} from '../../constants/firebaseCollections/FirebaseCollectoin';
+import {login} from '../../store/slices/authSlice';
+import {SignupUser} from '../../constants/types/types';
+import {ShowToast} from '../../components/showToast/ShowToast';
+import {FIREBASE_COLLECTIONS} from '../../constants/firebaseCollections/firebaseCollectoin';
 
 const initialState = {
   username: '',

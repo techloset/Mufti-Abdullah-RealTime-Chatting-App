@@ -7,14 +7,14 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import {styles} from './SearchStyles';
-import {SEARCHPAGEICON} from '../../constants/assets/AllImages';
+import {styles} from './searchStyles';
+import {SEARCHPAGEICON} from '../../constants/assets/allImages';
 import useSearch from './useSearch';
 import SearchUser from '../../components/searchUser/SearchUser';
 import {StackNavigationProp} from '@react-navigation/stack';
-import {HomeStackParamsList, HomeUser} from '../../constants/types/Types';
+import {HomeStackParamsList, HomeUser} from '../../constants/types/types';
 import {FirebaseFirestoreTypes} from '@react-native-firebase/firestore';
-import {COLORS} from '../../constants/colors/Color';
+import {COLORS} from '../../constants/colors/color';
 interface navigationProps {
   navigation: StackNavigationProp<HomeStackParamsList, 'HOMEPAGE'> & {
     navigate(screen: string, params: {userDetails: HomeUser}): void;

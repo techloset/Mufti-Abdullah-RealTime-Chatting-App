@@ -1,7 +1,7 @@
 import {Image, Text, View} from 'react-native';
 import React, {Component} from 'react';
 import {styles} from './Style';
-import {USERPROFILEIMAGE} from '../../constants/assets/AllImages';
+import {USERPROFILEIMAGE} from '../../constants/assets/allImages';
 interface UserInfoProps {
   photoURL: string | null | undefined;
   username: string | null | undefined;

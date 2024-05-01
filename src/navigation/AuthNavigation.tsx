@@ -1,15 +1,15 @@
 import React, {useEffect, useState} from 'react';
 import {createStackNavigator} from '@react-navigation/stack';
 
-import StackNavigation from './AuthStackNavigation';
+import StackNavigation from './authStackNavigation';
 import auth, {FirebaseAuthTypes} from '@react-native-firebase/auth';
 import firestore from '@react-native-firebase/firestore';
-import MainStack from './MainStack';
+import MainStack from './mainStack';
 import {useSelector} from 'react-redux';
-import {login, selectAuthState} from '../store/slices/AuthSlice';
-import {FirebaseUser, UserProfileData} from '../constants/types/Types';
+import {login, selectAuthState} from '../store/slices/authSlice';
+import {FirebaseUser, UserProfileData} from '../constants/types/types';
 import {useAppDispatch} from '../store/store';
-import {FIREBASE_COLLECTIONS} from '../constants/firebaseCollections/FirebaseCollectoin';
+import {FIREBASE_COLLECTIONS} from '../constants/firebaseCollections/firebaseCollectoin';
 
 const Stack = createStackNavigator();
 export default function AuthNavigation() {

@@ -1,5 +1,5 @@
 import {StyleSheet} from 'react-native';
-import {COLORS} from '../../constants/colors/Color';
+import {COLORS} from '../../constants/colors/color';
 
 export const profileStyles = StyleSheet.create({
   mainView: {

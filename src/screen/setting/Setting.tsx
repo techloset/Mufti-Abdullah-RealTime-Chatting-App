@@ -6,15 +6,15 @@ import {
   View,
 } from 'react-native';
 import React from 'react';
-import SettingInfo from '../../components/settingPageComponents/SettingInfo';
-import {HEADERICON, SETTINGICON} from '../../constants/assets/AllImages';
+import SettingInfo from '../../components/settingPageComponents/SettingPageComponents';
+import {HEADERICON, SETTINGICON} from '../../constants/assets/allImages';
 import {styles} from '../../components/settingPageComponents/Style';
 import {StackNavigationProp} from '@react-navigation/stack';
 
-import {HeaderStyles} from '../../styles/HeaderStyling';
-import {SettingStackParamsList, UserData} from '../../constants/types/Types';
+import {HeaderStyles} from '../../styles/headerStyling';
+import {SettingStackParamsList, UserData} from '../../constants/types/types';
 
-import {SettingStyles} from './SettingStyles';
+import {SettingStyles} from './settingStyles';
 import useSetting from './useSetting';
 import Loader from '../../components/loader/Loader';
 import SettingUser from '../../components/settingUser/SettingUser';

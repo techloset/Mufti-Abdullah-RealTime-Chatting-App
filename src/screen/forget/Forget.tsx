@@ -7,9 +7,9 @@ import {
   ScrollView,
   ActivityIndicator,
 } from 'react-native';
-import {styles} from './ForgotStyle';
+import {styles} from './forgotStyle';
 import useForget from './useForget';
-import {COLORS} from '../../constants/colors/Color';
+import {COLORS} from '../../constants/colors/color';
 export default function Forgot() {
   const {handleSubmit, setEmail, loading} = useForget();
   return (

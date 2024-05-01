@@ -8,12 +8,12 @@ import {
   TouchableOpacity,
   ImageBackground,
 } from 'react-native';
-import {RootStackParamsList} from '../../navigation/AuthStackNavigation';
-import {styles} from './LoginStyle';
+import {RootStackParamsList} from '../../navigation/authStackNavigation';
+import {styles} from './loginStyle';
 
 import useLogin from './useLogin';
 import Loader from '../../components/loader/Loader';
-import {COLORS} from '../../constants/colors/Color';
+import {COLORS} from '../../constants/colors/color';
 interface SignupScreenProps {
   navigation?: StackNavigationProp<RootStackParamsList, 'LOGIN'>;
 }

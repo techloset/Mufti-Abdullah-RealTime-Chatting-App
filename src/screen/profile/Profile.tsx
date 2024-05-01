@@ -8,13 +8,13 @@ import {
   View,
 } from 'react-native';
 import React from 'react';
-import {HEADERICON, USERPROFILEIMAGE} from '../../constants/assets/AllImages';
-import {styles} from '../signup/SignupStyles';
+import {HEADERICON, USERPROFILEIMAGE} from '../../constants/assets/allImages';
+import {styles} from '../signup/signupStyles';
 import {TextInput} from 'react-native';
-import {HeaderStyles} from '../../styles/HeaderStyling';
+import {HeaderStyles} from '../../styles/headerStyling';
 import {useNavigation} from '@react-navigation/native';
 import useProfile from './useProfile';
-import {profileStyles} from './ProfileStyles';
+import {profileStyles} from './profileStyles';
 export default function Profile() {
   const {
     currentUser,

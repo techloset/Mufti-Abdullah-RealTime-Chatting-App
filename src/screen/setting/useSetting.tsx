@@ -1,10 +1,10 @@
 import {useEffect, useState} from 'react';
 import auth from '@react-native-firebase/auth';
-import {UserData} from '../../constants/types/Types';
+import {UserData} from '../../constants/types/types';
 import firestore from '@react-native-firebase/firestore';
 import {useAppDispatch} from '../../store/store';
-import {logout} from '../../store/slices/AuthSlice';
-import {FIREBASE_COLLECTIONS} from '../../constants/firebaseCollections/FirebaseCollectoin';
+import {logout} from '../../store/slices/authSlice';
+import {FIREBASE_COLLECTIONS} from '../../constants/firebaseCollections/firebaseCollectoin';
 export default function useSetting() {
   const dispatch = useAppDispatch();
   const user = auth().currentUser;

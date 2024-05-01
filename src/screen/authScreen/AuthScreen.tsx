@@ -6,9 +6,9 @@ import {
   TouchableOpacity,
   ImageBackground,
 } from 'react-native';
-import {RootStackParamsList} from '../../navigation/AuthStackNavigation';
+import {RootStackParamsList} from '../../navigation/authStackNavigation';
 import {StackNavigationProp} from '@react-navigation/stack';
-import {styles} from './AuthStyle';
+import {styles} from './authScreenStyle';
 import UseAuthScreen from './useAuthScreen';
 interface LoginProps {
   navigation: StackNavigationProp<RootStackParamsList, 'LOGIN', 'SIGNUP'>;

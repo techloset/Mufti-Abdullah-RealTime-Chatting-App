@@ -11,16 +11,16 @@ import React from 'react';
 
 import {SafeAreaView, FlatList} from 'react-native';
 import {SwipeListView} from 'react-native-swipe-list-view';
-import {HomeStyles} from './HomeStyling';
+import {HomeStyles} from './homeStyling';
 import UserInfo from '../../components/userInfo/UserInfo';
 import {
   HEADERICON,
   HOMEICON,
   USERPROFILEIMAGE,
-} from '../../constants/assets/AllImages';
-import {HeaderStyles} from '../../styles/HeaderStyling';
+} from '../../constants/assets/allImages';
+import {HeaderStyles} from '../../styles/headerStyling';
 import {StackNavigationProp} from '@react-navigation/stack';
-import {HomeStackParamsList, HomeUser} from '../../constants/types/Types';
+import {HomeStackParamsList, HomeUser} from '../../constants/types/types';
 import uesHome from './uesHome';
 
 interface navigationProps {

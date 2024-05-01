@@ -1,18 +1,18 @@
 import React from 'react';
 import {createStackNavigator} from '@react-navigation/stack';
-import Navigation from './TabNavigation';
+import Navigation from './tabNavigation';
 import {NavigationContainer} from '@react-navigation/native';
 
 import {
   CONTACT_STACK_SCREENS_NAVIGATION,
   HOME_STACK_SCREENS_NAVIGATION,
   SETTING_STACK_SCREENS_NAVIGATION,
-} from '../constants/navigationScreens/NavigationScreens';
+} from '../constants/navigationScreens/navigationScreens';
 import {
   ContactStackParamsList,
   HomeStackParamsList,
   SettingStackParamsList,
-} from '../constants/types/Types';
+} from '../constants/types/types';
 const Stack = createStackNavigator();
 
 export default function MainStack() {

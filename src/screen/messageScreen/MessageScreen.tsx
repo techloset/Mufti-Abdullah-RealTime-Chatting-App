@@ -9,12 +9,12 @@ import {
   Pressable,
   ActivityIndicator,
 } from 'react-native';
-import {CHATICON, HEADERICON} from '../../constants/assets/AllImages';
+import {CHATICON, HEADERICON} from '../../constants/assets/allImages';
 
-import {styles} from './MessageScreenStyling';
+import {styles} from './messageScreenStyling';
 import Loader from '../../components/loader/Loader';
 import useMessageScreen from './useMessageScreen';
-import {COLORS} from '../../constants/colors/Color';
+import {COLORS} from '../../constants/colors/color';
 import ChatScreenUser from '../../components/chatScreenUser/ChatScreenUser';
 
 export default function MessageScreen({route}: any) {

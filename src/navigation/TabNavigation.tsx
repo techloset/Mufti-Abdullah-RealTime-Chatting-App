@@ -1,7 +1,7 @@
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
-import {BOTTOM_TAB_SCREEN} from '../constants/navigations/Navigations';
-import {COLORS} from '../constants/colors/Color';
-import {BOTTOM_TAB_SCREENS_NAVIGATION} from '../constants/navigationScreens/NavigationScreens';
+import {BOTTOM_TAB_SCREEN} from '../constants/navigations/navigations';
+import {COLORS} from '../constants/colors/color';
+import {BOTTOM_TAB_SCREENS_NAVIGATION} from '../constants/navigationScreens/navigationScreens';
 
 const Tab = createBottomTabNavigator();
 const screenOptions = {

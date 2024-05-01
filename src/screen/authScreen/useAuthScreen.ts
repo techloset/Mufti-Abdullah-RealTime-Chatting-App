@@ -1,11 +1,11 @@
 import {GoogleSignin} from '@react-native-google-signin/google-signin';
 import auth from '@react-native-firebase/auth';
 import firestore from '@react-native-firebase/firestore';
-import {UserData} from '../../constants/types/Types';
+import {UserData} from '../../constants/types/types';
 import {useDispatch} from 'react-redux';
-import {login} from '../../store/slices/AuthSlice';
-import {ShowToast} from '../..//components/toast/ShowToast';
-import {FIREBASE_COLLECTIONS} from '../../constants/firebaseCollections/FirebaseCollectoin';
+import {login} from '../../store/slices/authSlice';
+import {ShowToast} from '../../components/showToast/ShowToast';
+import {FIREBASE_COLLECTIONS} from '../../constants/firebaseCollections/firebaseCollectoin';
 
 GoogleSignin.configure({
   webClientId:

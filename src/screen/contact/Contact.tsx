@@ -8,13 +8,13 @@ import {
   View,
 } from 'react-native';
 import React, {useState} from 'react';
-import User from '../../components/contactUserInfo/User';
-import {styles} from './ContactStyle';
-import LinearGradient from 'react-native-linear-gradient';
-import {HEADERICON} from '../../constants/assets/AllImages';
-import {HeaderStyles} from '../../styles/HeaderStyling';
+import User from '../../components/contactUserInfo/ContactUserInfo';
+import {styles} from './contactStyle';
+
+import {HEADERICON} from '../../constants/assets/allImages';
+import {HeaderStyles} from '../../styles/headerStyling';
 import {StackNavigationProp} from '@react-navigation/stack';
-import {ContactStackParamsList, UserData} from '../../constants/types/Types';
+import {ContactStackParamsList, UserData} from '../../constants/types/types';
 import useContact from './useContact';
 import Loader from '../../components/loader/Loader';
 

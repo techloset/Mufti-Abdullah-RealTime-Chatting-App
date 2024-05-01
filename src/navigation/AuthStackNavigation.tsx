@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {createStackNavigator} from '@react-navigation/stack';
 import {NavigationContainer} from '@react-navigation/native';
-import {AUTH_STACK_SCREENS_NAVIGATION} from '../constants/navigationScreens/NavigationScreens';
+import {AUTH_STACK_SCREENS_NAVIGATION} from '../constants/navigationScreens/navigationScreens';
 
 export type RootStackParamsList = {
   SIGNUP: undefined;

@@ -1,6 +1,6 @@
 import {StyleSheet} from 'react-native';
-import {FONTS} from '../constants/fonts/Font';
-import {COLORS} from '../constants/colors/Color';
+import {FONTS} from '../constants/fonts/font';
+import {COLORS} from '../constants/colors/color';
 export const HeaderStyles = StyleSheet.create({
   mainContainer: {
     flex: 1,

@@ -1,4 +1,4 @@
-import {IMAGES} from '../assets/AllImages';
+import {IMAGES} from '../assets/allImages';
 
 export const BOTTOM_TAB_SCREEN = {
   HOME: 'HOME',

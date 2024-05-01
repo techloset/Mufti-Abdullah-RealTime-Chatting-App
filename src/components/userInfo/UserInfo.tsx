@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import {Image, Text, View} from 'react-native';
 import {styles} from './Style';
-import {USERPROFILEIMAGE} from '../../constants/assets/AllImages';
+import {USERPROFILEIMAGE} from '../../constants/assets/allImages';
 
 interface UserInfoProps {
   profileImage: string;

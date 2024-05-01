@@ -2,8 +2,8 @@ import {Text, View} from 'react-native';
 import React, {useEffect, useState} from 'react';
 import firestore from '@react-native-firebase/firestore';
 import auth from '@react-native-firebase/auth';
-import {HomeUser} from '../../constants/types/Types';
-import {FIREBASE_COLLECTIONS} from '../../constants/firebaseCollections/FirebaseCollectoin';
+import {HomeUser} from '../../constants/types/types';
+import {FIREBASE_COLLECTIONS} from '../../constants/firebaseCollections/firebaseCollectoin';
 
 export default function useContact() {
   const user = auth().currentUser;

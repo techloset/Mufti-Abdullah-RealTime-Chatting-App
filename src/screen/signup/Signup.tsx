@@ -6,7 +6,7 @@ import {
   TouchableOpacity,
   ImageBackground,
 } from 'react-native';
-import {styles} from './SignupStyles';
+import {styles} from './signupStyles';
 import useSignup from './useSignup';
 import Loader from '../../components/loader/Loader';
 export default function SignUp() {
