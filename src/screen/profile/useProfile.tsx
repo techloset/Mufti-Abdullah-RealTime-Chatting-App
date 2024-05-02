@@ -1,14 +1,13 @@
 import {Alert} from 'react-native';
-import React, {useEffect, useState} from 'react';
+import {useEffect, useState} from 'react';
 import firestore from '@react-native-firebase/firestore';
-import auth, {FirebaseAuthTypes} from '@react-native-firebase/auth';
+import auth from '@react-native-firebase/auth';
 import ImagePicker, {
   launchImageLibrary,
   ImagePickerResponse,
 } from 'react-native-image-picker';
 import storage from '@react-native-firebase/storage';
 import {ProfileHook, Resource, UserData} from '../../constants/types/types';
-import {Toast} from 'react-native-toast-notifications';
 import {ShowToast} from '../../components/showToast/ShowToast';
 import {FIREBASE_COLLECTIONS} from '../../constants/firebaseCollections/firebaseCollectoin';
 

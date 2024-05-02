@@ -1,10 +1,11 @@
 import auth, {FirebaseAuthTypes} from '@react-native-firebase/auth';
 import {useState} from 'react';
 import {useDispatch} from 'react-redux';
-import {SigninUserData, usersData} from '../../constants/types/types';
+import {SigninUserData, usersData} from '../../constants/types/Types';
 import {login} from '../../store/slices/authSlice';
 import {useAppDispatch} from '../../store/store';
 import {ShowToast} from '../../components/showToast/ShowToast';
+import {signInUser} from '../../store/slices/userSlice';
 
 const initialState = {email: '', password: ''};
 export default function useLogin() {
@@ -14,7 +15,7 @@ export default function useLogin() {
   const handleChange = (name: string, value: string): void => {
     setState(s => ({...s, [name]: value}));
   };
-  const handleLogin = () => {
+  const handleLogin = async () => {
     const {email, password} = state;
     let validRegex =
       /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
@@ -49,41 +50,10 @@ export default function useLogin() {
     }
     let userData = {email, password};
     setisloading(true);
-    loginUser(userData);
-
+    await dispatch(signInUser(userData) as any);
     setState(initialState);
+    setisloading(false);
   };
-  const loginUser = (userData: SigninUserData): void => {
-    auth()
-      .signInWithEmailAndPassword(userData.email, userData.password)
-      .then(userCredential => {
-        const user = userCredential.user;
-        if (user) {
-          console.log('User Login Successfully!', 'Welcome to TEXTit Chat app');
-          ShowToast('sucess', 'Yor are Login Sucessfully ,WellCome');
-          dispatch(login(user));
-          setisloading(false);
-        }
-      })
-      .catch(error => {
-        setisloading(false);
-        if (error.code === 'auth/email-already-in-use') {
-          ShowToast('danger', 'That email address is already registered!');
 
-          return console.log(
-            'Email Error',
-            'That email address is already registered!',
-            'error',
-          );
-        }
-        if (error.code === 'auth/invalid-email') {
-          ShowToast('danger', 'Email|Password Error');
-
-          console.log('Email|Password Error', 'Please try again', 'error');
-          return;
-        }
-        return console.log('Email|Password Error', 'Please try again', 'error');
-      });
-  };
   return {handleLogin, loading, handleChange, state, setState};
 }
