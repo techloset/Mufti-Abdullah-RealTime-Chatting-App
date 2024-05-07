@@ -23,9 +23,10 @@ export default function Profile() {
     name,
     status,
     setStatus,
-    updateUserProfile,
+    updateProfile,
     loading,
     imageUploading,
+    userData,
   } = useProfile();
 
   const navigation = useNavigation();
@@ -94,11 +95,14 @@ export default function Profile() {
                 placeholder="Your Status."
                 placeholderTextColor="#003f5c"
                 value={status}
-                onChangeText={setStatus}
+                onChangeText={newStatus => {
+                  console.log('New status:', newStatus);
+                  setStatus(newStatus);
+                }}
               />
             </View>
           </View>
-          <TouchableOpacity onPress={updateUserProfile}>
+          <TouchableOpacity onPress={updateProfile}>
             <ImageBackground
               source={require('../../assets/images/background.png')}
               style={styles.loginBtn}>

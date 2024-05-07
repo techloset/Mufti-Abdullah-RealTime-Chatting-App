@@ -91,10 +91,11 @@ export type ProfileHook = {
   name: string | null | undefined;
   status: string | null | undefined;
   setStatus: React.Dispatch<React.SetStateAction<string>>;
-  updateUserProfile: () => void;
+  updateProfile: () => Promise<void>;
   usersData: UserData | null;
   loading: boolean;
   imageUploading: boolean;
+  userData: UserData[];
 };
 export type Resource = {
   uri?: string;
